@@ -1,4 +1,5 @@
 #include "../include/datatypes.h"
+#include "datatypes.h"
 
 // DTFecha
 DTFecha::DTFecha(int dia, int mes, int anio) : dia(dia),

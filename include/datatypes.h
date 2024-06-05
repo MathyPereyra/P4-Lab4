@@ -33,6 +33,7 @@ public:
   bool operator>=(const DTFecha fecha) const;
 };
 
+// DTUsuario
 class DTUsuario
 {
 private:
@@ -42,7 +43,7 @@ private:
 
 public:
   DTUsuario();
-  DTUsuario(string nickname, string nombre, string descripcion);
+  DTUsuario(string nickname, string contrasena, DTFecha fechaNac);
   string getNickname() const;
   string getContrasena() const;
   DTFecha getFechaNac() const;
