@@ -62,4 +62,43 @@ public:
   DTComentario();
 };
 
+enum categoria {electrodomestico,,}
+
+
+class DTProducto
+{
+private:
+  integer id;
+  categoria cat;
+  string descripcion;
+  nombre string;
+  integer cantStock;
+  float precio;
+public:
+  DTProducto();
+  DTProducto(integer id, categoria cat, string desc, string nombre, integer cantStock, float precio);
+  integer getId();
+  categoria getCat();
+  string getDesc();
+  integer getCantStock();
+  float getPrecio();
+  virtual ~DTProducto();
+}
+
+class DTNotificacion
+{
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
 #endif

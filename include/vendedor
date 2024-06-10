@@ -1,0 +1,31 @@
+#ifndef VENDEDOR_H
+#define VENDEDOR_H
+
+#include <string>
+#include <set>
+#include <map>
+
+#include "usuario.h"
+#include "datatypes.h"
+#include "observer.h"
+
+using namespace std;
+
+class Vendedor : public Usuario
+{
+private:
+  string codigoRUT;
+
+public:
+  getProductosNoEnPromo();
+  seleccionarProductos(Integer id);
+  agregarSuscriptor();
+  eliminarSuscriptor();
+  notificarSuscriptores();
+  estaSuscrito(String nombre);
+  DTUsuario getDatos();
+  
+  virtual ~Vendedor();
+};
+
+#endif
