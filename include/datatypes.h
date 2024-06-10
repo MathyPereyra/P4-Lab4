@@ -54,12 +54,17 @@ public:
 class DTComentario
 {
 private:
-  string nickname;
-  string contrasena;
-  DTFecha fechaNac;
+  string text;
+  integer id;
+  DTFecha fechaCom;
 
 public:
-  DTComentario();
+  DTComentario(string text, integer id, DTFecha fechaCom);
+  string getText();
+  integer getId();
+  DTFecha getFechaCom();
+
+  virtual ~DTComentario();
 };
 
 enum categoria {electrodomestico,,}
@@ -71,12 +76,11 @@ private:
   integer id;
   categoria cat;
   string descripcion;
-  nombre string;
   integer cantStock;
   float precio;
 public:
   DTProducto();
-  DTProducto(integer id, categoria cat, string desc, string nombre, integer cantStock, float precio);
+  DTProducto(integer id, categoria cat, string desc, integer cantStock, float precio);
   integer getId();
   categoria getCat();
   string getDesc();

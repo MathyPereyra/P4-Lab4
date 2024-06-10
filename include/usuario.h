@@ -7,6 +7,7 @@
 
 #include "datatypes.h"
 #include "observer.h"
+#include "comentario.h"
 
 using namespace std;
 
@@ -16,6 +17,7 @@ private:
   string nickname;
   string contrasena;
   DTFecha fechaNac;
+  set<comentario> comentarios;
 
 public:
   Usuario(string nickname, string contrasena, DTFecha fechaNac);
@@ -23,8 +25,9 @@ public:
   string getContrasena();
   string getFechaNac();
   DTComentario listadoComentario();
-  void eliminarComentario(int);
+  void eliminarComentario(integer id);
   DTUsuario getDatos();
+  set<comentario> getComentarios();
 };
 
 #endif

@@ -15,8 +15,10 @@ class Vendedor : public Usuario
 {
 private:
   string codigoRUT;
+  set<producto> productos;
 
 public:
+  Vendedor(string codRUT);
   getProductosNoEnPromo();
   seleccionarProductos(Integer id);
   agregarSuscriptor();
@@ -24,6 +26,8 @@ public:
   notificarSuscriptores();
   estaSuscrito(String nombre);
   DTUsuario getDatos();
+  set<producto> getProductos();
+  string getCodigoRut();
   
   virtual ~Vendedor();
 };

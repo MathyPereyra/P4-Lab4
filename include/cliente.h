@@ -16,14 +16,18 @@ class Cliente : public Usuario, public IObserver
 private:
   string direccion;
   string ciudad;
-  set <DTNotificaciones> notificaciones;
+  set<DTNotificacion> notificaciones;
 
 public:
+  Cliente(string dir, string ciud);
   crearCompra();
   agregarSuscripcion();
   eliminarNotifiaciones();
   notificar(String nVen, String nProm, set <DTProducto>);
   DTUsuario getDatos();
+  string getDir();
+  string getCiudad();
+  set<DTNotificacion> getNotificaciones();
 
   virtual ~Cliente();
 };
