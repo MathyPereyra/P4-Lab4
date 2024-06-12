@@ -22,8 +22,8 @@ private:
 
 public:
   Promocion(string nombre, string descripcion, float descuento, DTFecha fechaVencimiento);
-  agergarAPromocion(integer id);
-  getProdEnProm();
+  void agergarAPromocion(integer id);
+  void getProdEnProm();
   string getNombre();
   string getDescripcion();
   float getDesc();

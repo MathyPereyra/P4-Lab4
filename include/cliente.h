@@ -17,6 +17,7 @@ private:
   string direccion;
   string ciudad;
   set<DTNotificacion> notificaciones;
+  set<Compra> compras;
 
 public:
   Cliente(string dir, string ciud);
@@ -25,9 +26,15 @@ public:
   eliminarNotifiaciones();
   notificar(String nVen, String nProm, set <DTProducto>);
   DTUsuario getDatos();
-  string getDir();
+
+  string getNickname();
+  string getContrasena();
+  DTFecha getFecha();
+  string getDireccion();
   string getCiudad();
   set<DTNotificacion> getNotificaciones();
+  set<Comentario> getComentarios();
+  set<Compra> getCompras();
 
   virtual ~Cliente();
 };

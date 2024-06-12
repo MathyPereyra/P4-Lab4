@@ -17,17 +17,17 @@ private:
   string nickname;
   string contrasena;
   DTFecha fechaNac;
-  set<comentario> comentarios;
+  set<Comentario> comentarios;
 
 public:
   Usuario(string nickname, string contrasena, DTFecha fechaNac);
   string getNickname();
   string getContrasena();
   string getFechaNac();
-  DTComentario listadoComentario();
+  set<DTComentario> listadoComentario();
   void eliminarComentario(integer id);
   DTUsuario getDatos();
-  set<comentario> getComentarios();
+  set<Comentario> getComentarios();
 };
 
 #endif

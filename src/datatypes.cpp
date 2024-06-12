@@ -44,9 +44,27 @@ bool DTFecha::operator>=(const DTFecha desde) const
 }
 
 // DataComentario
-DTComentario::DTComentario(){
-
+DTComentario::DTComentario(string text, integer id, DTFecha fechaCom);
+{
+  this->text = text;
+  this->id = id;
+  this->fechaCom = fechaCom;
 };
+
+string DTComentario::getText()
+{
+  return this->text;
+};
+
+integer DTComentario::getId()
+{
+  return this->id;
+};
+
+ DTFecha DTComentario::getFechaCom()
+ {
+  return this->fechaCom
+ };
 
 // DTUsuario
 DTUsuario::DTUsuario(string nickname, string contrasena, DTFecha fechaNac)
@@ -76,4 +94,49 @@ void DTUsuario::print()
   cout << "Nickname: " << this->nickname << endl;
   cout << "Contraseña: " << this->contrasena << endl;
   cout << "Fecha de nacimiento: " << this->fechaNac << endl;
+};
+
+//DTNotificacion
+DTNotificacion::DTNotificacion(string nicknameUsuario, string nombreProm,set<DTProducto> productos){
+  this->nicknameUsuario = nicknameUsuario;
+  this->nombreProm = nombreProm;
+  this->productos = productos;
+};
+
+string DTNotificacion::getNicknameUsuario()
+{
+  return this->nicknameUsuario;
+};
+
+string DTNotificacion::getNombreProm()
+{
+  return this->nombreProm;
+};
+
+set<DTProducto> DTNotificacion::getProductos()
+{
+  return this->productos;
+};
+   
+//DTCompra
+DTCompra::DTCompra(float precioTotal, DTFecha fechaCompra, set<Compra_Producto> com-Prod)
+{
+  this->precioTotal = precioTotal;
+  this->fechaCompra = fechaCompra;
+  this->com-Prod = com-Prod;
+};
+
+float DTCompra::getPrecioTotal()
+{
+  return this->precioTotal
+};
+
+DTFecha DTCompra::getFecha()
+{
+  return this->fechaCompra;
+};
+
+set<Com-Prod> DTCompra::getProdProm()
+{
+  return this->com-prod;
 };

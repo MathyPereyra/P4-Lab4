@@ -38,18 +38,55 @@ class DTUsuario
 {
 private:
   string nickname;
-  string contrasena;
   DTFecha fechaNac;
 
 public:
   DTUsuario();
-  DTUsuario(string nickname, string contrasena, DTFecha fechaNac);
+  DTUsuario(string nickname, DTFecha fechaNac);
   string getNickname() const;
   string getContrasena() const;
   DTFecha getFechaNac() const;
   virtual void print();
   virtual ~DTUsuario();
 };
+
+class DTCliente
+{
+private:
+  string nickname;
+  DTFecha fechaNac;
+  string ciudad;
+  string direccion;
+
+public:
+  DTUsuario();
+  DTUsuario(string nickname, DTFecha fechaNac, string ciudad, string direccion);
+  
+  string getNickname() const;
+  DTFecha getFechaNac() const;
+  string getCiudad();
+  string getDireccion();
+  virtual void print();
+  virtual ~DTUsuario();
+};
+
+class DTVendedor
+{
+private:
+  string nickname;
+  DTFecha fechaNac;
+  string codigoRUT;
+
+public:
+  DTUsuario();
+  DTUsuario(string nickname, DTFecha fechaNac, string codigoRUT);
+  string getNickname() const;
+  DTFecha getFechaNac() const;
+  string getCodigoRUT();
+  virtual void print();
+  virtual ~DTUsuario();
+};
+
 
 class DTComentario
 {
@@ -67,7 +104,7 @@ public:
   virtual ~DTComentario();
 };
 
-enum categoria {electrodomestico,,}
+enum categoria {ropa, electrodomesticos, otro}
 
 
 class DTProducto
@@ -87,22 +124,48 @@ public:
   integer getCantStock();
   float getPrecio();
   virtual ~DTProducto();
-}
+};
 
 class DTNotificacion
 {
+  private:
+    string nicknameUsuario;
+    string nombreProm;
+    set<DTProductopr>
+oductos;
+  public:
+    DTNotificacion(string nicknameUsuario, string nombreProm,set<DTProducto> productos);
+    string getNicknameUsuario();
+    string getNombreProm();
+    set<DTProducto> getProductos();
+    virtual ~DTNotificacion();}:
 
+class DTCompra
+{
+private:
+  float precioTotal;
+  DTFecha fechaCompra;
+  set<Compra_Producto> com-Prod;
+public:
+
+  DTCompra(float precioTotal, DTFecha fechaCompra, set<Compra_Producto> com-Prod);
+  float getPrecioTotal();
+  DTFecha getFecha();
+  set<Com-Prod> getProdProm();
+
+  virtual ~DTCompra();};
+
+class DTIdNProducto
+{
+private:
+  integer id;
+  string nombre;
+public:
+  DTIdNProducto(integer id, string nombre);
+  intger getId();
+  string getNombre()
+
+  virtual ~DTIdNProducto;
 }
-
-
-
-
-
-
-
-
-
-
-
 
 #endif

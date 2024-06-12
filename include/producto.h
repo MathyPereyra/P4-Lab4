@@ -19,8 +19,11 @@ private:
   string descripcion;
   integer cantStock;
   float precio;
+
+  //Al crearlo esta = false, si el producto es agregado a alguna promocion esta = true
+  bool esta;
 public:
-  Producto(integer id, categoria cat, string desc, integer cantStock, float precio);
+  Producto(integer id, categoria cat, string desc, integer cantStock, float precio, bool esta);
   bool estaEnPromo();
   float calcularDescuento();
 
