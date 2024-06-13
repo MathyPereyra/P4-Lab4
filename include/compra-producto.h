@@ -8,6 +8,7 @@
 #include "usuario.h"
 #include "datatypes.h"
 #include "observer.h"
+#include "producto.h"
 
 using namespace std;
 
