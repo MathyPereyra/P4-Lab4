@@ -3,8 +3,8 @@
 
 using namespace std;
 
-Compra(DTFecha fechaCompra, float montoTotal, set<Compra_Producto> com_Prods)
-{
+Compra(DTFecha fechaCompra, float montoTotal, set<Compra_Producto> com_Prods, integer id){
+: fecha(fechaCompra), montoTotal(montototal), com_Prods(com_Prods), id(id){};
 
 };
 
@@ -28,11 +28,11 @@ bool Compra::productoEnCompra(integer id_prod)
 };
 
 
-void Compra::setId(integer id)
+/*void Compra::setId(integer id)
 {
     this->id = id;
 };
-
+*/
 
 integer Compra::getId()
 {

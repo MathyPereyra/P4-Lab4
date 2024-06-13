@@ -67,11 +67,12 @@ integer DTComentario::getId()
  };
 
 // DTUsuario
-DTUsuario::DTUsuario(string nickname, string contrasena, DTFecha fechaNac)
+DTUsuario::DTUsuario(string nickname, string contrasena, DTFecha fechaNac, tipo tipocliente)
 {
   this->nickname = nickname;
   this->contrasena = contrasena;
   this->fechaNac = fechaNac;
+  this->tipo = tipocliente;
 };
 
 string DTUsuario::getNickname() const
@@ -87,6 +88,11 @@ string DTUsuario::getContrasena() const
 DTFecha DTUsuario::getFechaNac() const
 {
   return this->fechaNac;
+};
+
+string DTUsuario::getTipo() const
+{
+  return this->tipo;
 };
 
 void DTUsuario::print()

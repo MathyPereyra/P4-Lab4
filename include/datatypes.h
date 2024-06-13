@@ -38,7 +38,9 @@ class DTUsuario
 {
 private:
   string nickname;
+  string contrasena;
   DTFecha fechaNac;
+  tipo tipodeusuario;
 
 public:
   DTUsuario();
@@ -105,6 +107,8 @@ public:
 };
 
 enum categoria {ropa, electrodomesticos, otro}
+
+enum tipo {cliente, vendedor}
 
 
 class DTProducto

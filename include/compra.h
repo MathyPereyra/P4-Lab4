@@ -20,12 +20,12 @@ private:
   integer id;
 
 public:
-  Compra(DTFecha fecha, float montoTotal, set<Compra_Producto> com_Prod);
+  Compra(DTFecha fecha, float montoTotal, set<Compra_Producto> com_Prod, integer id);
   agregarACompra(Producto prod, integer id);
   bool productoEnCompra();
   DTCompra infoCompra();
   
-  void setId(integer id);
+  //void setId(integer id);
   integer getId();
   DTFecha getFecha();
   float getMontoTotal();

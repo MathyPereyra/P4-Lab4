@@ -21,6 +21,11 @@ string Usuario::getFechaNac()
 //  return getFecha(this->fechaNac);
 };
 
+tipo Usuario::getTipo()
+{
+//  return this->tipousuario
+}
+
 set<DTComentario> Usuario::listadoComentario() 
 {
 //  set<DTComentario> listadoComens;
