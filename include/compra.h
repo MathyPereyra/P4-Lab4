@@ -18,11 +18,12 @@ class Compra
 private:
   DTFecha fecha;
   float montoTotal;
-  set<Compra_Producto> com_Prods;
+  set<Compra_Producto> *com_Prods;
   int id;
 
 public:
   Compra(DTFecha fecha, float montoTotal, set<Compra_Producto> com_Prod, int id);
+
   agregarACompra(Producto prod, int id);
   bool productoEnCompra();
   DTCompra infoCompra();
@@ -32,6 +33,7 @@ public:
   DTFecha getFecha();
   float getMontoTotal();
   set<Compra_Producto> getCompProd();
+
   virtual ~Compra();
 };
 

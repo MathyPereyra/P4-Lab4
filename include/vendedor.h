@@ -17,26 +17,29 @@ class Vendedor : public Usuario
 {
 private:
   string codigoRUT;
-  set<Producto> productos;
-  set<Promocion> promociones;
+  set<Producto> *productos;
+  set<Promocion> *promociones;
+  set<IObserver> *suscriptores;
 
 public:
   Vendedor(string nickname, string contrasena, DTFecha fechaNac, string codigoRUT);
   
   set<DTIdNProducto>  getProductosNoEnPromo();
-  void seleccionarProductos(int id);
+  void seleccionarProducto(int id);
+
   void agregarSuscriptor();
   void eliminarSuscriptor();
-  notificarSuscriptores();
+  void notificarSuscriptores();
   bool estaSuscrito(string nombre);
+  
   DTVendedor getDatos();
-
   string getNickname();
   string getContrasena();
   DTFecha getFecha();
   set<Producto> getProductos();
   set<Promocion> getPromociones();
   set<Comentario> getComentarios();
+  set<IObserver> getSuscriptores();
   string getCodigoRUT();
   
   virtual ~Vendedor();

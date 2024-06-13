@@ -16,7 +16,7 @@ class Compra_Producto
 private:
   bool envio;
   int cantidad;
-  set<Producto> productosEnCompra;
+  set<Producto> *productosEnCompra;
 
 public:
   agregarProd(Producto prod);
@@ -25,7 +25,7 @@ public:
   
   bool getEnvio();
   int getCantidad();
-  set<Producto> getProductos();
+  set<Producto> getProductosEnCompra();
 
   virtual ~Compra_Producto();
 };

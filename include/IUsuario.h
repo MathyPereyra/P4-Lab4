@@ -8,6 +8,8 @@
 #include "usuario.h"
 #include "datatypes.h"
 #include "observer.h"
+#include "cliente.h" //no estoy seguro de si debe estar, pero para altaCliente creo qeu se utilizará
+#include "vendedor.h" //no estoy seguro de si debe estar, pero para altaVendedor creo qeu se utilizará
 
 using namespace std;
 
@@ -17,8 +19,8 @@ public:
     virtual void ingresarUsuario(string nickname, string contrasena, DTFecha fechaNac) = 0;
     virtual bool existeUsuarioIgualNickname(string nickname) = 0;
     virtual void terminarAlta() = 0;
-    virtual void altaCliente(string algo, string algo2) = 0;
-    virtual void altaVendedor(string algo) = 0;
+    virtual void altaCliente(string direccion, string ciudad) = 0;
+    virtual void altaVendedor(string codigoRUT) = 0;
     virtual void confirmarAltaUsuario() = 0;
     virtual void setDataUsuario(string nickname, string contrasena, DTFecha fechaNac) = 0;
 

@@ -17,7 +17,7 @@ private:
   string texto;
   DTFecha fecha;
   int id;
-  set<Comentario> respuestas;
+  set<Comentario> *respuestas;
 
 public:
   Comentario(string text, DTFecha fecha, int id)

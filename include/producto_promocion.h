@@ -16,12 +16,11 @@ class Producto_Promocion
 {
 private:
   int cantidadMinima;
-  set<Producto> productos;
+  set<Producto> *productos;
 
 public:
   void agregarProd(Producto prod);
   set<DTProducto> getProdEnProm();
-  int getCantidadMinima();
 
   int getCantidadMinima();
   set<Producto> getProductos();

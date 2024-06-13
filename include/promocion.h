@@ -18,12 +18,13 @@ private:
   string descripcion;
   float descuento;
   DTFecha fechaVencimiento;
-  set<Producto-Promocion> prod-proms;
+  set<Producto-Promocion> *prodProms;
 
 public:
   Promocion(string nombre, string descripcion, float descuento, DTFecha fechaVencimiento);
-  void agergarAPromocion(int id);
-  void getProdEnProm();
+  void agregarAPromocion(int id);
+  set<DTProducto> getProdEnProm();
+  
   string getNombre();
   string getDescripcion();
   float getDesc();

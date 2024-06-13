@@ -64,6 +64,7 @@ public:
   DTFecha getFechaNac() const;
   string getCiudad();
   string getDireccion();
+
   virtual void print();
   virtual ~DTUsuario();
 };
@@ -111,17 +112,22 @@ class DTProducto
 private:
   int id;
   categoria cat;
+  string nombre;
   string descripcion;
   int cantStock;
   float precio;
+  bool estaEnProm;
 public:
   DTProducto();
-  DTProducto(int id, categoria cat, string desc, int cantStock, float precio);
+  DTProducto(int id, categoria cat, string nombre, string desc, int cantStock, float precio);
+
   int getId();
   categoria getCat();
   string getDesc();
   int getCantStock();
   float getPrecio();
+  bool getEstaEnProm();
+
   virtual ~DTProducto();
 };
 
@@ -130,13 +136,15 @@ class DTNotificacion
   private:
     string nicknameUsuario;
     string nombreProm;
-    set<DTProductopr>
+    set<Producto> productos;
 oductos;
   public:
-    DTNotificacion(string nicknameUsuario, string nombreProm,set<DTProducto> productos);
+    DTNotificacion(string nicknameUsuario, string nombreProm,set<Producto> productos);
+
     string getNicknameUsuario();
     string getNombreProm();
-    set<DTProducto> getProductos();
+    set<Producto> getProductos();
+
     virtual ~DTNotificacion();
 };
 
@@ -163,10 +171,11 @@ private:
   string nombre;
 public:
   DTIdNProducto(int id, string nombre);
+
   int getId();
   string getNombre()
 
-  virtual ~DTIdNProducto;
+  virtual ~DTIdNProducto();
 };
 
 #endif

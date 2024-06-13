@@ -17,19 +17,20 @@ class Cliente : public Usuario, public IObserver
 private:
   string direccion;
   string ciudad;
-  set<DTNotificacion> notificaciones;
-  set<Compra> compras;
+  set<DTNotificacion> *notificaciones;
+  set<Compra> *compras;
 
 public:
-  Cliente(string dir, string ciud);
-  crearCompra();
-  agregarSuscripcion();
-  eliminarNotifiaciones();
-  notificar(String nVen, String nProm, set <DTProducto>);
-  DTUsuario getDatos();
+  Cliente(string nickname, string contrasena, DTFecha fechaNac, string dir, string ciud);
 
+  void crearCompra();
+  void agregarSuscripcion();
+  void eliminarNotifiaciones();
+  void notificar(String nVen, String nProm, set <DTProducto>);
+  void listadoComentario();
+
+  DTCliente getDatos();
   string getNickname();
-  string getContrasena();
   DTFecha getFecha();
   string getDireccion();
   string getCiudad();

@@ -17,10 +17,11 @@ class Notificacion
 private:
   string nicknameV;
   string nombreProm;
-  set<Producto> productos;
+  set<Producto> *productos;
 
 public:
   Notificacion(string nicknameV, string nombreProm, set<Producto> productos);
+  
   string getNicknameV();
   string getNombreProm();
   set<Producto> getProductos();

@@ -16,14 +16,17 @@ class Producto
 private:
   int id;
   categoria cat;
+  string nombre;
   string descripcion;
   int cantStock;
   float precio;
+  bool estaEnProm; //Al crearlo esta = false, si el producto es agregado a alguna promocion esta = true
 
-  //Al crearlo esta = false, si el producto es agregado a alguna promocion esta = true
-  bool esta;
+//Habria que agregar bidireccionalidad en la asociacion Producto --- Producto_Promocion para acceder al valor del descuento
+
+
 public:
-  Producto(int id, categoria cat, string descripcion, int cantStock, float precio, bool esta);
+  Producto(int id, categoria cat, string descripcion, int cantStock, float precio, bool estaEnProm);
   bool estaEnPromo();
   float calcularDescuento();
 
