@@ -1,22 +1,30 @@
-#include "../include/usuario.h"
+#include "../include/usuario.h" //este creo que no es necesario incluirlo, ya viene a traves de vendedor.h
+#include "../include/vendedor.h"
+#include "../include/producto.h"
+#include "../include/promocion.h"
+#include "../include/datatypes.h"
+#include "../include/cliente.h"
+
 #include <string>
 
 using namespace std;
 
-Usuario::Vendedor(string nickname, string contrasena, DTFecha fechaNac, string codigoRUT, set<Producto> productos)
-    : nickname(nickname), contrasena(contrasena), fechaNac(fechaNac), codigoRUT(codigoRUT), productos(productos){};
+Vendedor::Vendedor(string nickname, string contrasena, DTFecha fechaNac, string codigoRUT)
+    : Usuario(nickname, contrasena, fechaNac, tipo::vendedor), codigoRUT(codigoRUT) {}
+
+
 
 string Vendedor::getNickname()
 {
-  return this->nickname;
+  return this->nickname; // no podemos acceder directo a nickname para que funcione le puse visibildiad protected a nickname en usuario.h
 };
 
 string Vendedor::getContrasena()
 {
-  return this->contrasena;
+  return this->contrasena; // no podemos acceder directo a nickname para que funcione le puse visibildiad protected a nickname en usuario.h
 };
 
-string Vendedor::getCodigoRUT() 
+string Vendedor::getCodigoRUT()
 {
   return this->codigoRUT;
 };
@@ -37,15 +45,15 @@ set<Comentario> Vendedor::getComentarios()
 }
 
 
-set<DTIdNProducto> Vendedor::getProductosNoEnPromo() 
+set<DTIdNProducto> Vendedor::getProductosNoEnPromo()
 {
   set<DTIdNProducto> setInfoProductos;
   for (Producto p : this->productos)
   {
     if (!(p.estaEnPromo()))
         {
-            integer id = p.getId();
-            string nombre = p.getNombre();
+            int id = p.getId();
+            string nombre = p.getNombre(); // no existe en producto.h una operación llamada getNombre()
             DTIdNProducto dp = DTIdNProducto(id, nombre);
             setInfoProductos.insert(dp);
         }

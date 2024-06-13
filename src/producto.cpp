@@ -3,58 +3,56 @@
 
 using namespace std;
 
-Producto(integer id, categoria cat, string desc, integer cantStock, float precio, bool esta){
-: id(id), categoria(cat), desc(string), cantStock(cantStock), precio(precio), esta(esta){};
-};
+Producto::Producto(int id, categoria cat, string desc, int cantStock, float precio, bool esta)
+: id(id), cat(cat), descripcion(desc), cantStock(cantStock), precio(precio), esta(esta){}
 
 
-bool producto::estaEnPromo(){
+bool Producto::estaEnPromo(){
     
     return this->esta;
 };
 
 
-
 //cambiar DCD flecha q va a producto desde producto-promocion
-float producto::calcularDescuento(){
+float Producto::calcularDescuento(){
     
 };
 
 
-DTProducto producto::getDataProducto(){
+DTProducto Producto::getDataProducto(){
 
     return DTProducto(this->id, this->cat, this->descripcion, this->cantStock, this->precio);
 };
 
 
-integer producto::getId(){
+int Producto::getId(){
 
     return this->id;
 };
 
 
 
-categoria producto::getCat(){
+categoria Producto::getCat(){
     
     return this->cat;
 };
 
 
-string producto::getDesc(){
+string Producto::getDesc(){
     
     return this->descripcion;
 };
 
 
 
-integer producto::getCantStock(){
+int Producto::getCantStock(){
 
     return this->cantStock;
 };
 
   
 
-float producto::getPrecio(){
+float Producto::getPrecio(){
     
     return this->precio;
 };

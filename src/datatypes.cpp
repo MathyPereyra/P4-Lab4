@@ -44,7 +44,7 @@ bool DTFecha::operator>=(const DTFecha desde) const
 }
 
 // DataComentario
-DTComentario::DTComentario(string text, integer id, DTFecha fechaCom);
+DTComentario::DTComentario(string text, int id, DTFecha fechaCom);
 {
   this->text = text;
   this->id = id;
@@ -56,14 +56,14 @@ string DTComentario::getText()
   return this->text;
 };
 
-integer DTComentario::getId()
+int DTComentario::getId()
 {
   return this->id;
 };
 
  DTFecha DTComentario::getFechaCom()
  {
-  return this->fechaCom
+  return this->fechaCom;
  };
 
 // DTUsuario

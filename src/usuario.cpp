@@ -4,7 +4,7 @@
 using namespace std;
 
 //Usuario::Usuario(string nickname, string contrasena, DTFecha fechaNac)
-/=    : nickname(nickname), contrasena(contrasena), fechaNac(fechaNac){};
+//=    : nickname(nickname), contrasena(contrasena), fechaNac(fechaNac){};
 
 string Usuario::getNickname()
 {
@@ -37,7 +37,7 @@ set<DTComentario> Usuario::listadoComentario()
 //  return listadoComens;
 }
 
-DataUsuario Usuario::getDatos()
+DTUsuario Usuario::getDatos()
 {
 //  DTUsuario DataUsuario
 }

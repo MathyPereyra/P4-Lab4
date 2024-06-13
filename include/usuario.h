@@ -13,23 +13,23 @@ using namespace std;
 
 class Usuario : public IObserver
 {
-private:
+protected:
   string nickname;
   string contrasena;
   DTFecha fechaNac;
-  tipo tipousuario;
+  tipo tipoUsuario;
   set<Comentario> comentarios;
 
 public:
-  Usuario(string nickname, string contrasena, DTFecha fechaNac, tipo tipousuario);
-  string getNickname();
-  string getContrasena();
-  DTFecha getFechaNac();
-  tipo getTipo();
-  set<DTComentario> listadoComentario();
-  void eliminarComentario(int id);
-  DTUsuario getDatos();
-  set<Comentario> getComentarios();
+  Usuario(string nickname, string contrasena, DTFecha fechaNac, tipo tipoUsuario);
+  virtual string getNickname();
+  virtual string getContrasena();
+  virtual DTFecha getFechaNac();
+  virtual tipo getTipo();
+  virtual set<DTComentario> listadoComentario();
+  virtual void eliminarComentario(int id);
+  virtual DTUsuario getDatos();
+  virtual set<Comentario> getComentarios();
 };
 
 #endif

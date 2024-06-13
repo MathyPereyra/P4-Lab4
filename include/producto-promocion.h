@@ -8,7 +8,7 @@
 #include "usuario.h"
 #include "datatypes.h"
 #include "observer.h"
-#include "produto.h"
+#include "producto.h"
 
 using namespace std;
 
@@ -19,11 +19,11 @@ private:
   set<Producto> productos;
 
 public:
-  agregarProd(Producto prod);
+  void agregarProd(Producto prod);
   set<DTProducto> getProdEnProm();
-  integer getCantidadMinima();
+  int getCantidadMinima();
 
-  integer getCantidadMinima();
+  int getCantidadMinima();
   set<Producto> getProductos();
 
   virtual ~Producto_Promocion();

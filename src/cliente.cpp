@@ -46,7 +46,7 @@ set<Comentario> Cliente::getComentarios()
   return this->comentarios;
 }
  
-void Cliente::crearCompra(integer id) 
+void Cliente::crearCompra(int id) 
 {
   Compra d = Compra();
   d.setId(id);

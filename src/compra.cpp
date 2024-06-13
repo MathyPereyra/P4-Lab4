@@ -3,20 +3,20 @@
 
 using namespace std;
 
-Compra(DTFecha fechaCompra, float montoTotal, set<Compra_Producto> com_Prods, integer id){
+Compra(DTFecha fechaCompra, float montoTotal, set<Compra_Producto> com_Prods, int id){
 : fecha(fechaCompra), montoTotal(montototal), com_Prods(com_Prods), id(id){};
 
 };
 
 
-void Compra::agregarACompra(Producto prod, integer cantidad)
+void Compra::agregarACompra(Producto prod, int cantidad)
 {
     Compra_Producto nuevoCP = new Compra_Producto(cantidad, false);
     nuevoCP.agregarACompra(prod);
     this->com_Prod;
 };
 
-bool Compra::productoEnCompra(integer id_prod)
+bool Compra::productoEnCompra(int id_prod)
 {
     bool enCompra = false;
     for (Compra_Producto cp : this->com_Prods)
@@ -28,13 +28,13 @@ bool Compra::productoEnCompra(integer id_prod)
 };
 
 
-/*void Compra::setId(integer id)
+/*void Compra::setId(int id)
 {
     this->id = id;
 };
 */
 
-integer Compra::getId()
+int Compra::getId()
 {
     return this->id;
 };
@@ -56,7 +56,7 @@ set<Compra_Producto> Compra::getCompProd()
     return this->com_Prods;
 };
 
-integer Compra::getId()
+int Compra::getId()
 {
     return this->id;
 };

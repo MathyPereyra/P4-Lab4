@@ -8,6 +8,8 @@
 #include "usuario.h"
 #include "datatypes.h"
 #include "observer.h"
+#include "producto.h"
+#include "promocion.h"
 
 using namespace std;
 
@@ -19,13 +21,14 @@ private:
   set<Promocion> promociones;
 
 public:
-  Vendedor(string codRUT);
-  getProductosNoEnPromo();
-  seleccionarProductos(int id);
-  agregarSuscriptor();
-  eliminarSuscriptor();
+  Vendedor(string nickname, string contrasena, DTFecha fechaNac, string codigoRUT);
+  
+  set<DTIdNProducto>  getProductosNoEnPromo();
+  void seleccionarProductos(int id);
+  void agregarSuscriptor();
+  void eliminarSuscriptor();
   notificarSuscriptores();
-  estaSuscrito(string nombre);
+  bool estaSuscrito(string nombre);
   DTVendedor getDatos();
 
   string getNickname();
@@ -34,7 +37,7 @@ public:
   set<Producto> getProductos();
   set<Promocion> getPromociones();
   set<Comentario> getComentarios();
-  string getCodigoRut();
+  string getCodigoRUT();
   
   virtual ~Vendedor();
 };
