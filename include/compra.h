@@ -9,6 +9,7 @@
 #include "datatypes.h"
 #include "observer.h"
 #include "compra-producto.h"
+#include "producto.h"
 
 using namespace std;
 
