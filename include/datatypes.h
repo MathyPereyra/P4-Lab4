@@ -94,38 +94,38 @@ class DTComentario
 {
 private:
   string text;
-  integer id;
+  int id;
   DTFecha fechaCom;
 
 public:
-  DTComentario(string text, integer id, DTFecha fechaCom);
+  DTComentario(string text, int id, DTFecha fechaCom);
   string getText();
-  integer getId();
+  int getId();
   DTFecha getFechaCom();
 
   virtual ~DTComentario();
 };
 
-enum categoria {ropa, electrodomesticos, otro}
+enum categoria {ropa, electrodomesticos, otro};
 
-enum tipo {cliente, vendedor}
+enum tipo {cliente, vendedor};
 
 
 class DTProducto
 {
 private:
-  integer id;
+  int id;
   categoria cat;
   string descripcion;
-  integer cantStock;
+  int cantStock;
   float precio;
 public:
   DTProducto();
-  DTProducto(integer id, categoria cat, string desc, integer cantStock, float precio);
-  integer getId();
+  DTProducto(int id, categoria cat, string desc, int cantStock, float precio);
+  int getId();
   categoria getCat();
   string getDesc();
-  integer getCantStock();
+  int getCantStock();
   float getPrecio();
   virtual ~DTProducto();
 };
@@ -142,7 +142,8 @@ oductos;
     string getNicknameUsuario();
     string getNombreProm();
     set<DTProducto> getProductos();
-    virtual ~DTNotificacion();}:
+    virtual ~DTNotificacion();
+};
 
 class DTCompra
 {
@@ -157,19 +158,20 @@ public:
   DTFecha getFecha();
   set<Com-Prod> getProdProm();
 
-  virtual ~DTCompra();};
+  virtual ~DTCompra();
+};
 
 class DTIdNProducto
 {
 private:
-  integer id;
+  int id;
   string nombre;
 public:
-  DTIdNProducto(integer id, string nombre);
-  intger getId();
+  DTIdNProducto(int id, string nombre);
+  int getId();
   string getNombre()
 
   virtual ~DTIdNProducto;
-}
+};
 
 #endif

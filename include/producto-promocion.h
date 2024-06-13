@@ -8,13 +8,14 @@
 #include "usuario.h"
 #include "datatypes.h"
 #include "observer.h"
+#include "produto.h"
 
 using namespace std;
 
 class Producto_Promocion 
 {
 private:
-  integer cantidadMinima;
+  int cantidadMinima;
   set<Producto> productos;
 
 public:

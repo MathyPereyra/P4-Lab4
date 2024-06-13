@@ -15,7 +15,7 @@ class Compra_Producto
 {
 private:
   bool envio;
-  integer cantidad;
+  int cantidad;
   set<Producto> productosEnCompra;
 
 public:
@@ -24,10 +24,10 @@ public:
   DTProducto getDatosProductos();
   
   bool getEnvio();
-  integer getCantidad();
+  int getCantidad();
   set<Producto> getProductos();
 
-  virtual ~Compra();
+  virtual ~Compra_Producto();
 };
 
 #endif

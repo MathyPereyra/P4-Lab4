@@ -16,18 +16,18 @@ class Comentario
 private:
   string texto;
   DTFecha fecha;
-  integer id;
+  int id;
   set<DTComentario> respuestas;
 
 public:
-  Comentario(string text, DTFecha fecha, integer id)
+  Comentario(string text, DTFecha fecha, int id)
   DTComentario getDataComentario();
   string getText();
   DTFecha getFecha();
-  integer getId();
+  int getId();
   eliminarComentario();
   set<DTComentario> getRespuestas();
-  virtual ~Cliente();
+  virtual ~Comentario();
 };
 
 #endif

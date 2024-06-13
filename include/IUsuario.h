@@ -30,3 +30,5 @@ public:
 
     virtual ~IUsuario(){};
 };
+
+#endif

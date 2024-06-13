@@ -5,33 +5,33 @@
 #include <set>
 #include <map>
 
-#include "usuario.h"
 #include "datatypes.h"
 #include "observer.h"
+#include "usuario.h"
 
 using namespace std;
 
-class Producto : 
+class Producto 
 {
 private:
-  integer id;
+  int id;
   categoria cat;
   string descripcion;
-  integer cantStock;
+  int cantStock;
   float precio;
 
   //Al crearlo esta = false, si el producto es agregado a alguna promocion esta = true
   bool esta;
 public:
-  Producto(integer id, categoria cat, string desc, integer cantStock, float precio, bool esta);
+  Producto(int id, categoria cat, string desc, int cantStock, float precio, bool esta);
   bool estaEnPromo();
   float calcularDescuento();
 
   DTProducto getDataProducto();
-  integer getId();
+  int getId();
   categoria getCat();
   string getDesc();
-  integer getCantStock();
+  int getCantStock();
   float getPrecio();
 
   virtual ~Producto();

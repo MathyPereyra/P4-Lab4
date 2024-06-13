@@ -16,7 +16,7 @@ string Usuario::getContrasena()
 //  return this->contrasena;
 };
 
-string Usuario::getFechaNac() 
+DTFecha Usuario::getFechaNac() 
 {
 //  return getFecha(this->fechaNac);
 };

@@ -14,7 +14,7 @@ class ControladorVenta : public IVenta
 private:
     static ControladorVenta * instancia;
     ControladorVenta();
-    map<integer, Compra *> compras;
+    map<int, Compra *> compras;
     //aca es set o map porque no se identifican las notificaciones.
     set<Promocion> conjunto2;
  
@@ -27,11 +27,11 @@ public:
     void crearPromocion(string nombre, string descripcion, float descuento, DTFecha fechaVencimiento);
     DTPromocion setDP(string nombre, string descripcion, float descuento, DTFecha fechaVencimiento);
     set<DTProducto> listarProductosNoEnPromo(string nickname);
-    void seleccionarProducto(set<integer> productosid, integer cantMinima);
+    void seleccionarProducto(set<int> productosid, int cantMinima);
     void confirmarCrearPromocion();
     void crearCompra(string nickname);
     set<DTProducto> listadoProductos();
-    void agregarACompra(integer idproducto, integer cantidad);
+    void agregarACompra(int idproducto, int cantidad);
     //aca no pusimos datadetallecompra al final
     DTCompra detalllesCompra();
     void confirmarCompra();

@@ -17,8 +17,10 @@ virtual set<DTVendedor> listarVendedoresNoSuscritos(string nickname);
 virtual void suscribirAVendedor(string nickname, set<DTVendedor> suscritos);
 virtual set<DTVendedor> mostrarSuscripciones(string nickname);
 virtual void eliminarNotificacion();
-virtual set<DTVendedor> listarVendedoresSuscritos(string nickname)
+virtual set<DTVendedor> listarVendedoresSuscritos(string nickname);
 virtual void eliminarSuscripciones(string nickname, set<DTVendedor> vendedores);
 
 virtual ~INotificacion(){};
 };
+
+#endif

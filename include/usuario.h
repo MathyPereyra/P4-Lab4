@@ -24,7 +24,7 @@ public:
   Usuario(string nickname, string contrasena, DTFecha fechaNac, tipo tipousuario);
   string getNickname();
   string getContrasena();
-  string getFechaNac();
+  DTFecha getFechaNac();
   tipo getTipo();
   set<DTComentario> listadoComentario();
   void eliminarComentario(integer id);

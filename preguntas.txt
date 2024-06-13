@@ -1,0 +1,4 @@
+
+Tasks - Mathías:
+    DCD - Falta agregar todos los DataTypes
+    string Usuario::getFechaNac() // En usuario.h y .cpp ¿No debería de ser de tipo DTFecha?

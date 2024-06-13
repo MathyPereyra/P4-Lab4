@@ -17,14 +17,16 @@ public:
     virtual void crearPromocion(string nombre, string descripcion, float descuento, DTFecha fechaVencimiento);
     virtual DTPromocion setDP(string nombre, string descripcion, float descuento, DTFecha fechaVencimiento);
     virtual set<DTProducto> listarProductosNoEnPromo(string nickname);
-    virtual void seleccionarProducto(set<integer> productosid, integer cantMinima);
+    virtual void seleccionarProducto(set<int> productosid, int cantMinima);
     virtual void confirmarCrearPromocion();
     virtual void crearCompra(string nickname);
     virtual set<DTProducto> listadoProductos();
-    virtual void agregarACompra(integer idproducto, integer cantidad);
+    virtual void agregarACompra(int idproducto, int cantidad);
     //aca no pusimos datadetallecompra al final
     virtual DTCompra detalllesCompra();
     virtual void confirmarCompra();
 
-    virtual ~Venta(){};
+    virtual ~IVenta(){};
 };
+
+#endif
