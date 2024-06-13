@@ -14,17 +14,17 @@ using namespace std;
 class IVenta 
 {
 public:
-    virtual void crearPromocion(string nombre, string descripcion, float descuento, DTFecha fechaVencimiento);
-    virtual DTPromocion setDP(string nombre, string descripcion, float descuento, DTFecha fechaVencimiento);
-    virtual set<DTProducto> listarProductosNoEnPromo(string nickname);
-    virtual void seleccionarProducto(set<int> productosid, int cantMinima);
-    virtual void confirmarCrearPromocion();
-    virtual void crearCompra(string nickname);
-    virtual set<DTProducto> listadoProductos();
-    virtual void agregarACompra(int idproducto, int cantidad);
+    virtual void crearPromocion(string nombre, string descripcion, float descuento, DTFecha fechaVencimiento) = 0;
+    virtual DTPromocion setDP(string nombre, string descripcion, float descuento, DTFecha fechaVencimiento) = 0;
+    virtual set<DTProducto> listarProductosNoEnPromo(string nickname) = 0;
+    virtual void seleccionarProducto(set<int> productosid, int cantMinima) = 0;
+    virtual void confirmarCrearPromocion() = 0;
+    virtual void crearCompra(string nickname) = 0;
+    virtual set<DTProducto> listadoProductos() = 0;
+    virtual void agregarACompra(int idproducto, int cantidad) = 0;
     //aca no pusimos datadetallecompra al final
-    virtual DTCompra detalllesCompra();
-    virtual void confirmarCompra();
+    virtual DTCompra detalllesCompra() = 0;
+    virtual void confirmarCompra() = 0;
 
     virtual ~IVenta(){};
 };

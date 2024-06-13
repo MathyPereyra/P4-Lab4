@@ -14,19 +14,19 @@ using namespace std;
 class IUsuario 
 {
 public:
-    virtual void ingresarUsuario(string nickname, string contrasena, DTFecha fechaNac);
-    virtual bool existeUsuarioIgualNickname(string nickname);
-    virtual void terminarAlta();
-    virtual void altaCliente(string algo, string algo2);
-    virtual void altaVendedor(string algo);
-    virtual void confirmarAltaUsuario();
-    virtual void setDataUsuario(string nickname, string contrasena, DTFecha fechaNac);
+    virtual void ingresarUsuario(string nickname, string contrasena, DTFecha fechaNac) = 0;
+    virtual bool existeUsuarioIgualNickname(string nickname) = 0;
+    virtual void terminarAlta() = 0;
+    virtual void altaCliente(string algo, string algo2) = 0;
+    virtual void altaVendedor(string algo) = 0;
+    virtual void confirmarAltaUsuario() = 0;
+    virtual void setDataUsuario(string nickname, string contrasena, DTFecha fechaNac) = 0;
 
-    virtual set<DTUsuario> listadoUsuarios(string);
-    virtual set<string> listadoNicknameCliente();
-    virtual set<string> listadoUsuarioNickname();
-    virtual set<DTComentario> listadoComentario(string);
-    virtual void eliminarComentario(int);
+    virtual set<DTUsuario> listadoUsuarios(string) = 0;
+    virtual set<string> listadoNicknameCliente() = 0;
+    virtual set<string> listadoUsuarioNickname() = 0;
+    virtual set<DTComentario> listadoComentario(string) = 0;
+    virtual void eliminarComentario(int) = 0;
 
     virtual ~IUsuario(){};
 };

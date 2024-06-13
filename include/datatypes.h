@@ -40,29 +40,25 @@ private:
   string nickname;
   string contrasena;
   DTFecha fechaNac;
-  tipo tipodeusuario;
 
 public:
   DTUsuario();
-  DTUsuario(string nickname, DTFecha fechaNac);
+  DTUsuario(string nickname, string contrasena, DTFecha fechaNac);
   string getNickname() const;
-  string getContrasena() const;
   DTFecha getFechaNac() const;
   virtual void print();
   virtual ~DTUsuario();
 };
 
-class DTCliente
+class DTCliente : public DTUsuario
 {
 private:
-  string nickname;
-  DTFecha fechaNac;
   string ciudad;
   string direccion;
 
 public:
-  DTUsuario();
-  DTUsuario(string nickname, DTFecha fechaNac, string ciudad, string direccion);
+  DTCliente();
+  DTCliente(string nickname, string constrasena, DTFecha fechaNac, string ciudad, string direccion);
   
   string getNickname() const;
   DTFecha getFechaNac() const;
@@ -75,13 +71,12 @@ public:
 class DTVendedor
 {
 private:
-  string nickname;
-  DTFecha fechaNac;
+
   string codigoRUT;
 
 public:
-  DTUsuario();
-  DTUsuario(string nickname, DTFecha fechaNac, string codigoRUT);
+  DTVendedor();
+  DTVendedor(string nickname, string contrasena, DTFecha fechaNac, string codigoRUT);
   string getNickname() const;
   DTFecha getFechaNac() const;
   string getCodigoRUT();

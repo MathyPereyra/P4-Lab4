@@ -22,12 +22,14 @@ protected:
 
 public:
   Usuario(string nickname, string contrasena, DTFecha fechaNac, tipo tipoUsuario);
+
   virtual string getNickname();
   virtual string getContrasena();
   virtual DTFecha getFechaNac();
   virtual tipo getTipo();
+
   virtual set<DTComentario> listadoComentario();
-  virtual void eliminarComentario(int id);
+  virtual void eliminarComentario(int id) ;
   virtual DTUsuario getDatos();
   virtual set<Comentario> getComentarios();
 };

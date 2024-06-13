@@ -70,10 +70,10 @@ void Vendedor::eliminarSuscriptor()
 }
 
 
-DataCliente Cliente::getDatos()
+DTVendedor Vendedor::getDatos()
 {
-  DataCliente DC = DataCliente(this->nickname, this->fechaNac, this->ciudad, this->direccion);
-  return DC;
+  DTVendedor DV = DTVendedor(this->nickname, this->contrasena, this->fechaNac, this->codigoRUT);
+  return DV;
 }
 
 set<DTComentario> Vendedor::listadoComentario() 
@@ -86,3 +86,5 @@ set<DTComentario> Vendedor::listadoComentario()
   }
   return listadoComens;
 }
+
+

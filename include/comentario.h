@@ -17,16 +17,19 @@ private:
   string texto;
   DTFecha fecha;
   int id;
-  set<DTComentario> respuestas;
+  set<Comentario> respuestas;
 
 public:
   Comentario(string text, DTFecha fecha, int id)
+
   DTComentario getDataComentario();
   string getText();
   DTFecha getFecha();
   int getId();
-  eliminarComentario();
-  set<DTComentario> getRespuestas();
+  set<Comentario> getRespuestas();
+
+  void eliminarComentario();
+
   virtual ~Comentario();
 };
 
