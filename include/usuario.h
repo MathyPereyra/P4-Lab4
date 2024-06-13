@@ -27,7 +27,7 @@ public:
   DTFecha getFechaNac();
   tipo getTipo();
   set<DTComentario> listadoComentario();
-  void eliminarComentario(integer id);
+  void eliminarComentario(int id);
   DTUsuario getDatos();
   set<Comentario> getComentarios();
 };

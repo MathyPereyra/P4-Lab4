@@ -21,11 +21,11 @@ private:
 public:
   Vendedor(string codRUT);
   getProductosNoEnPromo();
-  seleccionarProductos(Integer id);
+  seleccionarProductos(int id);
   agregarSuscriptor();
   eliminarSuscriptor();
   notificarSuscriptores();
-  estaSuscrito(String nombre);
+  estaSuscrito(string nombre);
   DTVendedor getDatos();
 
   string getNickname();
