@@ -1,27 +1,29 @@
 #include "../include/usuario.h"
+
 #include <string>
+
 #include "usuario.h"
 
 using namespace std;
 
-// Usuario::Usuario(string nickname, string contrasena, DTFecha fechaNac)
-//=    : nickname(nickname), contrasena(contrasena), fechaNac(fechaNac){};
+Usuario::Usuario(string nickname, string contrasena, DTFecha fechaNac)
+  : nickname(nickname), contrasena(contrasena), fechaNac(fechaNac){}
 
 string Usuario::getNickname() {
-  //  return this->nickname;
+  return this->nickname;
 };
 
 string Usuario::getContrasena() {
-  //  return this->contrasena;
+   return this->contrasena;
 };
 
 DTFecha Usuario::getFechaNac() {
-  //  return getFecha(this->fechaNac);
+   return this->fechaNac;
 };
 
 tipo Usuario::getTipo()
 {
-  //  return this->tipousuario
+  return this->tipoUsuario;
 }
 
 set<DTComentario> Usuario::listadoComentarioUsuario()
@@ -38,4 +40,9 @@ set<DTComentario> Usuario::listadoComentarioUsuario()
 DTUsuario Usuario::getDatosUsuario()
 {
   //  DTUsuario DataUsuario
+}
+
+set<Comentario> Usuario::getComentarios()
+{
+  //  DTComentario
 }

@@ -5,8 +5,8 @@
 #include <set>
 #include <map>
 
-#include "usuario.h"
 #include "datatypes.h"
+#include "producto_promocion.h"
 #include "observer.h"
 
 using namespace std;
@@ -18,7 +18,7 @@ private:
   string descripcion;
   float descuento;
   DTFecha fechaVencimiento;
-  set<Producto-Promocion> *prodProms;
+  set<Producto_Promocion> *prodProms;
 
 public:
   Promocion(string nombre, string descripcion, float descuento, DTFecha fechaVencimiento);
@@ -29,7 +29,7 @@ public:
   string getDescripcion();
   float getDesc();
   DTFecha getFechaVen();
-  set<Producto-Promocion> getProdProms();
+  set<Producto_Promocion> getProdProms();
 
   virtual ~Promocion();
 };

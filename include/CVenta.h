@@ -22,7 +22,6 @@ private:
     //aca es set o map porque no se identifican las notificaciones.
     set<Promocion> conjunto2;
  
-
 public:
     static ControladorVenta * getInstancia();
 

@@ -39,4 +39,18 @@ Tasks - Mathías:
     
     CNotificacion.h
         1) agrego #include "INotificacion.h"
+
+    promocion.h
+        1) eliminé el #include "usuario.h" pues no se usa en esta clase
+        2) agregué #include "producto_promocion.h"
+        3) Por qué definimos un puntero que apunta al set?   set<Producto_Promocion> *prodProms;
     
+    usuario.h
+        1) agregué atributo tipo tipoUsuario; para poder implementar su getter en usuario.cpp
+        2) agregué destructor de clase usuario
+
+    usuario.cpp
+        1) Es clase abstracta, así que no deberíamos de implementar un método para sus operaciones ¿Right? Podría llegar a ser con los setters si, porque son comunes a ambas clases derivadas
+            En caso afirmativo, tampoco debería de implementar getTipo()
+        2) agregué atributo tipo tipoUsuario; para poder implementar su getter en usuario.cpp
+        3) agregué destructor de clase usuario
