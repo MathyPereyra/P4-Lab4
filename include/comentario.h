@@ -11,7 +11,7 @@
 
 using namespace std;
 
-class Comentario 
+class Comentario
 {
 private:
   string texto;
@@ -20,7 +20,7 @@ private:
   set<Comentario> *respuestas;
 
 public:
-  Comentario(string text, DTFecha fecha, int id)
+  Comentario(string text, DTFecha fecha, int id);
 
   DTComentario getDataComentario();
   string getText();

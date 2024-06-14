@@ -8,12 +8,12 @@
 #include "usuario.h"
 #include "datatypes.h"
 #include "observer.h"
-#include "cliente.h" //no estoy seguro de si debe estar, pero para altaCliente creo qeu se utilizará
+#include "cliente.h"  //no estoy seguro de si debe estar, pero para altaCliente creo qeu se utilizará
 #include "vendedor.h" //no estoy seguro de si debe estar, pero para altaVendedor creo qeu se utilizará
 
 using namespace std;
 
-class IUsuario 
+class IUsuario
 {
 public:
     virtual void ingresarUsuario(string nickname, string contrasena, DTFecha fechaNac) = 0;
@@ -27,7 +27,7 @@ public:
     virtual set<DTUsuario> listadoUsuarios(string) = 0;
     virtual set<string> listadoNicknameCliente() = 0;
     virtual set<string> listadoUsuarioNickname() = 0;
-    virtual set<DTComentario> listadoComentario(string) = 0;
+    virtual set<DTComentario> listadoComentarioUsuario(string) = 0;
     virtual void eliminarComentario(int) = 0;
 
     virtual ~IUsuario(){};

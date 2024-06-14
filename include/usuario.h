@@ -11,7 +11,7 @@
 
 using namespace std;
 
-class Usuario 
+class Usuario
 {
 protected:
   string nickname;
@@ -26,8 +26,10 @@ public:
   virtual string getContrasena();
   virtual DTFecha getFechaNac();
 
-  virtual set<DTComentario> listadoComentario();
-  virtual DTUsuario getDatos() = ;
+  tipo getTipo();
+
+  virtual set<DTComentario> listadoComentarioUsuario();
+  virtual DTUsuario getDatosUsuario();
   virtual set<Comentario> getComentarios();
 };
 

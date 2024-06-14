@@ -59,7 +59,7 @@ private:
 public:
   DTCliente();
   DTCliente(string nickname, string constrasena, DTFecha fechaNac, string ciudad, string direccion);
-  
+
   string getNickname() const;
   DTFecha getFechaNac() const;
   string getCiudad();
@@ -72,7 +72,6 @@ public:
 class DTVendedor
 {
 private:
-
   string codigoRUT;
 
 public:
@@ -84,7 +83,6 @@ public:
   virtual void print();
   virtual ~DTUsuario();
 };
-
 
 class DTComentario
 {
@@ -102,10 +100,18 @@ public:
   virtual ~DTComentario();
 };
 
-enum categoria {ropa, electrodomesticos, otro};
+enum categoria
+{
+  ropa,
+  electrodomesticos,
+  otro
+};
 
-enum tipo {cliente, vendedor};
-
+enum tipo
+{
+  cliente,
+  vendedor
+};
 
 class DTProducto
 {
@@ -117,6 +123,7 @@ private:
   int cantStock;
   float precio;
   bool estaEnProm;
+
 public:
   DTProducto();
   DTProducto(int id, categoria cat, string nombre, string desc, int cantStock, float precio);
@@ -133,19 +140,20 @@ public:
 
 class DTNotificacion
 {
-  private:
-    string nicknameUsuario;
-    string nombreProm;
-    set<Producto> productos;
-oductos;
-  public:
-    DTNotificacion(string nicknameUsuario, string nombreProm,set<Producto> productos);
+private:
+  string nicknameUsuario;
+  string nombreProm;
+  set<Producto> productos;
+  oductos;
 
-    string getNicknameUsuario();
-    string getNombreProm();
-    set<Producto> getProductos();
+public:
+  DTNotificacion(string nicknameUsuario, string nombreProm, set<Producto> productos);
 
-    virtual ~DTNotificacion();
+  string getNicknameUsuario();
+  string getNombreProm();
+  set<Producto> getProductos();
+
+  virtual ~DTNotificacion();
 };
 
 class DTCompra
@@ -153,13 +161,13 @@ class DTCompra
 private:
   float precioTotal;
   DTFecha fechaCompra;
-  set<Compra_Producto> com-Prod;
-public:
+  set<Compra_Producto> com - Prod;
 
-  DTCompra(float precioTotal, DTFecha fechaCompra, set<Compra_Producto> com-Prod);
+public:
+  DTCompra(float precioTotal, DTFecha fechaCompra, set<Compra_Producto> com - Prod);
   float getPrecioTotal();
   DTFecha getFecha();
-  set<Com-Prod> getProdProm();
+  set<Com - Prod> getProdProm();
 
   virtual ~DTCompra();
 };
@@ -169,13 +177,14 @@ class DTIdNProducto
 private:
   int id;
   string nombre;
+
 public:
   DTIdNProducto(int id, string nombre);
 
   int getId();
   string getNombre()
 
-  virtual ~DTIdNProducto();
+      virtual ~DTIdNProducto();
 };
 
 #endif

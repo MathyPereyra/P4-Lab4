@@ -6,13 +6,14 @@
 
 #include "datatypes.h"
 #include "usuario.h"
+#include "IUsuario.h"
 
 using namespace std;
 
 class ControladorUsuario : public IUsuario
 {
 private:
-  //aca asumi que el map usuarios de CUsuario que mapea usuarios a strings guarda como string el nickname del usuario
+  // aca asumi que el map usuarios de CUsuario que mapea usuarios a strings guarda como string el nickname del usuario
   map<string, Usuario *> usuarios;
   static ControladorUsuario *instancia;
   ControladorUsuario();
@@ -41,7 +42,7 @@ public:
   //  Retorna set con los nickname de todos los usuarios del sistema (Clientes y Vendedores)
   set<string> listadoNicknameCliente();
   set<string> listadoUsuarioNickname();
-  set<DTComentario> listadoComentario(string);
+  set<DTComentario> listadoComentarioUsuario(string);
   void eliminarComentario(int);
   void getInstance();
 

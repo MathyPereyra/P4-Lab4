@@ -8,6 +8,7 @@
 #include "usuario.h"
 #include "datatypes.h"
 #include "observer.h"
+#include "producto.h"
 
 using namespace std;
 
@@ -22,7 +23,7 @@ public:
   agregarProd(Producto prod);
   float sumaPrecios();
   DTProducto getDatosProductos();
-  
+
   bool getEnvio();
   int getCantidad();
   set<Producto> getProductosEnCompra();

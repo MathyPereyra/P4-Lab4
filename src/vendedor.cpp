@@ -6,13 +6,13 @@
 #include "../include/cliente.h"
 
 #include <string>
+#include "vendedor.h"
+#include <promocion.h>
 
 using namespace std;
 
 Vendedor::Vendedor(string nickname, string contrasena, DTFecha fechaNac, string codigoRUT)
     : Usuario(nickname, contrasena, fechaNac, tipo::vendedor), codigoRUT(codigoRUT) {}
-
-
 
 string Vendedor::getNickname()
 {
@@ -29,12 +29,12 @@ string Vendedor::getCodigoRUT()
   return this->codigoRUT;
 };
 
-set<Producto> Vendedor::getProductos() 
+set<Producto> Vendedor::getProductos()
 {
   return this->productos;
 };
 
-set<Promocion> Vendedor::getPromociones() 
+set<Promocion> Vendedor::getPromociones()
 {
   return this->promociones;
 };
@@ -44,19 +44,18 @@ set<Comentario> Vendedor::getComentarios()
   return this->comentarios;
 }
 
-
 set<DTIdNProducto> Vendedor::getProductosNoEnPromo()
 {
   set<DTIdNProducto> setInfoProductos;
   for (Producto p : this->productos)
   {
     if (!(p.estaEnPromo()))
-        {
-            int id = p.getId();
-            string nombre = p.getNombre(); // no existe en producto.h una operación llamada getNombre()
-            DTIdNProducto dp = DTIdNProducto(id, nombre);
-            setInfoProductos.insert(dp);
-        }
+    {
+      int id = p.getId();
+      string nombre = p.getNombre(); // no existe en producto.h una operación llamada getNombre()
+      DTIdNProducto dp = DTIdNProducto(id, nombre);
+      setInfoProductos.insert(dp);
+    }
   }
   return setInfoProductos;
 }
@@ -69,14 +68,13 @@ void Vendedor::eliminarSuscriptor()
 {
 }
 
-
-DTVendedor Vendedor::getDatos()
+DTVendedor Vendedor::getDatosVendedor()
 {
   DTVendedor DV = DTVendedor(this->nickname, this->contrasena, this->fechaNac, this->codigoRUT);
   return DV;
 }
 
-set<DTComentario> Vendedor::listadoComentario() 
+set<DTComentario> Vendedor::listadoComentarioVendedor()
 {
   set<DTComentario> listadoComens;
   for (Comentario comen : this->comentarios)
@@ -86,5 +84,3 @@ set<DTComentario> Vendedor::listadoComentario()
   }
   return listadoComens;
 }
-
-

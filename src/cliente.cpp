@@ -1,10 +1,11 @@
 #include "../include/usuario.h"
 #include <string>
+#include <compra.h>
 
 using namespace std;
 
 Usuario::Cliente(string nickname, string contrasena, DTFecha fechaNac, string direccion, string ciudad, set<DataNotificacion> notificaciones)
-    : nickname(nickname), contrasena(contrasena), fechaNac(fechaNac), direccion(direccion),ciudad(ciudad), notificaciones(notificaciones){};
+    : nickname(nickname), contrasena(contrasena), fechaNac(fechaNac), direccion(direccion), ciudad(ciudad), notificaciones(notificaciones){};
 
 string Cliente::getNickname()
 {
@@ -16,22 +17,22 @@ string Cliente::getContrasena()
   return this->contrasena;
 };
 
-DTFecha Cliente::getFechaNac() 
+DTFecha Cliente::getFechaNac()
 {
   return this->fechaNac;
 };
 
-string Cliente::getCiudad() 
+string Cliente::getCiudad()
 {
   return this->ciudad;
 };
 
-string Cliente::getDireccion() 
+string Cliente::getDireccion()
 {
   return this->direccion;
 };
 
-string Cliente::getNotificaciones() 
+string Cliente::getNotificaciones()
 {
   return this->notificaciones;
 };
@@ -45,21 +46,21 @@ set<Comentario> Cliente::getComentarios()
 {
   return this->comentarios;
 }
- 
-void Cliente::crearCompra(int id) 
+
+void Cliente::crearCompra(int id)
 {
   Compra d = Compra();
   d.setId(id);
   this->compras.insert(d);
 }
 
-DataCliente Cliente::getDatos()
+DataCliente Cliente::getDatosCliente()
 {
   DataCliente DC = DataCliente(this->nickname, this->fechaNac, this->ciudad, this->direccion);
   return DC;
 }
 
-set<DTComentario> Cliente::listadoComentario() 
+set<DTComentario> Cliente::listadoComentarioCliente()
 {
   set<DTComentario> listadoComens;
   for (Comentario comen : this->comentarios)
@@ -69,4 +70,3 @@ set<DTComentario> Cliente::listadoComentario()
   }
   return listadoComens;
 }
-

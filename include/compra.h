@@ -1,5 +1,5 @@
-#ifndef PROMOCION_H
-#define PROMOCION_H
+#ifndef COMPRA_H
+#define COMPRA_H
 
 #include <string>
 #include <set>
@@ -13,7 +13,7 @@
 
 using namespace std;
 
-class Compra 
+class Compra
 {
 private:
   DTFecha fecha;
@@ -27,8 +27,8 @@ public:
   agregarACompra(Producto prod, int id);
   bool productoEnCompra();
   DTCompra infoCompra();
-  
-  //void setId(integer id);
+
+  // void setId(integer id);
   int getId();
   DTFecha getFecha();
   float getMontoTotal();

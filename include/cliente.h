@@ -26,10 +26,10 @@ public:
   void crearCompra();
   void agregarSuscripcion();
   void eliminarNotifiaciones();
-  void notificar(String nVen, String nProm, set <DTProducto>);
-  void listadoComentario();
+  void notificar(string nVen, string nProm, set<DTProducto>);
+  void listadoComentarioCliente();
 
-  DTCliente getDatos();
+  DTCliente getDatosCliente();
   string getNickname();
   DTFecha getFecha();
   string getDireccion();

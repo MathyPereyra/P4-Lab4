@@ -23,16 +23,17 @@ private:
 
 public:
   Vendedor(string nickname, string contrasena, DTFecha fechaNac, string codigoRUT);
-  
-  set<DTIdNProducto>  getProductosNoEnPromo();
+
+  set<DTIdNProducto> getProductosNoEnPromo();
   void seleccionarProducto(int id);
 
   void agregarSuscriptor();
   void eliminarSuscriptor();
   void notificarSuscriptores();
   bool estaSuscrito(string nombre);
-  
-  DTVendedor getDatos();
+
+  DTVendedor getDatosVendedor(); // cambie el nombre porque era igual al getdatos de usuario ver si falta cambiar en algun lado
+  set<DTComentario> listadoComentarioVendedor();
   string getNickname();
   string getContrasena();
   DTFecha getFecha();
@@ -41,7 +42,7 @@ public:
   set<Comentario> getComentarios();
   set<IObserver> getSuscriptores();
   string getCodigoRUT();
-  
+
   virtual ~Vendedor();
 };
 
