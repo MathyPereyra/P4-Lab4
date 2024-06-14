@@ -1,4 +1,5 @@
 #include "../include/producto.h"
+#include "../include/compra.h"
 #include <string>
 
 using namespace std;
@@ -59,6 +60,11 @@ set<Compra_Producto> Compra::getCompProd()
 int Compra::getId()
 {
     return this->id;
+};
+
+void Compra::setId(int id)
+{
+    this->id = id;
 };
 
 DTCompra Compra::infoCompra()

@@ -22,6 +22,7 @@ private:
   int id;
 
 public:
+  Compra();
   Compra(DTFecha fecha, float montoTotal, set<Compra_Producto> com_Prods, int id);
 
   void agregarACompra(Producto prod, int id);
@@ -33,6 +34,7 @@ public:
   DTFecha getFecha();
   float getMontoTotal();
   set<Compra_Producto> getCompProd();
+  void setId(int);
 
   virtual ~Compra();
 };

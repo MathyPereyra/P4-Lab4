@@ -4,7 +4,7 @@
 class IObserver
 {
     public:
-        virtual void notificar();
+        virtual void notificar() = 0;
 };
 
 #endif

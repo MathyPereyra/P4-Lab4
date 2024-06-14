@@ -8,7 +8,7 @@
 #include "usuario.h"
 #include "datatypes.h"
 #include "observer.h"
-#include "compra.h"
+//#include "compra.h"
 
 using namespace std;
 
@@ -23,7 +23,7 @@ private:
 public:
   Cliente(string nickname, string contrasena, DTFecha fechaNac, string dir, string ciud);
 
-  void crearCompra();
+  void crearCompra(int); // le agregue el parámetro int porque en cliente.cpp le pasamos el id
   void agregarSuscripcion();
   void eliminarNotifiaciones();
   void notificar(string nVen, string nProm, set<DTProducto>);
@@ -31,7 +31,8 @@ public:
 
   DTCliente getDatosCliente();
   string getNickname();
-  DTFecha getFecha();
+  string getContrasena(); //debería ir? solo lo agregué porque estaría faltando para usar en cliente.cpp
+  DTFecha getFechaNac();
   string getDireccion();
   string getCiudad();
   set<DTNotificacion> getNotificaciones();

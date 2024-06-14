@@ -1,4 +1,9 @@
 #include "../include/CUsuario.h"
+#include "../include/datatypes.h"
+#include "../include/usuario.h"
+#include "../include/cliente.h"
+#include "cliente.cpp"
+#include "../include/vendedor.h"
 
 string ControladorUsuario::getmemNickname()
 {
@@ -20,12 +25,12 @@ tipo ControladorUsuario::getmemTipo()
     return this->memTipo;
 };
 
-void ControladorUsuario::ingresarUsuario(string nickname, string contrasena, DTFecha fechaNac, tipo tipousuario)
+void ControladorUsuario::ingresarUsuario(string nickname, string contrasena, DTFecha fechaNac, tipo tipoUsuario)
 {
     this->memNickname = nickname;
     this->memContrasena = contrasena;
     this->memFechaNac = fechaNac;
-    this->memTipo = tipousuario;
+    this->memTipo = tipoUsuario;
 };
 
 bool ControladorUsuario::existeUsuarioIgualNickname(string nickname)
@@ -34,25 +39,27 @@ bool ControladorUsuario::existeUsuarioIgualNickname(string nickname)
     map<string, Usuario *>::iterator it;
     for (it = this->usuarios.begin(); it != this->usuarios.end(); ++it)
     {
-        if (it->getNickname() == nickname)
+        if (it->second->getNickname() == nickname)
         {
             existe = true;
             break;
         }
     }
-
     return existe;
 };
 
 // no se que iria aca
 void ControladorUsuario::terminarAlta() {
+//acá se debe de liberar memoria del DTUsuario credo temporalmente en ingresarUsuario, 
+// es para el caso en que el nickname ya existe en la colección de Usuarios
 
 };
 
 // esta no la termine, hay q chequear la creadora/setter de usuario
 void ControladorUsuario::altaCliente(string direccion, string ciudad)
 {
-    Cliente *nuevo = new Cliente(direccion, ciudad);
+    Cliente *nuevo = new Cliente(this->memNickname,this->memContrasena, this->memFechaNac, direccion, ciudad);
+
     nuevo->setnickname
         nuevo->setcontrasena
             nuevo->setfechanac

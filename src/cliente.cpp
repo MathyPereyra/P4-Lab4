@@ -1,11 +1,16 @@
-#include "../include/usuario.h"
+//#include "../include/usuario.h"
+//#include <../include/CUsuario.h>
+//#include <../include/cliente.h>
+#include <../include/compra.h>
+#include <../include/compra_producto.h>
+//#include <../include/datatypes.h>
+
 #include <string>
-#include <compra.h>
 
 using namespace std;
 
-Usuario::Cliente(string nickname, string contrasena, DTFecha fechaNac, string direccion, string ciudad, set<DataNotificacion> notificaciones)
-    : nickname(nickname), contrasena(contrasena), fechaNac(fechaNac), direccion(direccion), ciudad(ciudad), notificaciones(notificaciones){};
+Cliente::Cliente(string nickname, string contrasena, DTFecha fechaNac, string direccion, string ciudad)
+    : Usuario(nickname, contrasena, fechaNac), direccion(direccion), ciudad(ciudad){}
 
 string Cliente::getNickname()
 {
@@ -22,36 +27,37 @@ DTFecha Cliente::getFechaNac()
   return this->fechaNac;
 };
 
-string Cliente::getCiudad()
-{
-  return this->ciudad;
-};
 
 string Cliente::getDireccion()
 {
   return this->direccion;
 };
 
-string Cliente::getNotificaciones()
+string Cliente::getCiudad()
 {
-  return this->notificaciones;
+  return this->ciudad;
+};
+
+set<DTNotificacion> Cliente::getNotificaciones()
+{
+  // return this->notificaciones; //esto estaba porque en el constructor pasabamos por parámetro el set DTNotificaciones, pero eso es incorrecto
 };
 
 set<Compra> Cliente::getCompras()
 {
-  return this->compras;
+  //return this->compras;
 }
 
 set<Comentario> Cliente::getComentarios()
 {
-  return this->comentarios;
+  //return this->comentarios;
 }
 
 void Cliente::crearCompra(int id)
 {
   Compra d = Compra();
   d.setId(id);
-  this->compras.insert(d);
+  this->compras.insert(d); // donde está el set/map compras?
 }
 
 DataCliente Cliente::getDatosCliente()

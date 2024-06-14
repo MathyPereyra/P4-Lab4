@@ -18,6 +18,8 @@ Tasks - Mathías:
             en DCD y en IUsuario existe la operación set<DTUsuario> listadoUsuarios(tipo), aunque en DCD aparece como listadoUsuarios(string).
             De todos modos, las siguientes dos operaciones están una retornando un set de nicknames de clientes y la otra un set de nickname de usuarios
         4) agregué la operación set<DTUsuario> listadoUsuarios();
+        5) me parece que en vez de poner los 3 atributos memNickname, etc. debería de ser un DTUsiario con esa info, para ser consistentes con el DCD.
+        6) agrego ->second 
 
 
     datatypes.h
@@ -25,6 +27,7 @@ Tasks - Mathías:
         2) agregué #include "producto.h" y "compra_producto.h"
         3) en DTCompra corrijo parámetro donde aparece Com - Prod por Compra_Producto
         4) en la clase DTIdNProducto, por qué virtual en el destructor?
+        5) DTUsuario, le agregaría el atributo tipo tipoUsuario.
 
     compra_producto.h
         1) agregué void a la operación agregarProd(Producto prod);
@@ -48,6 +51,7 @@ Tasks - Mathías:
     usuario.h
         1) agregué atributo tipo tipoUsuario; para poder implementar su getter en usuario.cpp
         2) agregué destructor de clase usuario
+        3) marque como op. abstractas puras a  listadoComentarioUsuario(), getDatosUsuario() y getComentarios().
 
     usuario.cpp
         1) Es clase abstracta, así que no deberíamos de implementar un método para sus operaciones ¿Right? Podría llegar a ser con los setters si, porque son comunes a ambas clases derivadas
