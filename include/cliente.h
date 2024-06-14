@@ -8,7 +8,7 @@
 #include "usuario.h"
 #include "datatypes.h"
 #include "observer.h"
-//#include "compra.h"
+#include "compra.h"
 
 using namespace std;
 
@@ -29,7 +29,7 @@ public:
   void notificar(string nVen, string nProm, set<DTProducto>);
   void listadoComentarioCliente();
 
-  DTCliente getDatosCliente();
+  DTUsuario getDatosUsuario();
   string getNickname();
   string getContrasena(); //debería ir? solo lo agregué porque estaría faltando para usar en cliente.cpp
   DTFecha getFechaNac();
@@ -38,6 +38,8 @@ public:
   set<DTNotificacion> getNotificaciones();
   set<Comentario> getComentarios();
   set<Compra> getCompras();
+  void notificar();
+
 
   virtual ~Cliente();
 };

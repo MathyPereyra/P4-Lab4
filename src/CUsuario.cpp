@@ -4,6 +4,7 @@
 #include "../include/cliente.h"
 #include "cliente.cpp"
 #include "../include/vendedor.h"
+#include <cstddef>
 
 string ControladorUsuario::getmemNickname()
 {
@@ -49,26 +50,24 @@ bool ControladorUsuario::existeUsuarioIgualNickname(string nickname)
 };
 
 // no se que iria aca
-void ControladorUsuario::terminarAlta() {
+void ControladorUsuario::terminarAlta()
+{
 //acá se debe de liberar memoria del DTUsuario credo temporalmente en ingresarUsuario, 
 // es para el caso en que el nickname ya existe en la colección de Usuarios
-
+    this->memFechaNac.~DTFecha();
 };
 
-// esta no la termine, hay q chequear la creadora/setter de usuario
 void ControladorUsuario::altaCliente(string direccion, string ciudad)
 {
-    Cliente *nuevo = new Cliente(this->memNickname,this->memContrasena, this->memFechaNac, direccion, ciudad);
-
-    nuevo->setnickname
-        nuevo->setcontrasena
-            nuevo->setfechanac
-
-        this->usuarios[this->memNickname] = new Cliente(direccion, ciudad);
+    Cliente* nuevo = new Cliente(this->memNickname,this->memContrasena, this->memFechaNac, direccion, ciudad);
+    this->usuarios[this->memNickname] = nuevo;
 };
 
-void ControladorUsuario::altaVendedor(string algo) {
-
+void ControladorUsuario::altaVendedor(string codigoRUT) 
+{
+    Vendedor* nuevo = new Vendedor(this->memNickname, this->memContrasena, this->memFechaNac, codigoRUT);
+    Usuario* u = nuevo;
+    this->usuarios[this->memNickname] = nuevo;
 };
 
 void ControladorUsuario::confirmarAltaUsuario() {
@@ -120,6 +119,14 @@ void ControladorUsuario::eliminarComentario(int) {
 
 };
 
-void ControladorUsuario::getInstance() {
+ControladorUsuario::ControladorUsuario()
+{
+    this->memFechaNac = DTFecha();
+};
 
+ControladorUsuario * ControladorUsuario::getInstance() 
+{
+    if (instancia == NULL)
+        instancia = new ControladorUsuario();
+    return instancia;
 };

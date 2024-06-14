@@ -10,6 +10,7 @@
 #include "observer.h"
 #include "producto.h"
 #include "promocion.h"
+#include "compra.h"
 
 using namespace std;
 
@@ -17,9 +18,9 @@ class Vendedor : public Usuario
 {
 private:
   string codigoRUT;
-  set<Producto> *productos;
-  set<Promocion> *promociones;
-  set<IObserver> *suscriptores;
+  set<Producto> productos;
+  set<Promocion> promociones;
+  set<IObserver> suscriptores;
 
 public:
   Vendedor(string nickname, string contrasena, DTFecha fechaNac, string codigoRUT);
@@ -32,8 +33,8 @@ public:
   void notificarSuscriptores();
   bool estaSuscrito(string nombre);
 
-  DTVendedor getDatosVendedor(); // cambie el nombre porque era igual al getdatos de usuario ver si falta cambiar en algun lado
-  set<DTComentario> listadoComentarioVendedor();
+  DTUsuario getDatosUsuario(); // cambie el nombre porque era igual al getdatos de usuario ver si falta cambiar en algun lado
+  set<DTComentario> listadoComentarioUsuario();
   string getNickname();
   string getContrasena();
   DTFecha getFecha();
@@ -42,8 +43,6 @@ public:
   set<Comentario> getComentarios();
   set<IObserver> getSuscriptores();
   string getCodigoRUT();
-
-  virtual ~Vendedor();
 };
 
 #endif

@@ -6,8 +6,6 @@
 #include <set>
 #include <map>
 
-#include "producto.h"
-#include "compra_producto.h"
 
 using namespace std;
 
@@ -21,6 +19,7 @@ private:
 
 public:
   // Constructor
+  DTFecha();
   DTFecha(int dia, int mes, int anio);
 
   // getters
@@ -75,7 +74,7 @@ public:
 };
 
 //DTVendedor
-class DTVendedor
+class DTVendedor : DTUsuario
 {
 private:
   string codigoRUT;
@@ -83,9 +82,11 @@ private:
 public:
   DTVendedor();
   DTVendedor(string nickname, string contrasena, DTFecha fechaNac, string codigoRUT);
+  
   string getNickname() const;
   DTFecha getFechaNac() const;
   string getCodigoRUT();
+
   virtual void print();
   virtual ~DTVendedor();
 };
@@ -153,16 +154,32 @@ class DTNotificacion
 private:
   string nicknameUsuario;
   string nombreProm;
-  set<Producto> productos;
+  set<DTProducto> productos;
 
 public:
-  DTNotificacion(string nicknameUsuario, string nombreProm, set<Producto> productos);
+  DTNotificacion(string nicknameUsuario, string nombreProm, set<DTProducto> productos);
 
   string getNicknameUsuario();
   string getNombreProm();
-  set<Producto> getProductos();
+  set<DTProducto> getProductos();
 
   virtual ~DTNotificacion();
+};
+
+class DTCompra_Producto
+{
+private:
+  int cantidad;
+  bool envio;
+  set<DTProducto> productos;
+public:
+  DTCompra_Producto(int cantidad, bool envio);
+
+  int getCantidad();
+  bool getEnvio();
+  set<DTProducto> getProductos();
+
+  virtual ~DTCompra_Producto();
 };
 
 //DTCompra
@@ -171,13 +188,13 @@ class DTCompra
 private:
   float precioTotal;
   DTFecha fechaCompra;
-  set<Compra_Producto> comProd;
+  set<DTCompra_Producto> comProd;
 
 public:
-  DTCompra(float precioTotal, DTFecha fechaCompra, set<Compra_Producto> comProd);
+  DTCompra(float precioTotal, DTFecha fechaCompra, set<DTCompra_Producto> comProd);
   float getPrecioTotal();
   DTFecha getFecha();
-  set<Compra_Producto> getProdProm();
+  set<DTCompra_Producto> getProdProm();
 
   virtual ~DTCompra();
 };
@@ -197,4 +214,10 @@ public:
   virtual ~DTIdNProducto();
 };
 
+
+
+
+
+
 #endif
+

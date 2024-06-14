@@ -26,7 +26,7 @@ private:
 
 
 public:
-  Producto(int id, categoria cat, string descripcion, int cantStock, float precio, bool estaEnProm);
+  Producto(int id, categoria cat, string nombre, string descripcion, int cantStock, float precio, bool estaEnProm);
   bool estaEnPromo();
   float calcularDescuento();
 

@@ -6,13 +6,11 @@
 #include "../include/cliente.h"
 
 #include <string>
-#include "vendedor.h"
-#include <promocion.h>
 
 using namespace std;
 
 Vendedor::Vendedor(string nickname, string contrasena, DTFecha fechaNac, string codigoRUT)
-    : Usuario(nickname, contrasena, fechaNac, tipo::vendedor), codigoRUT(codigoRUT) {}
+    : Usuario(nickname, contrasena, fechaNac, codigoRUT(codigoRUT) {}
 
 string Vendedor::getNickname()
 {

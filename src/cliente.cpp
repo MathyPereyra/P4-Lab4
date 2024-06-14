@@ -1,6 +1,6 @@
 //#include "../include/usuario.h"
 //#include <../include/CUsuario.h>
-//#include <../include/cliente.h>
+#include <../include/cliente.h>
 #include <../include/compra.h>
 #include <../include/compra_producto.h>
 //#include <../include/datatypes.h>
@@ -60,9 +60,9 @@ void Cliente::crearCompra(int id)
   this->compras.insert(d); // donde está el set/map compras?
 }
 
-DataCliente Cliente::getDatosCliente()
+DTCliente Cliente::getDatosCliente()
 {
-  DataCliente DC = DataCliente(this->nickname, this->fechaNac, this->ciudad, this->direccion);
+  DTCliente DC = DTCliente(this->nickname, this->fechaNac, this->ciudad, this->direccion);
   return DC;
 }
 

@@ -29,9 +29,9 @@ public:
 
   tipo getTipo();
 
-  virtual set<DTComentario> listadoComentarioUsuario() = 0;
+  virtual set<DTComentario> listadoComentarioUsuario() ;
   virtual DTUsuario getDatosUsuario() = 0;
-  virtual set<Comentario> getComentarios() = 0;
+  virtual set<Comentario> getComentarios() ;
 
   virtual ~Usuario();
 };

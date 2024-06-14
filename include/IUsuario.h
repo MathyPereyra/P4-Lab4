@@ -10,6 +10,7 @@
 #include "observer.h"
 #include "cliente.h"  //no estoy seguro de si debe estar, pero para altaCliente creo qeu se utilizará
 #include "vendedor.h" //no estoy seguro de si debe estar, pero para altaVendedor creo qeu se utilizará
+#include "promocion.h"
 
 using namespace std;
 
