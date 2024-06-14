@@ -3,9 +3,13 @@
 
 #include <string>
 #include <set>
+#include <map>
 
 #include "datatypes.h"
 #include "usuario.h"
+#include "compra.h"
+#include "IVenta.h"
+#include "promocion.h"
 
 using namespace std;
 
