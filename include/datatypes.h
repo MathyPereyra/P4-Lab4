@@ -6,6 +6,9 @@
 #include <set>
 #include <map>
 
+#include "producto.h"
+#include "compra_producto.h"
+
 using namespace std;
 
 class DTFecha
@@ -50,6 +53,7 @@ public:
   virtual ~DTUsuario();
 };
 
+//DTCliente
 class DTCliente : public DTUsuario
 {
 private:
@@ -66,9 +70,10 @@ public:
   string getDireccion();
 
   virtual void print();
-  virtual ~DTUsuario();
+  virtual ~DTCliente();
 };
 
+//DTVendedor
 class DTVendedor
 {
 private:
@@ -81,9 +86,10 @@ public:
   DTFecha getFechaNac() const;
   string getCodigoRUT();
   virtual void print();
-  virtual ~DTUsuario();
+  virtual ~DTVendedor();
 };
 
+//DTComentario
 class DTComentario
 {
 private:
@@ -100,6 +106,7 @@ public:
   virtual ~DTComentario();
 };
 
+//Enumerados categoria y tipo
 enum categoria
 {
   ropa,
@@ -113,6 +120,7 @@ enum tipo
   vendedor
 };
 
+//DTProducto
 class DTProducto
 {
 private:
@@ -138,13 +146,13 @@ public:
   virtual ~DTProducto();
 };
 
+//DTNotificacion
 class DTNotificacion
 {
 private:
   string nicknameUsuario;
   string nombreProm;
   set<Producto> productos;
-  oductos;
 
 public:
   DTNotificacion(string nicknameUsuario, string nombreProm, set<Producto> productos);
@@ -156,18 +164,19 @@ public:
   virtual ~DTNotificacion();
 };
 
+//DTCompra
 class DTCompra
 {
 private:
   float precioTotal;
   DTFecha fechaCompra;
-  set<Compra_Producto> com - Prod;
+  set<Compra_Producto> comProd;
 
 public:
-  DTCompra(float precioTotal, DTFecha fechaCompra, set<Compra_Producto> com - Prod);
+  DTCompra(float precioTotal, DTFecha fechaCompra, set<Compra_Producto> comProd);
   float getPrecioTotal();
   DTFecha getFecha();
-  set<Com - Prod> getProdProm();
+  set<Compra_Producto> getProdProm();
 
   virtual ~DTCompra();
 };
@@ -182,9 +191,9 @@ public:
   DTIdNProducto(int id, string nombre);
 
   int getId();
-  string getNombre()
+  string getNombre();
 
-      virtual ~DTIdNProducto();
+  virtual ~DTIdNProducto();
 };
 
 #endif

@@ -6,6 +6,7 @@
 
 #include "datatypes.h"
 #include "usuario.h"
+#include "INotificacion.h"
 
 using namespace std;
 
@@ -13,7 +14,7 @@ class ControladorNotificacion : public INotificacion
 {
 private:
     static ControladorNotificacion * instancia;
-    ControaldorNotificacion();
+    ControladorNotificacion();
 
 public:
     static ControladorNotificacion * getInstancia();
@@ -22,7 +23,7 @@ public:
     void suscribirAVendedor(string nickname, set<DTVendedor> suscritos);
     set<DTVendedor> mostrarSuscripciones(string nickname);
     void eliminarNotificacion();
-    set<DTVendedor> listarVendedoresSuscritos(string nickname)
+    set<DTVendedor> listarVendedoresSuscritos(string nickname);
     void eliminarSuscripciones(string nickname, set<DTVendedor> vendedores);
     //aca no pusimos datadetallecompra al final
     DTCompra detallesCompra();
@@ -30,7 +31,7 @@ public:
 
     // Operaciones internas
 
-    virtual ~ControladorNotificacion(){};
+    virtual ~ControladorNotificacion();
 };
 
 #endif

@@ -8,7 +8,7 @@
 #include "usuario.h"
 #include "datatypes.h"
 #include "observer.h"
-#include "compra-producto.h"
+#include "compra_producto.h"
 #include "producto.h"
 
 using namespace std;
@@ -22,9 +22,9 @@ private:
   int id;
 
 public:
-  Compra(DTFecha fecha, float montoTotal, set<Compra_Producto> com_Prod, int id);
+  Compra(DTFecha fecha, float montoTotal, set<Compra_Producto> com_Prods, int id);
 
-  agregarACompra(Producto prod, int id);
+  void agregarACompra(Producto prod, int id);
   bool productoEnCompra();
   DTCompra infoCompra();
 

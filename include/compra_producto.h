@@ -20,7 +20,7 @@ private:
   set<Producto> *productosEnCompra;
 
 public:
-  agregarProd(Producto prod);
+  void agregarProd(Producto prod);
   float sumaPrecios();
   DTProducto getDatosProductos();
 

@@ -7,6 +7,7 @@
 #include "observer.h"
 #include "producto.h"
 #include "promocion.h"
+#include "compra_producto.h"
 #include "compra.h"
 #include "vendedor.h"
 #include "cliente.h"

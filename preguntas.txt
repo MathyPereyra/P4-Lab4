@@ -1,4 +1,42 @@
 
 Tasks - Mathías:
-    DCD - Falta agregar todos los DataTypes
-    string Usuario::getFechaNac() // En usuario.h y .cpp ¿No debería de ser de tipo DTFecha?
+    Recordar para mañana DCD y Diagramas de c- Falta agregar todos los DataTypes
+
+    Modificaciones:
+    IUsuario
+        1) cambié tipo de parámetro de listadoUsuarios(string) a listadoUsuarios(tipo)
+        2) a la operación virtual set<DTComentario> listadoComentarioUsuario(string) = 0; 
+            deberiamos quitarle la palabra Usuario en el nombre de la operación, o asegurarnos de ponerselo en DCD y Diagrama de comuniación 
+        3) agregué operación virtual set<DTUsuario> listadoUsuarios() = 0; sin parámetro para usar en Casos de Uso Suscribirse a Notificaciones, 
+            Consulta de Notificaciones y Eliminar Suscripciones.
+        
+
+    CUsuario
+        1) agregé #include <map>
+        2) Consulta: map<string, Usuario *> usuarios; entonces el nickname del usuario es su key?
+        3) set<string> listadoUsuarios(tipo tipodeusuario); no existe esta operación en IUsuario ni en DCD
+            en DCD y en IUsuario existe la operación set<DTUsuario> listadoUsuarios(tipo), aunque en DCD aparece como listadoUsuarios(string).
+            De todos modos, las siguientes dos operaciones están una retornando un set de nicknames de clientes y la otra un set de nickname de usuarios
+        4) agregué la operación set<DTUsuario> listadoUsuarios();
+
+
+    datatypes.h
+        1) modifiqué los desrutructores de las clases DTCliente y DTVendedor porque debían ser ~DTCliente() y ~DTVendedor()
+        2) agregué #include "producto.h" y "compra_producto.h"
+        3) en DTCompra corrijo parámetro donde aparece Com - Prod por Compra_Producto
+        4) en la clase DTIdNProducto, por qué virtual en el destructor?
+
+    compra_producto.h
+        1) agregué void a la operación agregarProd(Producto prod);
+    
+    compra.h
+        1) corregí #include "compra-producto.h" por "compra_producto.h"
+        2) agregué void a la operación agregarACompra(Producto prod, int id);
+
+    notificacion.h
+        1) agregué #include "producto.h"
+        2) en la clase Notificacion, por qué virtual en el destructor?
+    
+    CNotificacion.h
+        1) agrego #include "INotificacion.h"
+    
