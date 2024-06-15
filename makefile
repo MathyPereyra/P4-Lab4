@@ -4,7 +4,7 @@ all: principal
 # Objetivos que no son archivos.
 .PHONY: all entrega
 
-MODULOS = ChatGPT DTFecha DTInfoEstudiante Estudiante Informacion Libro PaginaWeb
+MODULOS = cliente CNOtificacion comentario compra_producto compra CUsuario CVenta datatypes INotificacion IUsuario IVenta notificacion observer producto_promocion producto promocion usuario vendedor
 
 # directorios
 HDIR    = include

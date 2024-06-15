@@ -94,7 +94,7 @@ set<DTUsuario> ControladorUsuario::listadoUsuarios(string tipoDeUsuario)
         else if (tipoDeUsuario == "vendedor") 
         {
             Vendedor *vendedor = dynamic_cast<Vendedor*>(it->second);
-            if (cliente != NULL)
+            if ("cliente" != NULL)
             {
                 dataUsuarios.insert(vendedor->getDatosUsuario());
             }
@@ -103,31 +103,44 @@ set<DTUsuario> ControladorUsuario::listadoUsuarios(string tipoDeUsuario)
         {
             dataUsuarios.insert(it->second->getDatosUsuario());
         }
-
     }
-
     return dataUsuarios;
 };
 
-
-
-set<string> ControladorUsuario::listadoNicknameCliente()
+set<DTUsuario> ControladorUsuario::listadoUsuarios()
 {
-    return this->listadoUsuarios(cliente);
-};
-
-// aca asumi que el map usuarios de CUsuario que mapea usuarios a strings guarda como string el nickname del usuario
-set<string> ControladorUsuario::listadoUsuarioNickname()
-{
-    set<string> nombres;
+    set<DTUsuario> dataUsuarios;
     map<string, Usuario *>::iterator it;
     for (it = this->usuarios.begin(); it != this->usuarios.end(); ++it)
     {
-        nombres.insert(it->getNickname);
+            dataUsuarios.insert(it->second->getDatosUsuario());
     }
 
-    return nombres;
+    return dataUsuarios;
+}
+
+set<string> ControladorUsuario::listadoNicknameCliente()
+{
+    set<string> setNicknames;
+    for(DTUsuario dtU : this->listadoUsuarios("cliente"))
+    {
+        setNicknames.insert(dtU.getNickname());
+    }
+    return setNicknames;
 };
+
+// aca asumi que el map usuarios de CUsuario que mapea usuarios a strings guarda como string el nickname del usuario
+//set<string> ControladorUsuario::listadoUsuarioNickname()
+//{
+//    set<string> nombres;
+//    map<string, Usuario *>::iterator it;
+//    for (it = this->usuarios.begin(); it != this->usuarios.end(); ++it)
+//    {
+//        nombres.insert(it->getNickname);
+//    }
+//
+//    return nombres;
+//};
 
 set<DTComentario> ControladorUsuario::listadoComentarioUsuario(string){
 

@@ -24,7 +24,6 @@ private:
   string memNickname;
   string memContrasena;
   DTFecha memFechaNac;
-  tipo memTipo;
 
 public:
   static ControladorUsuario *getInstancia();
@@ -32,7 +31,6 @@ public:
   string getmemNickname();
   string getmemContrasena();
   DTFecha getmemFechaNac();
-  tipo getmemTipo();
   void ingresarUsuario(string nickname, string contrasena, DTFecha fechaNac);
   bool existeUsuarioIgualNickname(string nickname);
   void terminarAlta();
@@ -46,11 +44,11 @@ public:
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //  Retorna set de nicknames, si el tipo es cliente retorna los nickname de todos los clientes y si el tipo es vendedor el de todos los vendedores
   set<DTUsuario> listadoUsuarios(string tipoDeUsuario);
+  set<DTUsuario> listadoUsuarios();
   //  Retorna set con los nickname de todos los usuarios del sistema (Clientes y Vendedores)
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-  set<DTUsuario> listadoUsuarios();
   set<string> listadoNicknameCliente();
   set<string> listadoUsuarioNickname();
   set<DTComentario> listadoComentarioUsuario(string);

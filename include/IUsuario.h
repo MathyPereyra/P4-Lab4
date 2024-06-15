@@ -25,7 +25,7 @@ public:
     virtual void confirmarAltaUsuario() = 0;
     virtual void setDataUsuario(string nickname, string contrasena, DTFecha fechaNac) = 0;
 
-    virtual set<DTUsuario> listadoUsuarios(tipo) = 0;
+    virtual set<DTUsuario> listadoUsuarios(string tipoUsuario) = 0;
     virtual set<DTUsuario> listadoUsuarios() = 0;
     virtual set<string> listadoNicknameCliente() = 0;
     virtual set<string> listadoUsuarioNickname() = 0;

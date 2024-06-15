@@ -123,7 +123,7 @@ public:
   virtual ~DTComentario();
 };
 
-//Enumerados categoria y tipo
+//Enumerados categoria 
 enum categoria
 {
   ropa,
@@ -131,11 +131,7 @@ enum categoria
   otro
 };
 
-enum tipo
-{
-  cliente,
-  vendedor
-};
+
 
 //DTProducto
 class DTProducto
