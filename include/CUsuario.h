@@ -59,7 +59,7 @@ public:
   // Operaciones internas
   void limpiarMemoria();
 
-  virtual ~ControladorUsuario();
+  virtual ~ControladorUsuario(){};
 };
 
 #endif

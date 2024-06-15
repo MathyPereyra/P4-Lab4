@@ -33,7 +33,7 @@ public:
   virtual DTUsuario getDatosUsuario() = 0;
   virtual set<Comentario>* getComentarios() ;
 
-  virtual ~Usuario();
+  virtual ~Usuario(){};
 };
 
 #endif

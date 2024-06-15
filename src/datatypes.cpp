@@ -1,7 +1,8 @@
 #include "../include/datatypes.h"
-#include "../include/compra_producto.h"
 
 // DTFecha
+DTFecha::DTFecha() : dia(), mes(), anio() {};
+
 DTFecha::DTFecha(int dia, int mes, int anio) : dia(dia),
                                                mes(mes),
                                                anio(anio){};

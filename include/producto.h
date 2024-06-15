@@ -37,7 +37,7 @@ public:
   int getCantStock();
   float getPrecio();
 
-  virtual ~Producto();
+  virtual ~Producto(){};
 };
 
 #endif

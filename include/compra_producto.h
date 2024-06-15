@@ -28,7 +28,7 @@ public:
   int getCantidad();
   set<Producto> getProductosEnCompra();
 
-  virtual ~Compra_Producto();
+  virtual ~Compra_Producto(){};
 };
 
 #endif

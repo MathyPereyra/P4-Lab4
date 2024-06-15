@@ -1,4 +1,4 @@
-//#include "../include/producto.h"
+#include "../include/producto.h"
 //#include <string>
 //
 //using namespace std;

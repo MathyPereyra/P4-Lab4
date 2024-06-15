@@ -6,6 +6,8 @@
 //#include "../include/INotificacion.h"
 //#include "../include/CNotificiacion.h"
 
+Fabrica::Fabrica(){};
+
 Fabrica* Fabrica::getInstance()
 {
     if (instancia == NULL)
@@ -15,8 +17,7 @@ Fabrica* Fabrica::getInstance()
 
 IUsuario* Fabrica::getIUsuario()
 {
-    ControladorUsuario* controlador = ControladorUsuario::getInstancia();
-    return controlador->getInstance();
+    return ControladorUsuario::getInstancia();
 };
 
 //IVenta* Fabrica::getIVenta()

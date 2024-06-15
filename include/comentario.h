@@ -29,7 +29,7 @@ public:
 
   void eliminarComentario();
 
-  virtual ~Comentario();
+  virtual ~Comentario(){};
 };
 
 #endif

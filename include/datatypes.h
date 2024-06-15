@@ -50,10 +50,15 @@ public:
   string getNickname() const;
   DTFecha getFechaNac() const;
 
-  friend ostream &operator<<(ostream &os, const DTUsuario &ie);    // Sobrecarga del operador << para imprimir DTInfoEstudiante
+  friend ostream &operator<<(ostream &os, const DTUsuario &dtU)
+  {  
+    os << "Nickname: "<<dtU.getNickname() << ", Fecha: " << dtU.getFechaNac().getDia() << "/" << dtU.getFechaNac().getMes() << "/" << dtU.getFechaNac().getAnio() << "/n" ;
+    return os;
+  }
+  
   bool operator<(const DTUsuario& otro) const;   // Comparacion entre DTUsuario
 
-  virtual ~DTUsuario();
+  virtual ~DTUsuario(){};
 };
 
 
@@ -78,7 +83,7 @@ public:
     return os;
   }
 
-  virtual ~DTCliente();
+  virtual ~DTCliente(){};
 };
 
 
@@ -103,7 +108,7 @@ public:
   }
 
 
-  virtual ~DTVendedor();
+  virtual ~DTVendedor(){};
 };
 
 
@@ -121,7 +126,7 @@ public:
   int getId();
   DTFecha getFechaCom();
 
-  virtual ~DTComentario();
+  virtual ~DTComentario(){};
 };
 
 
@@ -158,7 +163,7 @@ public:
   float getPrecio();
   bool getEstaEnProm();
 
-  virtual ~DTProducto();
+  virtual ~DTProducto(){};
 };
 
 
@@ -177,7 +182,7 @@ public:
   string getNombreProm();
   set<DTProducto> getProductos();
 
-  virtual ~DTNotificacion();
+  virtual ~DTNotificacion(){};
 };
 
 
@@ -194,7 +199,7 @@ public:
   bool getEnvio();
   set<DTProducto> getProductos();
 
-  virtual ~DTCompra_Producto();
+  virtual ~DTCompra_Producto(){};
 };
 
 
@@ -212,7 +217,7 @@ public:
   DTFecha getFecha();
   set<DTCompra_Producto> getProdProm();
 
-  virtual ~DTCompra();
+  virtual ~DTCompra(){};
 };
 
 

@@ -1,9 +1,5 @@
-#include "../include/usuario.h" //este creo que no es necesario incluirlo, ya viene a traves de vendedor.h
 #include "../include/vendedor.h"
-#include "../include/comentario.h"
-#include "../include/producto.h"
-#include "../include/promocion.h"
-#include "../include/datatypes.h"
+
 //#include "../include/cliente.h"
 
 #include <string>
@@ -87,4 +83,3 @@ DTUsuario Vendedor::getDatosUsuario()
 //  return listadoComens;
 //}
 
-Vendedor::~Vendedor(){};

@@ -1,6 +1,4 @@
-#include "../include/usuario.h"
 #include "../include/comentario.h"
-#include "../include/datatypes.h"
 
 #include <string>
 

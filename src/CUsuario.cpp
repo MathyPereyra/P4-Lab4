@@ -1,9 +1,5 @@
 #include "../include/CUsuario.h"
-#include "../include/datatypes.h"
-#include "../include/usuario.h"
-#include "../include/cliente.h"
-#include "cliente.cpp"
-#include "../include/vendedor.h"
+
 #include <cstddef>
 
 string ControladorUsuario::getmemNickname()

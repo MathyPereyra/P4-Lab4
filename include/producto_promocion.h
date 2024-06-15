@@ -25,7 +25,7 @@ public:
   int getCantidadMinima();
   set<Producto> getProductos();
 
-  virtual ~Producto_Promocion();
+  virtual ~Producto_Promocion(){};
 };
 
 #endif

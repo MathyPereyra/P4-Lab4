@@ -44,7 +44,7 @@ public:
   //set<IObserver> getSuscriptores();
   string getCodigoRUT();
 
-  virtual ~Vendedor();
+  virtual ~Vendedor(){};
 };
 
 #endif

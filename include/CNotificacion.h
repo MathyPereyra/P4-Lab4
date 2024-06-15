@@ -31,7 +31,7 @@ public:
 
     // Operaciones internas
 
-    virtual ~ControladorNotificacion();
+    virtual ~ControladorNotificacion(){};
 };
 
 #endif

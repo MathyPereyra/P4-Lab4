@@ -1,5 +1,5 @@
 //#include "../include/producto.h"
-//#include "../include/compra.h"
+#include "../include/compra.h"
 //#include <string>
 //
 //using namespace std;

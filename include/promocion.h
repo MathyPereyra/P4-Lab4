@@ -31,7 +31,7 @@ public:
   DTFecha getFechaVen();
   set<Producto_Promocion> getProdProms();
 
-  virtual ~Promocion();
+  virtual ~Promocion(){};
 };
 
 #endif

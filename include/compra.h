@@ -36,7 +36,7 @@ public:
   set<Compra_Producto> getCompProd();
   void setId(int);
 
-  virtual ~Compra();
+  virtual ~Compra(){};
 };
 
 #endif

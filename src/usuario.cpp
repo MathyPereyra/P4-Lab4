@@ -2,8 +2,6 @@
 
 #include <string>
 
-#include "../include/usuario.h"
-
 using namespace std;
 
 Usuario::Usuario(string nickname, string contrasena, DTFecha fechaNac)

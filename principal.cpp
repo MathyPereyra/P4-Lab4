@@ -3,7 +3,6 @@
 //#include <map>
 #include <iostream>
 
-#include "include/IUsuario.h"
 #include "include/datatypes.h"
 #include "include/fabrica.h"
 //#include "include/observer.h"

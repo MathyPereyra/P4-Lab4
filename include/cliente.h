@@ -41,7 +41,7 @@ public:
   void notificar();
 
 
-  virtual ~Cliente();
+  virtual ~Cliente(){};
 };
 
 #endif

@@ -26,7 +26,7 @@ public:
   string getNombreProm();
   set<Producto> getProductos();
 
-  virtual ~Notificacion();
+  virtual ~Notificacion(){};
 };
 
 #endif
