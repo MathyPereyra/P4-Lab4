@@ -18,7 +18,7 @@ protected:
   string contrasena;
   DTFecha fechaNac;
   set<Comentario> *comentarios;
-  tipo tipoUsuario;
+//  tipo tipoUsuario;
 
 public:
   Usuario(string nickname, string contrasena, DTFecha fechaNac);
@@ -27,7 +27,7 @@ public:
   virtual string getContrasena();
   virtual DTFecha getFechaNac();
 
-  tipo getTipo();
+//  tipo getTipo();
 
   virtual set<DTComentario> listadoComentarioUsuario() ;
   virtual DTUsuario getDatosUsuario() = 0;

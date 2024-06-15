@@ -18,7 +18,7 @@ private:
   string descripcion;
   float descuento;
   DTFecha fechaVencimiento;
-  set<Producto_Promocion> *prodProms;
+  set<Producto_Promocion> prodProms;
 
 public:
   Promocion(string nombre, string descripcion, float descuento, DTFecha fechaVencimiento);

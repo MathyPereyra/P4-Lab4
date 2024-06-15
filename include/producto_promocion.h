@@ -1,5 +1,5 @@
-#ifndef PROMOCION_H
-#define PROMOCION_H
+#ifndef PRODUCTO_PROMOCION_H
+#define PRODUCTO_PROMOCION_H
 
 #include <string>
 #include <set>

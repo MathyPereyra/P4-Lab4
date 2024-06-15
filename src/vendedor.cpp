@@ -10,7 +10,7 @@
 using namespace std;
 
 Vendedor::Vendedor(string nickname, string contrasena, DTFecha fechaNac, string codigoRUT)
-    : Usuario(nickname, contrasena, fechaNac, codigoRUT(codigoRUT) {}
+    : Usuario(nickname, contrasena, fechaNac, codigoRUT(codigoRUT)) {}
 
 string Vendedor::getNickname()
 {

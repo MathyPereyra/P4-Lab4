@@ -5,7 +5,6 @@
 #include <set>
 #include <map>
 
-#include "usuario.h"
 #include "datatypes.h"
 #include "observer.h"
 

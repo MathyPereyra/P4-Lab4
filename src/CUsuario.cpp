@@ -21,17 +21,12 @@ DTFecha ControladorUsuario::getmemFechaNac()
     return this->memFechaNac;
 };
 
-tipo ControladorUsuario::getmemTipo()
-{
-    return this->memTipo;
-};
-
-void ControladorUsuario::ingresarUsuario(string nickname, string contrasena, DTFecha fechaNac, tipo tipoUsuario)
+void ControladorUsuario::ingresarUsuario(string nickname, string contrasena, DTFecha fechaNac)
 {
     this->memNickname = nickname;
     this->memContrasena = contrasena;
     this->memFechaNac = fechaNac;
-    this->memTipo = tipoUsuario;
+//    this->memTipo = tipoUsuario;
 };
 
 bool ControladorUsuario::existeUsuarioIgualNickname(string nickname)
@@ -66,32 +61,55 @@ void ControladorUsuario::altaCliente(string direccion, string ciudad)
 void ControladorUsuario::altaVendedor(string codigoRUT) 
 {
     Vendedor* nuevo = new Vendedor(this->memNickname, this->memContrasena, this->memFechaNac, codigoRUT);
-    Usuario* u = nuevo;
     this->usuarios[this->memNickname] = nuevo;
 };
 
-void ControladorUsuario::confirmarAltaUsuario() {
-
-};
-
-void ControladorUsuario::setDataUsuario(string nickname, string contrasena, DTFecha fechaNac, tipo tipousuario) {
-
-};
-
-set<string> ControladorUsuario::listadoUsuarios(tipo tipodeusuario)
+void ControladorUsuario::confirmarAltaUsuario() 
 {
-    set<string> nombres;
+    this->memFechaNac.~DTFecha();
+};
+
+void ControladorUsuario::setDataUsuario(string nickname, string contrasena, DTFecha fechaNac) {
+
+};
+
+
+
+
+// Se puede emprolijar sacando los if para afuera y el for dentro de cada if dependiendo el caso
+set<DTUsuario> ControladorUsuario::listadoUsuarios(string tipoDeUsuario)
+{
+    set<DTUsuario> dataUsuarios;
     map<string, Usuario *>::iterator it;
     for (it = this->usuarios.begin(); it != this->usuarios.end(); ++it)
     {
-        if (it->getTipo == tipodeusuario)
+        if (tipoDeUsuario == "cliente")
         {
-            nombres.insert(it->getNickname);
+            Cliente *cliente = dynamic_cast<Cliente*>(it->second);
+            if (cliente != NULL)
+            {
+                dataUsuarios.insert(cliente->getDatosUsuario());
+            }
         }
+        else if (tipoDeUsuario == "vendedor") 
+        {
+            Vendedor *vendedor = dynamic_cast<Vendedor*>(it->second);
+            if (cliente != NULL)
+            {
+                dataUsuarios.insert(vendedor->getDatosUsuario());
+            }
+        }
+        else
+        {
+            dataUsuarios.insert(it->second->getDatosUsuario());
+        }
+
     }
 
-    return nombres;
+    return dataUsuarios;
 };
+
+
 
 set<string> ControladorUsuario::listadoNicknameCliente()
 {

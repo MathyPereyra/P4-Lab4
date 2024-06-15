@@ -27,7 +27,7 @@ public:
   void agregarSuscripcion();
   void eliminarNotifiaciones();
   void notificar(string nVen, string nProm, set<DTProducto>);
-  void listadoComentarioCliente();
+  set<DTComentario> listadoComentarioCliente();
 
   DTUsuario getDatosUsuario();
   string getNickname();

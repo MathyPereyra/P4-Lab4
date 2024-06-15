@@ -1,8 +1,8 @@
 //#include "../include/usuario.h"
 //#include <../include/CUsuario.h>
-#include <../include/cliente.h>
-#include <../include/compra.h>
-#include <../include/compra_producto.h>
+#include "../include/cliente.h"
+#include "../include/compra.h"
+#include "../include/compra_producto.h"
 //#include <../include/datatypes.h>
 
 #include <string>
@@ -60,16 +60,16 @@ void Cliente::crearCompra(int id)
   this->compras.insert(d); // donde está el set/map compras?
 }
 
-DTCliente Cliente::getDatosCliente()
+DTUsuario Cliente::getDatosUsuario()
 {
-  DTCliente DC = DTCliente(this->nickname, this->fechaNac, this->ciudad, this->direccion);
+  DTUsuario DC = DTCliente(this-> nickname,this->contrasena, this->fechaNac, this->ciudad, this->direccion);
   return DC;
 }
 
 set<DTComentario> Cliente::listadoComentarioCliente()
 {
   set<DTComentario> listadoComens;
-  for (Comentario comen : this->comentarios)
+  for (Comentario comen : *this->comentarios)
   {
     DTComentario dataComentario = DTComentario(comen.getText(), comen.getId(), comen.getFecha());
     listadoComens.insert(dataComentario);

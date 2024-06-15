@@ -1,19 +1,19 @@
 #include <string>
-#include <set>
-#include <map>
+//#include <set>
+//#include <map>
 #include <iostream>
 
-#include "datatypes.h"
+#include "include/datatypes.h"
 #include "include/CUsuario.h"
 #include "include/datatypes.h"
-#include "observer.h"
-#include "producto.h"
-#include "promocion.h"
-#include "compra_producto.h"
-#include "compra.h"
-#include "vendedor.h"
-#include "cliente.h"
-#include "producto.h"
+//#include "include/observer.h"
+//#include "include/producto.h"
+//#include "include/promocion.h"
+//#include "include/compra_producto.h"
+//#include "include/compra.h"
+//#include "include/vendedor.h"
+//#include "include/cliente.h"
+//#include "include/producto.h"
 
 using namespace std;
 
@@ -33,7 +33,7 @@ void altaDeUsuario()
     cout << "\nIngrese anio: ";
     cin >> anio;
     DTFecha fecha(dia, mes, anio);
-    controlador->ingresarUsuario(nickname, contrasena,fecha, aa);
+    controlador->ingresarUsuario(nickname, contrasena,fecha);
     if (controlador->existeUsuarioIgualNickname(nickname))
     {
         cout << "\nNickname ya existe, intente nuevamente. ";
@@ -67,7 +67,16 @@ void altaDeUsuario()
     return;
 }
 
-
+void listadoDeUsuarios()
+{
+    set<DTUsuario> dataUsuarios;
+    ControladorUsuario* controlador = ControladorUsuario::getInstancia();
+    dataUsuarios = controlador->listadoUsuarios();
+    for (DTUsuario usuario : dataUsuarios)
+    {
+        cout << usuario;
+    }
+}
 
 
 
@@ -89,7 +98,7 @@ while (continuar)
             altaDeUsuario();
         case 2:
             cout << "Ejecutando caso de uso: Listado de usuarios" << endl;
-
+            listadoDeUsuarios();
         case 3:
             cout << "Ejecutando caso de uso: Alta de producto" << endl;
 

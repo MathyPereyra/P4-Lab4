@@ -50,6 +50,9 @@ public:
   string getNickname() const;
   DTFecha getFechaNac() const;
   virtual void print();
+  friend ostream &operator<<(ostream &os, const DTUsuario &ie);    // Sobrecarga del operador << para imprimir DTInfoEstudiante
+
+
   virtual ~DTUsuario();
 };
 
@@ -68,6 +71,11 @@ public:
   DTFecha getFechaNac() const;
   string getCiudad();
   string getDireccion();
+  friend ostream &operator<<(ostream &os, const DTCliente &dtC)
+  {  
+    os << "Nickname: "<<dtC.getNickname() << ", Fecha: " << dtC.getFechaNac().getDia() << "/" << dtC.getFechaNac().getMes() << "/" << dtC.getFechaNac().getAnio() << "\n Ciudad:" << dtC.ciudad << ", Direccion: " << dtC.direccion << "/n" ;
+    return os;
+  }
 
   virtual void print();
   virtual ~DTCliente();
@@ -86,6 +94,13 @@ public:
   string getNickname() const;
   DTFecha getFechaNac() const;
   string getCodigoRUT();
+
+  friend ostream &operator<<(ostream &os, const DTVendedor &dtV)
+  {  
+    os << "Nickname: "<<dtV.getNickname() << ", Fecha: " << dtV.getFechaNac().getDia() << "/" << dtV.getFechaNac().getMes() << "/" << dtV.getFechaNac().getAnio() << "\n Codigo RUT:" << dtV.codigoRUT << "\n" ;
+    return os;
+  }
+
 
   virtual void print();
   virtual ~DTVendedor();
