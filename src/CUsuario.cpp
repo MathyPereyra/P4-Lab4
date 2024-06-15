@@ -148,7 +148,6 @@ void ControladorUsuario::eliminarComentario(int) {
 
 ControladorUsuario::ControladorUsuario()
 {
-    this->memFechaNac = DTFecha();
 };
 
 ControladorUsuario * ControladorUsuario::getInstance() 

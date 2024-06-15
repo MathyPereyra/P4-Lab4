@@ -1,16 +1,19 @@
 #include "../include/fabrica.h"
-#include "../include/IUsuario.h"
 #include "../include/CUsuario.h"
+
+//#include <cstddef>
 //#include "../include/IVenta.h"
 //#include "../include/CVenta.h"
 //#include "../include/INotificacion.h"
 //#include "../include/CNotificiacion.h"
 
+Fabrica * Fabrica::instancia = nullptr;
+
 Fabrica::Fabrica(){};
 
-Fabrica* Fabrica::getInstance()
+Fabrica* Fabrica::getInstanceF()
 {
-    if (instancia == NULL)
+    if (instancia == nullptr)
         instancia = new Fabrica();
     return instancia;
 };

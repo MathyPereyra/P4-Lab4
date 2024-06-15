@@ -1,9 +1,4 @@
-//#include "../include/usuario.h"
-//#include <../include/CUsuario.h>
 #include "../include/cliente.h"
-//#include "../include/compra.h"
-//#include "../include/compra_producto.h"
-//#include <../include/datatypes.h>
 
 #include <string>
 

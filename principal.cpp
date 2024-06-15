@@ -1,10 +1,12 @@
 #include <string>
-//#include <set>
+#include <set>
 //#include <map>
 #include <iostream>
 
+#include "include/CUsuario.h"
 #include "include/datatypes.h"
 #include "include/fabrica.h"
+#include "include/IUsuario.h"
 //#include "include/observer.h"
 //#include "include/producto.h"
 //#include "include/promocion.h"
@@ -79,11 +81,14 @@ void listadoDeUsuarios(IUsuario *controlador)
 
 
 
+
 int main()
 {
-    
-Fabrica* fabrica = Fabrica::getInstance(); // se crea instancia única de fábrica
-IUsuario* controlador = fabrica->getIUsuario(); // se crea la instancia del controlador CUsuario de tipo IUsuario
+
+//Fabrica* fabrica = Fabrica::getInstanceF(); // se crea instancia única de fábrica
+
+
+IUsuario* controlador = ControladorUsuario::getInstance(); // se crea la instancia del controlador CUsuario de tipo IUsuario
 
 int opcion;
 bool continuar = true;
