@@ -2,7 +2,7 @@
 
 #include <string>
 
-#include "usuario.h"
+#include "../include/usuario.h"
 
 using namespace std;
 
@@ -21,28 +21,24 @@ DTFecha Usuario::getFechaNac() {
    return this->fechaNac;
 };
 
-tipo Usuario::getTipo()
-{
-  return this->tipoUsuario;
-}
 
-set<DTComentario> Usuario::listadoComentarioUsuario()
-{
-  //  set<DTComentario> listadoComens;
-  //  for (Comentario comen : this->comentarios)
-  //  {
-  //    DTComentario dataComentario = DTComentario(comen.getText(), comen.getId(), comen.getFecha());
-  //    listadoComens.insert(dataComentario);
-  //  }
-  //  return listadoComens;
-}
-
-DTUsuario Usuario::getDatosUsuario()
-{
-  //  DTUsuario DataUsuario
-}
-
-set<Comentario> Usuario::getComentarios()
-{
-  //  DTComentario
-}
+//set<DTComentario> Usuario::listadoComentarioUsuario()
+//{
+//  //  set<DTComentario> listadoComens;
+//  //  for (Comentario comen : this->comentarios)
+//  //  {
+//  //    DTComentario dataComentario = DTComentario(comen.getText(), comen.getId(), comen.getFecha());
+//  //    listadoComens.insert(dataComentario);
+//  //  }
+//  //  return listadoComens;
+//}
+//
+//DTUsuario Usuario::getDatosUsuario()
+//{
+//  //  DTUsuario DataUsuario
+//}
+//
+//set<Comentario> Usuario::getComentarios()
+//{
+//  //  DTComentario
+//}

@@ -8,12 +8,13 @@
 class Fabrica
 {
 private:
-    Fabrica* instancia;
+    static Fabrica *instancia;
+    Fabrica();
 public:
-    IUsuario getIUsuario();
-    IVenta getIVenta();
-    INotificacion getINotificacion();
-    Fabrica* getInstance();
+    IUsuario* getIUsuario();
+    IVenta* getIVenta();
+    INotificacion* getINotificacion();
+    static Fabrica* getInstance();
 };
 
 #endif

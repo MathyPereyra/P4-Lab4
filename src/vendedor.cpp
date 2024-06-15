@@ -1,16 +1,17 @@
 #include "../include/usuario.h" //este creo que no es necesario incluirlo, ya viene a traves de vendedor.h
 #include "../include/vendedor.h"
+#include "../include/comentario.h"
 #include "../include/producto.h"
 #include "../include/promocion.h"
 #include "../include/datatypes.h"
-#include "../include/cliente.h"
+//#include "../include/cliente.h"
 
 #include <string>
 
 using namespace std;
 
 Vendedor::Vendedor(string nickname, string contrasena, DTFecha fechaNac, string codigoRUT)
-    : Usuario(nickname, contrasena, fechaNac, codigoRUT(codigoRUT)) {}
+    : Usuario(nickname, contrasena, fechaNac), codigoRUT(codigoRUT){}
 
 string Vendedor::getNickname()
 {
@@ -37,48 +38,53 @@ set<Promocion> Vendedor::getPromociones()
   return this->promociones;
 };
 
-set<Comentario> Vendedor::getComentarios()
+set<Comentario>* Vendedor::getComentarios()
 {
   return this->comentarios;
 }
 
-set<DTIdNProducto> Vendedor::getProductosNoEnPromo()
-{
-  set<DTIdNProducto> setInfoProductos;
-  for (Producto p : this->productos)
-  {
-    if (!(p.estaEnPromo()))
-    {
-      int id = p.getId();
-      string nombre = p.getNombre(); // no existe en producto.h una operación llamada getNombre()
-      DTIdNProducto dp = DTIdNProducto(id, nombre);
-      setInfoProductos.insert(dp);
-    }
-  }
-  return setInfoProductos;
-}
-
-void Cliente::agregarSuscripcion()
-{
-}
+//set<DTIdNProducto> Vendedor::getProductosNoEnPromo()
+//{
+//  set<DTIdNProducto> setInfoProductos;
+//  for (Producto p : this->productos)
+//  {
+//    if (!(p.estaEnPromo()))
+//    {
+//      int id = p.getId();
+//      string nombre = p.getNombre(); // no existe en producto.h una operación llamada getNombre()
+//      DTIdNProducto dp = DTIdNProducto(id, nombre);
+//      setInfoProductos.insert(dp);
+//    }
+//  }
+//  return setInfoProductos;
+//}
+//
+//void Cliente::agregarSuscripcion()
+//{
+//}
 
 void Vendedor::eliminarSuscriptor()
 {
 }
 
-DTVendedor Vendedor::getDatosVendedor()
+DTUsuario Vendedor::getDatosUsuario()
 {
-  DTVendedor DV = DTVendedor(this->nickname, this->contrasena, this->fechaNac, this->codigoRUT);
+  DTUsuario DV = DTVendedor(this->nickname, this->contrasena, this->fechaNac, this->codigoRUT);
   return DV;
 }
 
-set<DTComentario> Vendedor::listadoComentarioVendedor()
-{
-  set<DTComentario> listadoComens;
-  for (Comentario comen : this->comentarios)
-  {
-    DTComentario dataComentario = DTComentario(comen.getText(), comen.getId(), comen.getFecha());
-    listadoComens.insert(dataComentario);
-  }
-  return listadoComens;
-}
+
+
+
+//set<DTComentario> Vendedor::listadoComentarioVendedor()
+//{
+//  set<DTComentario> listadoComens;
+//  for (Comentario comen : this->comentarios)
+//  {
+//    DTComentario dataComentario = DTComentario(comen.getText(), comen.getId(), comen.getFecha());
+//    listadoComens.insert(dataComentario);
+//  }
+//  return listadoComens;
+//}
+
+Vendedor::~Vendedor(){};

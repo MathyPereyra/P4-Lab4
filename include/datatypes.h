@@ -39,7 +39,7 @@ public:
 // DTUsuario
 class DTUsuario
 {
-private:
+protected:
   string nickname;
   string contrasena;
   DTFecha fechaNac;
@@ -49,9 +49,9 @@ public:
   DTUsuario(string nickname, string contrasena, DTFecha fechaNac);
   string getNickname() const;
   DTFecha getFechaNac() const;
-  virtual void print();
-  friend ostream &operator<<(ostream &os, const DTUsuario &ie);    // Sobrecarga del operador << para imprimir DTInfoEstudiante
 
+  friend ostream &operator<<(ostream &os, const DTUsuario &ie);    // Sobrecarga del operador << para imprimir DTInfoEstudiante
+  bool operator<(const DTUsuario& otro) const;   // Comparacion entre DTUsuario
 
   virtual ~DTUsuario();
 };
@@ -78,13 +78,12 @@ public:
     return os;
   }
 
-  virtual void print();
   virtual ~DTCliente();
 };
 
 
 //DTVendedor
-class DTVendedor : DTUsuario
+class DTVendedor : public DTUsuario
 {
 private:
   string codigoRUT;
@@ -104,7 +103,6 @@ public:
   }
 
 
-  virtual void print();
   virtual ~DTVendedor();
 };
 
@@ -218,24 +216,20 @@ public:
 };
 
 
-class DTIdNProducto
-{
-private:
-  int id;
-  string nombre;
-
-public:
-  DTIdNProducto(int id, string nombre);
-
-  int getId();
-  string getNombre();
-
-  virtual ~DTIdNProducto();
-};
-
-
-
-
+//class DTIdNProducto
+//{
+//private:
+//  int id;
+//  string nombre;
+//
+//public:
+//  DTIdNProducto(int id, string nombre);
+//
+//  int getId();
+//  string getNombre();
+//
+//  virtual ~DTIdNProducto();
+//};
 
 
 #endif

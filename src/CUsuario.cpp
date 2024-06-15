@@ -141,11 +141,11 @@ set<string> ControladorUsuario::listadoNicknameCliente()
 //
 //    return nombres;
 //};
-
-set<DTComentario> ControladorUsuario::listadoComentarioUsuario(string){
-
-};
-
+//
+//set<DTComentario> ControladorUsuario::listadoComentario(string){
+//
+//};
+//
 void ControladorUsuario::eliminarComentario(int) {
 
 };

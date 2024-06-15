@@ -1,7 +1,8 @@
 #include "../include/usuario.h"
 #include "../include/comentario.h"
+#include "../include/datatypes.h"
+
 #include <string>
-#include "datatypes.h"
 
 using namespace std;
 
@@ -13,9 +14,9 @@ string Comentario::getText()
   return this->texto;
 };
 
-DTComentario::getDataComentario()
+DTComentario Comentario::getDataComentario()
 {
-  return DTComentario(this->text, this->id, this->fecha);
+  return DTComentario(this->texto, this->id, this->fecha);
 };
 
 DTFecha Comentario::getFecha()
@@ -28,18 +29,8 @@ int Comentario::getId()
   return this->id;
 };
 
-set<Comentario> Comentario::getRespuestas()
-{
-  return this->respuestas;
-}
+//set<Comentario> Comentario::getRespuestas()
+//{
+//  return this->respuestas;
+//}
 
-void Cliente::crearCompra(int id)
-{
-  Compra d = Compra();
-  d.setId(id);
-  this->compras.insert(d);
-}
-
-void Comentario::eliminarComentario()
-{
-}

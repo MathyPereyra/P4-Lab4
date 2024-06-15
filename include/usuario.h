@@ -31,7 +31,7 @@ public:
 
   virtual set<DTComentario> listadoComentarioUsuario() ;
   virtual DTUsuario getDatosUsuario() = 0;
-  virtual set<Comentario> getComentarios() ;
+  virtual set<Comentario>* getComentarios() ;
 
   virtual ~Usuario();
 };

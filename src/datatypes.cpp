@@ -1,5 +1,5 @@
 #include "../include/datatypes.h"
-#include "datatypes.h"
+#include "../include/compra_producto.h"
 
 // DTFecha
 DTFecha::DTFecha(int dia, int mes, int anio) : dia(dia),
@@ -44,12 +44,12 @@ bool DTFecha::operator>=(const DTFecha desde) const
 }
 
 // DataComentario
-DTComentario::DTComentario(string text, int id, DTFecha fechaCom);
+DTComentario::DTComentario(string text, int id, DTFecha fechaCom)
 {
   this->text = text;
   this->id = id;
   this->fechaCom = fechaCom;
-};
+}
 
 string DTComentario::getText()
 {
@@ -67,12 +67,11 @@ int DTComentario::getId()
  };
 
 // DTUsuario
-DTUsuario::DTUsuario(string nickname, string contrasena, DTFecha fechaNac, tipo tipocliente)
+DTUsuario::DTUsuario(string nickname, string contrasena, DTFecha fechaNac)
 {
   this->nickname = nickname;
   this->contrasena = contrasena;
   this->fechaNac = fechaNac;
-  this->tipo = tipocliente;
 };
 
 string DTUsuario::getNickname() const
@@ -80,27 +79,18 @@ string DTUsuario::getNickname() const
   return this->nickname;
 };
 
-string DTUsuario::getContrasena() const
-{
-  return this->contrasena;
-};
 
 DTFecha DTUsuario::getFechaNac() const
 {
   return this->fechaNac;
 };
 
-string DTUsuario::getTipo() const
-{
-  return this->tipo;
+
+bool DTUsuario::operator<(const DTUsuario& otro) const{
+    return (this->nickname < otro.nickname); 
 };
 
-void DTUsuario::print()
-{
-  cout << "Nickname: " << this->nickname << endl;
-  cout << "Contraseña: " << this->contrasena << endl;
-  cout << "Fecha de nacimiento: " << this->fechaNac << endl;
-};
+
 
 //DTNotificacion
 DTNotificacion::DTNotificacion(string nicknameUsuario, string nombreProm,set<DTProducto> productos){
@@ -125,16 +115,16 @@ set<DTProducto> DTNotificacion::getProductos()
 };
    
 //DTCompra
-DTCompra::DTCompra(float precioTotal, DTFecha fechaCompra, set<Compra_Producto> com-Prod)
+DTCompra::DTCompra(float precioTotal, DTFecha fechaCompra, set<DTCompra_Producto> comProd)
 {
   this->precioTotal = precioTotal;
   this->fechaCompra = fechaCompra;
-  this->com-Prod = com-Prod;
+  this->comProd = comProd;
 };
 
 float DTCompra::getPrecioTotal()
 {
-  return this->precioTotal
+  return this->precioTotal;
 };
 
 DTFecha DTCompra::getFecha()
@@ -142,7 +132,7 @@ DTFecha DTCompra::getFecha()
   return this->fechaCompra;
 };
 
-set<Com-Prod> DTCompra::getProdProm()
+set<DTCompra_Producto> DTCompra::getProdProm()
 {
-  return this->com-prod;
+  return this->comProd;
 };

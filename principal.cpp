@@ -3,9 +3,9 @@
 //#include <map>
 #include <iostream>
 
+#include "include/IUsuario.h"
 #include "include/datatypes.h"
-#include "include/CUsuario.h"
-#include "include/datatypes.h"
+#include "include/fabrica.h"
 //#include "include/observer.h"
 //#include "include/producto.h"
 //#include "include/promocion.h"
@@ -17,11 +17,11 @@
 
 using namespace std;
 
-void altaDeUsuario()
+
+void altaDeUsuario(IUsuario* controlador)
 {
     string nickname, contrasena;
     int dia, mes, anio;
-    ControladorUsuario* controlador = ControladorUsuario::getInstancia();
     cout << "Ingrese nickname:";
     cin >> nickname;
     cout << "\nIngrese contasena: ";
@@ -38,7 +38,7 @@ void altaDeUsuario()
     {
         cout << "\nNickname ya existe, intente nuevamente. ";
         controlador->terminarAlta();
-        altaDeUsuario();
+        altaDeUsuario(controlador);
         return;
     }
     cout << "\nIngrese 1 si va a ingresar un cliente o 2 si va a ingresar un vendedor: ";
@@ -67,10 +67,9 @@ void altaDeUsuario()
     return;
 }
 
-void listadoDeUsuarios()
+void listadoDeUsuarios(IUsuario *controlador)
 {
     set<DTUsuario> dataUsuarios;
-    ControladorUsuario* controlador = ControladorUsuario::getInstancia();
     dataUsuarios = controlador->listadoUsuarios();
     for (DTUsuario usuario : dataUsuarios)
     {
@@ -83,6 +82,10 @@ void listadoDeUsuarios()
 
 int main()
 {
+    
+Fabrica* fabrica = Fabrica::getInstance(); // se crea instancia única de fábrica
+IUsuario* controlador = fabrica->getIUsuario(); // se crea la instancia del controlador CUsuario de tipo IUsuario
+
 int opcion;
 bool continuar = true;
 while (continuar) 
@@ -95,10 +98,10 @@ while (continuar)
     {
         case 1:
             cout << "Ejecutando caso de uso: Alta de usuario" << endl;
-            altaDeUsuario();
+            altaDeUsuario(controlador);
         case 2:
             cout << "Ejecutando caso de uso: Listado de usuarios" << endl;
-            listadoDeUsuarios();
+            listadoDeUsuarios(controlador);
         case 3:
             cout << "Ejecutando caso de uso: Alta de producto" << endl;
 

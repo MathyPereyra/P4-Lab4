@@ -20,12 +20,12 @@ private:
   string codigoRUT;
   set<Producto> productos;
   set<Promocion> promociones;
-  set<IObserver> suscriptores;
+  //set<IObserver> suscriptores;
 
 public:
   Vendedor(string nickname, string contrasena, DTFecha fechaNac, string codigoRUT);
 
-  set<DTIdNProducto> getProductosNoEnPromo();
+  //set<DTIdNProducto> getProductosNoEnPromo();
   void seleccionarProducto(int id);
 
   void agregarSuscriptor();
@@ -40,9 +40,11 @@ public:
   DTFecha getFecha();
   set<Producto> getProductos();
   set<Promocion> getPromociones();
-  set<Comentario> getComentarios();
-  set<IObserver> getSuscriptores();
+  set<Comentario>* getComentarios();
+  //set<IObserver> getSuscriptores();
   string getCodigoRUT();
+
+  virtual ~Vendedor();
 };
 
 #endif

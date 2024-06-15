@@ -29,7 +29,7 @@ public:
     virtual set<DTUsuario> listadoUsuarios() = 0;
     virtual set<string> listadoNicknameCliente() = 0;
     virtual set<string> listadoUsuarioNickname() = 0;
-    virtual set<DTComentario> listadoComentarioUsuario(string) = 0;
+    virtual set<DTComentario> listadoComentario(string) = 0;
     virtual void eliminarComentario(int) = 0;
 
     virtual ~IUsuario(){};

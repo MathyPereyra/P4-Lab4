@@ -21,6 +21,7 @@ private:
   static ControladorUsuario *instancia;
   ControladorUsuario();
   // Memoria Alta de Usuario
+  //Recordar pasar estos tres atributos como DataUsuario antes de entregar
   string memNickname;
   string memContrasena;
   DTFecha memFechaNac;
@@ -51,7 +52,7 @@ public:
 
   set<string> listadoNicknameCliente();
   set<string> listadoUsuarioNickname();
-  set<DTComentario> listadoComentarioUsuario(string);
+  set<DTComentario> listadoComentario(string);
   void eliminarComentario(int);
   static ControladorUsuario* getInstance();
 

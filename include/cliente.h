@@ -12,7 +12,7 @@
 
 using namespace std;
 
-class Cliente : public Usuario, public IObserver
+class Cliente : public Usuario //, public IObserver
 {
 private:
   string direccion;
@@ -36,7 +36,7 @@ public:
   string getDireccion();
   string getCiudad();
   set<DTNotificacion> getNotificaciones();
-  set<Comentario> getComentarios();
+  set<Comentario>* getComentarios();
   set<Compra> getCompras();
   void notificar();
 
