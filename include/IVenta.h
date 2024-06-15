@@ -15,7 +15,7 @@ class IVenta
 {
 public:
     virtual void crearPromocion(string nombre, string descripcion, float descuento, DTFecha fechaVencimiento) = 0;
-    virtual DTPromocion setDP(string nombre, string descripcion, float descuento, DTFecha fechaVencimiento) = 0;
+    virtual void setDP(string nombre, string descripcion, float descuento, DTFecha fechaVencimiento) = 0;
     virtual set<DTProducto> listarProductosNoEnPromo(string nickname) = 0;
     virtual void seleccionarProducto(set<int> productosid, int cantMinima) = 0;
     virtual void confirmarCrearPromocion() = 0;

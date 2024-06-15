@@ -56,6 +56,7 @@ public:
   virtual ~DTUsuario();
 };
 
+
 //DTCliente
 class DTCliente : public DTUsuario
 {
@@ -80,6 +81,7 @@ public:
   virtual void print();
   virtual ~DTCliente();
 };
+
 
 //DTVendedor
 class DTVendedor : DTUsuario
@@ -106,6 +108,7 @@ public:
   virtual ~DTVendedor();
 };
 
+
 //DTComentario
 class DTComentario
 {
@@ -122,6 +125,7 @@ public:
 
   virtual ~DTComentario();
 };
+
 
 //Enumerados categoria 
 enum categoria
@@ -159,6 +163,7 @@ public:
   virtual ~DTProducto();
 };
 
+
 //DTNotificacion
 class DTNotificacion
 {
@@ -177,6 +182,7 @@ public:
   virtual ~DTNotificacion();
 };
 
+
 class DTCompra_Producto
 {
 private:
@@ -192,6 +198,7 @@ public:
 
   virtual ~DTCompra_Producto();
 };
+
 
 //DTCompra
 class DTCompra
@@ -209,6 +216,7 @@ public:
 
   virtual ~DTCompra();
 };
+
 
 class DTIdNProducto
 {

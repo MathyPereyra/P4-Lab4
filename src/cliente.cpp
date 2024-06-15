@@ -2,7 +2,7 @@
 //#include <../include/CUsuario.h>
 #include "../include/cliente.h"
 #include "../include/compra.h"
-#include "../include/compra_producto.h"
+//#include "../include/compra_producto.h"
 //#include <../include/datatypes.h>
 
 #include <string>
@@ -37,28 +37,28 @@ string Cliente::getCiudad()
 {
   return this->ciudad;
 };
-
-set<DTNotificacion> Cliente::getNotificaciones()
-{
-  // return this->notificaciones; //esto estaba porque en el constructor pasabamos por parámetro el set DTNotificaciones, pero eso es incorrecto
-};
-
-set<Compra> Cliente::getCompras()
-{
-  //return this->compras;
-}
-
-set<Comentario> Cliente::getComentarios()
-{
-  //return this->comentarios;
-}
-
-void Cliente::crearCompra(int id)
-{
-  Compra d = Compra();
-  d.setId(id);
-  this->compras.insert(d); // donde está el set/map compras?
-}
+//
+//set<DTNotificacion> Cliente::getNotificaciones()
+//{
+//  // return this->notificaciones; //esto estaba porque en el constructor pasabamos por parámetro el set DTNotificaciones, pero eso es incorrecto
+//};
+//
+//set<Compra> Cliente::getCompras()
+//{
+//  //return this->compras;
+//}
+//
+//set<Comentario> Cliente::getComentarios()
+//{
+//  //return this->comentarios;
+//}
+//
+//void Cliente::crearCompra(int id)
+//{
+//  Compra d = Compra();
+//  d.setId(id);
+//  this->compras->insert(d); // donde está el set/map compras?
+//}
 
 DTUsuario Cliente::getDatosUsuario()
 {
@@ -66,13 +66,13 @@ DTUsuario Cliente::getDatosUsuario()
   return DC;
 }
 
-set<DTComentario> Cliente::listadoComentarioCliente()
-{
-  set<DTComentario> listadoComens;
-  for (Comentario comen : *this->comentarios)
-  {
-    DTComentario dataComentario = DTComentario(comen.getText(), comen.getId(), comen.getFecha());
-    listadoComens.insert(dataComentario);
-  }
-  return listadoComens;
-}
+//set<DTComentario> Cliente::listadoComentarioCliente()
+//{
+//  set<DTComentario> listadoComens;
+//  for (Comentario comen : *this->comentarios)
+//  {
+//    DTComentario dataComentario = DTComentario(comen.getText(), comen.getId(), comen.getFecha());
+//    listadoComens.insert(dataComentario);
+//  }
+//  return listadoComens;
+//}
