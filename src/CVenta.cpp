@@ -1,5 +1,5 @@
 #include "../include/CVenta.h"
-#include "CVenta.h"
+
 
 void ControladorVenta::crearProducto(Vendedor *vendedor, string nombreP, string descripcionP, float precioP, int cantStockP, categoria cat)
 {
@@ -28,8 +28,8 @@ void ControladorVenta::avanzarContador()
 set<DTProducto> ControladorVenta::listadoProductos()
 {
     set<DTProducto> dataProductos;
-    map<string, Producto *>::iterator it;
-    for (it == this->productos.begin(); it != this->productos.end(); ++it)
+    map<int, Producto *>::iterator it;
+    for (it = this->productos.begin(); it != this->productos.end(); ++it)
     {
         dataProductos.insert(it->second->getDataProducto());
     }
@@ -46,7 +46,14 @@ Producto *ControladorVenta::seleccionarProductoPorId(int productoId)
     }
 }
 
-ControladorVenta *ControladorVenta::getInstancia()
+
+ControladorVenta *ControladorVenta::instancia = nullptr;
+
+
+ControladorVenta::ControladorVenta(){};
+
+
+ControladorVenta *ControladorVenta::getInstanciaVen()
 {
     if (instancia == nullptr)
         instancia = new ControladorVenta();

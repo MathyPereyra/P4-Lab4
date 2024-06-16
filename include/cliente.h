@@ -18,7 +18,7 @@ private:
   string direccion;
   string ciudad;
   set<DTNotificacion> *notificaciones;
-  set<Compra> *compras;
+  set<Compra> compras;
 
 public:
   Cliente(string nickname, string contrasena, DTFecha fechaNac, string dir, string ciud);
@@ -41,7 +41,7 @@ public:
   void notificar();
 
 
-  virtual ~Cliente(){};
+  ~Cliente(){};
 };
 
 #endif

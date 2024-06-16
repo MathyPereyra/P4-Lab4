@@ -238,3 +238,7 @@ bool DTProducto::getEstaEnProm()
 {
   return this->estaEnProm;
 };
+
+bool DTProducto::operator<(const DTProducto& otro) const{
+    return (this->id < otro.id); 
+};

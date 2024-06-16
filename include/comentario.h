@@ -24,13 +24,14 @@ private:
 public:
   Comentario();
   Comentario(string text, DTFecha fecha, int id, Producto *prod);
-  Comentario(string text, DTFecha fecha, int id, Producto *prod, Comentario *respondeA);
+  Comentario(string text, DTFecha fecha, int id);
 
   DTComentario getDataComentario();
   string getText();
   DTFecha getFecha();
   int getId();
   set<Comentario> getRespuestas();
+  void agregarRespuesta(Comentario * Comentario);
 
   void eliminarComentario();
 

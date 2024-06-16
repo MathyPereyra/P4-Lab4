@@ -5,7 +5,11 @@
 using namespace std;
 
 Cliente::Cliente(string nickname, string contrasena, DTFecha fechaNac, string direccion, string ciudad)
-    : Usuario(nickname, contrasena, fechaNac), direccion(direccion), ciudad(ciudad) {}
+    : Usuario(nickname, contrasena, fechaNac), direccion(direccion), ciudad(ciudad){}
+
+// Cliente::~Cliente(){
+//     delete compras;
+// }
 
 string Cliente::getNickname()
 {
@@ -37,15 +41,15 @@ string Cliente::getCiudad()
 //  // return this->notificaciones; //esto estaba porque en el constructor pasabamos por parámetro el set DTNotificaciones, pero eso es incorrecto
 //};
 //
-// set<Compra> Cliente::getCompras()
-//{
-//  //return this->compras;
-//}
-//
-// map<Comentario> Cliente::getComentarios()
-//{
-//  //return this->comentarios;
-//}
+set<Compra> Cliente::getCompras()
+{
+ return this->compras;
+}
+
+map<int, Comentario*> Cliente::getComentarios()
+{
+  return this->comentarios;
+}
 //
 // void Cliente::crearCompra(int id)
 //{
@@ -70,3 +74,5 @@ DTUsuario Cliente::getDatosUsuario()
 //   }
 //   return listadoComens;
 // }
+
+ 

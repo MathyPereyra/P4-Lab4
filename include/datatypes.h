@@ -103,7 +103,7 @@ public:
 
   friend ostream &operator<<(ostream &os, const DTVendedor &dtV)
   {  
-    os << "Nickname: "<<dtV.getNickname() << ", Fecha: " << dtV.getFechaNac().getDia() << "/" << dtV.getFechaNac().getMes() << "/" << dtV.getFechaNac().getAnio() << "\n Codigo RUT:" << dtV.codigoRUT << "\n" ;
+    os << "Nickname: " << dtV.getNickname() << ", Fecha: " << dtV.getFechaNac().getDia() << "/" << dtV.getFechaNac().getMes() << "/" << dtV.getFechaNac().getAnio() << "\n Codigo RUT:" << dtV.codigoRUT << "\n" ;
     return os;
   }
 
@@ -163,7 +163,12 @@ public:
   int getCantStock();
   float getPrecio();
   bool getEstaEnProm();
-
+  bool operator<(const DTProducto& otro) const;   // Comparacion entre DTProducto
+  friend ostream &operator<<(ostream &os, const DTProducto &dtP)
+  {  
+    os << "ID: "<< dtP.id << ", Nombre: " << dtP.nombre<< ", Cantidad en stock: " << dtP.cantStock << ", Precio: " << dtP.precio << ", Categoria: " << dtP.cat<<"\n" ;
+    return os;
+  }
   virtual ~DTProducto(){};
 };
 

@@ -24,8 +24,8 @@ IUsuario* Fabrica::getIUsuario()
 
 IVenta* Fabrica::getIVenta()
 {
-    ControladorVenta* controlador = ControladorVenta::getInstancia();
-    return controlador->getInstancia();
+    ControladorVenta* controlador = ControladorVenta::getInstanciaVen();
+    return controlador->getInstanciaVen();
 };
 
 //IUsuario* Fabrica::getINotificacion()

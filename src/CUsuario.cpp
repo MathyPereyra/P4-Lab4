@@ -54,11 +54,15 @@ void ControladorUsuario::terminarAlta()
     this->memFechaNac.~DTFecha();
 };
 
+
+
 void ControladorUsuario::altaCliente(string direccion, string ciudad)
 {
     Cliente *nuevo = new Cliente(this->memNickname, this->memContrasena, this->memFechaNac, direccion, ciudad);
     this->usuarios[this->memNickname] = nuevo;
 };
+
+
 
 void ControladorUsuario::altaVendedor(string codigoRUT)
 {
@@ -66,19 +70,25 @@ void ControladorUsuario::altaVendedor(string codigoRUT)
     this->usuarios[this->memNickname] = nuevo;
 };
 
+
+
 void ControladorUsuario::confirmarAltaUsuario()
 {
     this->memFechaNac.~DTFecha();
 };
 
+
+
 // void ControladorUsuario::setDataUsuario(string nickname, string contrasena, DTFecha fechaNac) {
 
 // };
 
+
+
 // Se puede emprolijar sacando los if para afuera y el for dentro de cada if dependiendo el caso
-set<DTUsuario> ControladorUsuario::listadoUsuarios(string tipoDeUsuario)
+map<string, Usuario*> ControladorUsuario::listadoUsuarios(string tipoDeUsuario)
 {
-    set<DTUsuario> dataUsuarios;
+    map<string, Usuario *> resultado;
     map<string, Usuario *>::iterator it;
     for (it = this->usuarios.begin(); it != this->usuarios.end(); ++it)
     {
@@ -87,7 +97,7 @@ set<DTUsuario> ControladorUsuario::listadoUsuarios(string tipoDeUsuario)
             Cliente *cliente = dynamic_cast<Cliente *>(it->second);
             if (cliente != NULL)
             {
-                dataUsuarios.insert(cliente->getDatosUsuario());
+                resultado[it->second->getNickname()] = cliente; 
             }
         }
         else if (tipoDeUsuario == "vendedor")
@@ -95,16 +105,18 @@ set<DTUsuario> ControladorUsuario::listadoUsuarios(string tipoDeUsuario)
             Vendedor *vendedor = dynamic_cast<Vendedor *>(it->second);
             if ("cliente" != NULL)
             {
-                dataUsuarios.insert(vendedor->getDatosUsuario());
+                resultado[it->second->getNickname()] = vendedor;
             }
         }
         else
         {
-            dataUsuarios.insert(it->second->getDatosUsuario());
+            resultado[it->second->getNickname()];
         }
     }
-    return dataUsuarios;
+    return resultado;
 };
+
+
 
 Usuario *ControladorUsuario::obtenerUsuarioPorNickname(const string &nickname)
 {
@@ -116,32 +128,45 @@ Usuario *ControladorUsuario::obtenerUsuarioPorNickname(const string &nickname)
     throw std::runtime_error("Usuario no encontrado");
 };
 
-set<DTUsuario> ControladorUsuario::listadoUsuarios()
+map<string, Usuario*> ControladorUsuario::listadoUsuarios()
 {
-    set<DTUsuario> dataUsuarios;
-    map<string, Usuario *>::iterator it;
-    for (it = this->usuarios.begin(); it != this->usuarios.end(); ++it)
-    {
-        dataUsuarios.insert(it->second->getDatosUsuario());
-    }
-
-    return dataUsuarios;
+    return this->usuarios;
 };
+
+//set<DTUsuario> ControladorUsuario::listadoUsuarios()
+//{
+//    set<DTUsuario> dataUsuarios;
+//    map<string, Usuario *>::iterator it;
+//    for (it = this->usuarios.begin(); it != this->usuarios.end(); ++it)
+//    {
+//        dataUsuarios.insert(it->second->getDatosUsuario());
+//    }
+//
+//    return dataUsuarios;
+//};
+
+
 
 void ControladorUsuario::setContadorComentario()
 {
     this->contadorComentario = 0;
 };
 
+
+
 int ControladorUsuario::getContadorComentario()
 {
     return this->contadorComentario;
 };
 
+
+
 void ControladorUsuario::avanzarContadorComentario()
 {
     this->contadorComentario = this->contadorComentario + 1;
 };
+
+
 
 /*set<string> ControladorUsuario::listadoNicknameCliente()
 {
@@ -152,6 +177,8 @@ void ControladorUsuario::avanzarContadorComentario()
     }
     return setNicknames;
 };*/
+
+
 
 // aca asumi que el map usuarios de CUsuario que mapea usuarios a strings guarda como string el nickname del usuario
 /* set<string> ControladorUsuario::listadoUsuarioNickname()
@@ -166,9 +193,14 @@ void ControladorUsuario::avanzarContadorComentario()
     return nombres;
 };*/
 
+
+
 // set<DTComentario> ControladorUsuario::listadoComentario(string){
 
 // };
+
+
+
 void ControladorUsuario::recordarUsuario(Usuario *usuario)
 {
     this->memUsuario = usuario;
@@ -179,14 +211,32 @@ void ControladorUsuario::eliminarComentario(int id)
     Usuario *usuario = getmemUsuario();
     map<int, Comentario *>::iterator it = usuario->getComentarios().find(id);
     it->second->eliminarComentario();
-};
+    liberarMemoriaUsuario();
+}
+
+void ControladorUsuario::liberarMemoriaUsuario()
+{
+    delete this->memUsuario;
+}
 
 void ControladorUsuario::crearComentario(string texto, Producto *producto)
 {
     int id = this->getContadorComentario();
     this->avanzarContadorComentario();
+    DTFecha fecha = DTFecha();
     Comentario *nuevo = new Comentario(texto, fecha, id, producto);
     producto->agregarComentario(id, nuevo);
+};
+
+
+
+void ControladorUsuario::crearRespuesta(string texto, Comentario * comentarioOg)
+{
+    int id = this->getContadorComentario();
+    this->avanzarContadorComentario();
+    DTFecha fecha = DTFecha();
+    Comentario *nuevo = new Comentario(texto, fecha, id);
+    comentarioOg->agregarRespuesta(nuevo);
 };
 
 ControladorUsuario::ControladorUsuario(){};

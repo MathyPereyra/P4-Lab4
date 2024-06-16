@@ -7,14 +7,19 @@ using namespace std;
 Comentario::Comentario(){};
 
 Comentario::Comentario(string text, DTFecha fecha, int id, Producto *producto)
-    : texto(text), fecha(fecha), id(id), producto(*producto), respondeA(NULL) {}
+    : texto(text), fecha(fecha), id(id), producto(producto), respondeA(NULL) {}
 
-Comentario::Comentario(string text, DTFecha fecha, int id, Producto *producto, Comentario *respondeA)
-    : texto(text), fecha(fecha), id(id), producto(*producto), respondeA(respondeA) {}
+Comentario::Comentario(string text, DTFecha fecha, int id)
+    : texto(text), fecha(fecha), id(id), producto(NULL), respondeA(NULL) {}
 
 string Comentario::getText()
 {
   return this->texto;
+};
+
+ void Comentario::agregarRespuesta(Comentario * Comentario)
+{
+  this->respuestas[Comentario->getId()] = Comentario;
 };
 
 DTComentario Comentario::getDataComentario()
@@ -34,9 +39,9 @@ int Comentario::getId()
 
 void Comentario::eliminarComentario()
 {
-  if (this->respuestas == NULL)
+  if (this->respuestas.empty())
   {
-    this->producto->listadoComentarios().erase(this.getId());
+    this->producto->listadoComentarios().erase(this->getId());
     delete this->producto;
     if (this->respondeA != NULL)
       delete this->respondeA;
@@ -45,9 +50,9 @@ void Comentario::eliminarComentario()
   else
   {
     map<int, Comentario *>::iterator ite;
-    for (ite = this->respuestas.begin(); it != this->respuestas.end(); ++it)
+    for (ite = this->respuestas.begin(); ite != this->respuestas.end(); ++ite)
     {
-      res.eliminarComentario();
+      ite->second->eliminarComentario();
     }
   }
 }

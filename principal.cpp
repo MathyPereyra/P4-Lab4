@@ -3,7 +3,7 @@
 // #include <map>
 #include <iostream>
 
-#include "include/CUsuario.h"
+//#include "include/CUsuario.h"
 #include "include/IVenta.h"
 #include "include/comentario.h"
 #include "include/datatypes.h"
@@ -11,7 +11,6 @@
 #include "include/IUsuario.h"
 #include "include/usuario.h"
 #include "include/vendedor.h"
-#include "CUsuario.h"
 // #include "include/observer.h"
 // #include "include/producto.h"
 // #include "include/promocion.h"
@@ -77,9 +76,13 @@ void altaDeUsuario(IUsuario *controlador)
 }
 
 void listadoDeUsuarios(IUsuario *controlador)
-{
+{  
     set<DTUsuario> dataUsuarios;
-    dataUsuarios = controlador->listadoUsuarios();
+    map<string, Usuario*> usuarios = controlador->listadoUsuarios();
+    for(map<string, Usuario*>::iterator it = usuarios.begin(); it != usuarios.end(); ++it)
+    {
+        dataUsuarios.insert(it->second->getDatosUsuario());
+    }
     for (DTUsuario usuario : dataUsuarios)
     {
         cout << usuario << "\n";
@@ -89,7 +92,11 @@ void listadoDeUsuarios(IUsuario *controlador)
 void altaDeProducto(IUsuario *controladorU, IVenta *controladorV)
 {
     set<DTUsuario> dataVendedores;
-    dataVendedores = controladorU->listadoUsuarios("vendedor");
+    map<string, Usuario*> usuarios = controladorU->listadoUsuarios();
+    for(map<string, Usuario*>::iterator it = usuarios.begin(); it != usuarios.end(); ++it)
+    {
+        dataVendedores.insert(it->second->getDatosUsuario());
+    }    
     for (DTUsuario vendedor : dataVendedores)
     {
         cout << vendedor.getNickname() << "\n";
@@ -135,7 +142,7 @@ void altaDeProducto(IUsuario *controladorU, IVenta *controladorV)
     }
 }
 
-void consultarProducto(IVenta *controladorV)
+void consultarProducto(IUsuario * controladorU, IVenta *controladorV)
 {
     int idProducto;
     set<DTProducto> dataProductos;
@@ -148,13 +155,27 @@ void consultarProducto(IVenta *controladorV)
         cout << "Descripcion: " << producto.getDesc() << "\n";
         cout << "Cantidad en stock: " << producto.getCantStock() << "\n";
         cout << "Precio: " << producto.getPrecio() << "\n";
-        cout << "Nombre: " << producto.getNombre() << "\n";
     }
 
     cout << "Seleccione un Producto con su id: ";
     cin >> idProducto;
-
+    cout << "\n";
     Producto *productoConsultado = controladorV->seleccionarProductoPorId(idProducto);
+    DTProducto dataP = productoConsultado->getDataProducto();
+    map<string, Usuario*> vendedores;
+    vendedores = controladorU->listadoUsuarios("vendedor");
+    string nicknameV;
+    for(map<string, Usuario*>::iterator it = vendedores.begin(); it != vendedores.end(); ++it)
+    {
+        Vendedor *vendedor = dynamic_cast<Vendedor *>(it->second);
+        if (vendedor->getProductos().find(idProducto) != vendedor->getProductos().end())
+        {
+            nicknameV = vendedor->getNickname();
+            break;
+        }
+    }
+    cout << dataP << "Nickname del vendedor: " << nicknameV << endl;
+
 }
 
 void dejarComentario(IUsuario *controladorU, IVenta *controladorV)
@@ -162,12 +183,11 @@ void dejarComentario(IUsuario *controladorU, IVenta *controladorV)
     // lista usuarios y selecciona uno
     string nicknameU, textoC;
     int idP;
-    set<DTUsuario> dataUsuarios;
-    dataUsuarios = controladorU->listadoUsuarios();
-
-    for (DTUsuario usuario : dataUsuarios)
+    map<string, Usuario*> dataUsuarios = controladorU->listadoUsuarios();
+    map<string, Usuario*>::iterator it;
+    for (it = dataUsuarios.begin(); it != dataUsuarios.end(); it++)
     {
-        cout << usuario.getNickname() << "\n";
+        cout << it->second->getNickname() << "\n";
     }
     cout << "Seleccione un Usuario: ";
     cin >> nicknameU;
@@ -204,12 +224,23 @@ void dejarComentario(IUsuario *controladorU, IVenta *controladorV)
 
     case 2:
     {
+        int idComen;
+        Producto *seleccionado = controladorV->seleccionarProductoPorId(idP);
         map<int, Comentario *>::iterator it;
-        for (it = seleccionado->comentarios.begin(); it != seleccionado->comentarios.end(); ++it)
+        map<int, Comentario *> mapa = seleccionado->listadoComentarios();
+        //lista todos los comentarios asociados al producto seleccionado
+        for (it = mapa.begin(); it != mapa.end(); ++it)
         {
             cout << "Id comentario: " << it->second->getId() << "\n";
             cout << "Comentario: " << it->second->getText() << "\n";
         }
+        cout << "Seleccione un Comentario con su id: ";
+        cin >> idComen;
+        cout << "\n";
+        cout << "Ingrese el texto de la respuesta al comentario: ";
+        cin >> textoC;
+        Comentario * comentarioOriginal = mapa.find(idComen)->second;
+        controladorU->crearRespuesta(textoC, comentarioOriginal);
     }
     break;
     }
@@ -217,12 +248,11 @@ void dejarComentario(IUsuario *controladorU, IVenta *controladorV)
 
 void eliminarComentario(IUsuario *controladorU)
 {
-    set<DTUsuario> dataUsuarios;
-    dataUsuarios = controladorU->listadoUsuarios();
-
-    for (DTUsuario usuario : dataUsuarios)
+    map<string, Usuario*> dataUsuarios = controladorU->listadoUsuarios();
+    map<string, Usuario*>::iterator it;
+    for (it = dataUsuarios.begin(); it != dataUsuarios.end(); it++)
     {
-        cout << usuario.getNickname() << "\n";
+        cout << it->second->getNickname() << "\n";
     }
     string usuarioSeleccionado;
     cout << "Ingrese el nickname del usuario que desee borrar un comentario: \n";
@@ -247,65 +277,80 @@ void eliminarComentario(IUsuario *controladorU)
     cout << "Comentario " << id << "eliminado. ";
 }
 
-void expedienteDeUsuario(IUsuario *controlador)
-{
-    string nicknameU;
-
-    cout << "Usuarios registrados:\n";
-    set<DTUsuario> dataUsuarios;
-    dataUsuarios = controlador->listadoUsuarios();
-    for (DTUsuario usuario : dataUsuarios)
-    {
-        cout << usuario.getNickname() << "\n";
-    }
-
-    cout << "Seleccione un usuario: ";
-    cin >> nicknameU;
-    Usuario *usuario;
-    usuario = controlador->obtenerUsuarioPorNickname(nicknameU);
-    DTUsuario dataUsuario;
-    dataUsuario = usuario->getDatosUsuario();
-    cout << "Datos del usuario seleccionado:\n"
-         << dataUsuario << endl;
-
-    Vendedor *vendedor = dynamic_cast<Vendedor *>(usuario);
-    if (vendedor != NULL)
-    {
-        // lista todos los productos del vendedor
-        map<int, Producto *> productos = vendedor->getProductos();
-        cout << "Productos del vendedor " << vendedor->getNickname() << ": \n"
-             << endl;
-
-        for (map<int, Producto *>::const_iterator it = productos.begin(); it != productos.end(); ++it)
-        {
-            Producto *producto = it->second;
-            cout << producto->getDataProducto().getNombre() << endl;
-        }
-
-        // Lista todos las promociones activas
-        set<Promocion> promociones = vendedor->getPromociones();
-        cout << "\nPromociones del vendedor " << vendedor->getNickname() << ": \n"
-             << endl;
-
-        for (std::set<Promocion>::const_iterator it = promociones.begin(); it != promociones.end(); ++it)
-        {
-            Promocion promocion = *it;
-            std::cout << promocion.getNombre() << std::endl; // Mostrar el nombre de la promoción
-        }
-    }
-    else
-    {
-        // El usuario no es de tipo Vendedor
-    }
-}
-
+//void expedienteDeUsuario(IUsuario *controlador)
+//{
+//    string nicknameU;
+//
+//    cout << "Usuarios registrados:\n";
+//    set<DTUsuario> dataUsuarios;
+//    dataUsuarios = controlador->listadoUsuarios();
+//    for (DTUsuario usuario : dataUsuarios)
+//    {
+//        cout << usuario.getNickname() << "\n";
+//    }
+//
+//    cout << "Seleccione un usuario: ";
+//    cin >> nicknameU;
+//    cout << "\n";
+//    Usuario *usuario;
+//    usuario = controlador->obtenerUsuarioPorNickname(nicknameU);
+//    DTUsuario dataUsuario;
+//    dataUsuario = usuario->getDatosUsuario();
+//    cout << "Datos del usuario seleccionado:\n"
+//         << dataUsuario << endl;
+//
+//    Vendedor *vendedor = dynamic_cast<Vendedor *>(usuario);
+//    if (vendedor != NULL)
+//    {
+//        // Usuario es vendedor
+//        // lista todos los productos del vendedor
+//        map<int, Producto *> productos = vendedor->getProductos();
+//        cout << "Productos del vendedor " << vendedor->getNickname() << ": \n"
+//             << endl;
+//        for (map<int, Producto *>::const_iterator it = productos.begin(); it != productos.end(); ++it)
+//        {
+//            Producto *producto = it->second;
+//            cout << producto->getDataProducto() << endl;
+//        }
+//
+//        // Lista todos las promociones activas
+//        set<Promocion> promociones = vendedor->getPromociones();
+//        cout << "\nPromociones del vendedor " << vendedor->getNickname() << ": \n"
+//             << endl;
+//        for (set<Promocion>::const_iterator it = promociones.begin(); it != promociones.end(); ++it)
+//        {
+//            Promocion promocion = *it;
+//            cout << promocion.getNombre() << endl; // Muestro el nombre de la promo
+//        }
+//    }
+//    else
+//    {
+//        // El usuario es cliente
+//        Cliente *cliente = dynamic_cast<Cliente *>(usuario);
+//        set<Compra> compras = cliente->getCompras();
+//        cout << "\nCompras del cliente " << cliente->getNickname() << ": \n"
+//             << endl;
+//        for (set<Compra>::const_iterator it = compras.begin(); it != compras.end(); ++it)
+//        {
+//            Compra pcompra = *it;
+//            cout << "Id de la compra:" << endl;
+//            cout << pcompra.getId() << endl; // Muestro el nombre de la promo
+//            for (const Producto& producto : pcompra.getCompProd(). ()) {
+//                cout << "Nombre del producto: " << producto.getNombre() << endl;
+//            }
+//        }
+//
+//    }
+//}
+//
 int main()
 {
 
     Fabrica *fabrica = Fabrica::getInstanceF();      // se crea instancia única de fábrica
     IUsuario *controladorU = fabrica->getIUsuario(); // se crea la instancia del controlador CUsuario de tipo IUsuario
-    IVenta *contraladorV = fabrica->getIVenta();
-    contraladorV->setContador();
+    IVenta *controladorV = fabrica->getIVenta();
+    controladorV->setContador();
+    controladorU->setContadorComentario();
 
     int opcion;
     bool continuar = true;
@@ -326,7 +371,8 @@ int main()
              << "12: Suscribirse a notificaciones" << endl
              << "13: Consulta de notificaciones" << endl
              << "14: Eliminar suscripciones" << endl
-             << "15: Terminar programa" << endl;
+             << "15: Cargar datos preestablecidos" << endl
+             << "16: Terminar programa" << endl;
         cout << "Ingrese el numero correspondiente al caso de uso a ejecutar: ";
         cin >> opcion;
         switch (opcion)
@@ -343,10 +389,12 @@ int main()
 
         case 3:
             cout << "Ejecutando caso de uso: Alta de producto" << endl;
+            altaDeProducto(controladorU,  controladorV);
             break;
 
         case 4:
             cout << "Ejecutando caso de uso: Consultar producto" << endl;
+            consultarProducto(controladorU, controladorV);
             break;
 
         case 5:
@@ -363,10 +411,12 @@ int main()
 
         case 8:
             cout << "Ejecutando caso de uso: Dejar comentario" << endl;
+            dejarComentario(controladorU, controladorV);
             break;
 
         case 9:
             cout << "Ejecutando caso de uso: Eliminar Comentario" << endl;
+            eliminarComentario(controladorU);
             break;
 
         case 10:
@@ -375,6 +425,7 @@ int main()
 
         case 11:
             cout << "Ejecutando caso de uso: Expediente de Usuario" << endl;
+            //expedienteDeUsuario(controladorU);
             break;
 
         case 12:
@@ -390,6 +441,10 @@ int main()
             break;
 
         case 15:
+            cout << "hay q hacerlo xd...\n";
+            break;
+
+        case 16:
             cout << "Terminando programa...\n";
             continuar = false;
             break;

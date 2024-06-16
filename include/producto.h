@@ -7,10 +7,12 @@
 
 #include "datatypes.h"
 #include "observer.h"
-#include "usuario.h"
-#include "comentario.h"
+//#include "vendedor.h"
+//#include "comentario.h"
 
 using namespace std;
+
+class Comentario;
 
 class Producto
 {
@@ -32,6 +34,7 @@ public:
   float calcularDescuento();
 
   map<int, Comentario *> listadoComentarios();
+  
   void agregarComentario(int id, Comentario *comentario);
   DTProducto getDataProducto();
   int getId();
