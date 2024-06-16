@@ -5,6 +5,7 @@
 #include <set>
 #include <map>
 
+#include "producto.h"
 #include "datatypes.h"
 #include "observer.h"
 
@@ -16,10 +17,14 @@ private:
   string texto;
   DTFecha fecha;
   int id;
-  set<Comentario> *respuestas;
+  map<int, Comentario *> respuestas;
+  Comentario *respondeA;
+  Producto *producto;
 
 public:
-  Comentario(string text, DTFecha fecha, int id);
+  Comentario();
+  Comentario(string text, DTFecha fecha, int id, Producto *prod);
+  Comentario(string text, DTFecha fecha, int id, Producto *prod, Comentario *respondeA);
 
   DTComentario getDataComentario();
   string getText();

@@ -21,14 +21,14 @@ private:
   static ControladorUsuario *instancia;
   ControladorUsuario();
   // Memoria Alta de Usuario
-  //Recordar pasar estos tres atributos como DataUsuario antes de entregar
+  // Recordar pasar estos tres atributos como DataUsuario antes de entregar
   string memNickname;
   string memContrasena;
   DTFecha memFechaNac;
+  Usuario *memUsuario;
   int contadorComentario;
 
 public:
-
   void setContadorComentario();
   int getContadorComentario();
   void avanzarContadorComentario();
@@ -38,15 +38,16 @@ public:
   string getmemNickname();
   string getmemContrasena();
   DTFecha getmemFechaNac();
+  Usuario *getmemUsuario();
+  void recordarUsuario(Usuario *usuario);
   void ingresarUsuario(string nickname, string contrasena, DTFecha fechaNac);
   bool existeUsuarioIgualNickname(string nickname);
   void terminarAlta();
   void altaCliente(string direccion, string ciudad);
   void altaVendedor(string codigoRUT);
   void confirmarAltaUsuario();
-  //void setDataUsuario(string nickname, string contrasena, DTFecha fechaNac);
+  // void setDataUsuario(string nickname, string contrasena, DTFecha fechaNac);
 
-  
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //  Retorna set de nicknames, si el tipo es cliente retorna los nickname de todos los clientes y si el tipo es vendedor el de todos los vendedores
@@ -56,18 +57,18 @@ public:
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-  //set<string> listadoNicknameCliente();
+  // set<string> listadoNicknameCliente();
   set<string> listadoUsuarioNickname();
-  //set<DTComentario> listadoComentario(string);
+  // set<DTComentario> listadoComentario(string);
   void eliminarComentario(int id);
-  static ControladorUsuario* getInstance();
+  static ControladorUsuario *getInstance();
 
   // Operaciones internas
-  //void limpiarMemoria();
+  // void limpiarMemoria();
 
-  void crearComentario(string texto);
+  void crearComentario(string texto, Producto *producto);
 
-  Usuario* obtenerDatosUsuarioPorNickname(const string & nickname);
+  Usuario *obtenerUsuarioPorNickname(const string &nickname);
 
   virtual ~ControladorUsuario(){};
 };

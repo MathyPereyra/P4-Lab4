@@ -18,31 +18,31 @@ class Vendedor : public Usuario
 {
 private:
   string codigoRUT;
-  map<int , Producto*> productos;
+  map<int, Producto *> productos;
   set<Promocion> promociones;
-  //set<IObserver> suscriptores;
+  // set<IObserver> suscriptores;
 
 public:
   Vendedor(string nickname, string contrasena, DTFecha fechaNac, string codigoRUT);
 
-  //set<DTIdNProducto> getProductosNoEnPromo();
+  // set<DTIdNProducto> getProductosNoEnPromo();
   void seleccionarProducto(int id);
 
-  void agregarProd(Producto * prod);
+  void agregarProd(Producto *prod);
   void agregarSuscriptor();
   void eliminarSuscriptor();
   void notificarSuscriptores();
   bool estaSuscrito(string nombre);
 
-  DTUsuario getDatosUsuario(); 
+  DTUsuario getDatosUsuario();
   set<DTComentario> listadoComentarioUsuario();
   string getNickname();
   string getContrasena();
   DTFecha getFecha();
-  map<int, Producto*> getProductos();
+  map<int, Producto *> getProductos();
   set<Promocion> getPromociones();
-  map<int, Comentario * > getComentarios();
-  //set<IObserver> getSuscriptores();
+  map<int, Comentario *> getComentarios();
+  // set<IObserver> getSuscriptores();
   string getCodigoRUT();
 
   virtual ~Vendedor(){};
