@@ -24,7 +24,7 @@ string Vendedor::getCodigoRUT()
   return this->codigoRUT;
 };
 
-set<Producto> Vendedor::getProductos()
+map<int, Producto*> Vendedor::getProductos()
 {
   return this->productos;
 };
@@ -69,7 +69,10 @@ DTUsuario Vendedor::getDatosUsuario()
   return DV;
 }
 
-
+void Vendedor::agregarProd(Producto * prod)
+{
+  this->productos[prod->getId()] = prod;
+}
 
 
 //set<DTComentario> Vendedor::listadoComentarioVendedor()

@@ -17,7 +17,7 @@ protected:
   string nickname;
   string contrasena;
   DTFecha fechaNac;
-  set<Comentario> *comentarios;
+  map<int, Comentario*> comentarios;
 //  tipo tipoUsuario;
 
 public:
@@ -29,9 +29,9 @@ public:
 
 //  tipo getTipo();
 
-  virtual set<DTComentario> listadoComentarioUsuario() ;
+  //virtual set<DTComentario> listadoComentarioUsuario() ;
   virtual DTUsuario getDatosUsuario() = 0;
-  virtual set<Comentario>* getComentarios() ;
+  virtual map<int, Comentario*> getComentarios() = 0;
 
   virtual ~Usuario(){};
 };

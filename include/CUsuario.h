@@ -25,8 +25,14 @@ private:
   string memNickname;
   string memContrasena;
   DTFecha memFechaNac;
+  int contadorComentario;
 
 public:
+
+  void setContadorComentario();
+  int getContadorComentario();
+  void avanzarContadorComentario();
+
   static ControladorUsuario *getInstancia();
   // Operaciones externas
   string getmemNickname();
@@ -38,7 +44,7 @@ public:
   void altaCliente(string direccion, string ciudad);
   void altaVendedor(string codigoRUT);
   void confirmarAltaUsuario();
-  void setDataUsuario(string nickname, string contrasena, DTFecha fechaNac);
+  //void setDataUsuario(string nickname, string contrasena, DTFecha fechaNac);
 
   
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -50,14 +56,18 @@ public:
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-  set<string> listadoNicknameCliente();
+  //set<string> listadoNicknameCliente();
   set<string> listadoUsuarioNickname();
-  set<DTComentario> listadoComentario(string);
-  void eliminarComentario(int);
+  //set<DTComentario> listadoComentario(string);
+  void eliminarComentario(int id);
   static ControladorUsuario* getInstance();
 
   // Operaciones internas
-  void limpiarMemoria();
+  //void limpiarMemoria();
+
+  void crearComentario(string texto);
+
+  Usuario* obtenerDatosUsuarioPorNickname(const string & nickname);
 
   virtual ~ControladorUsuario(){};
 };

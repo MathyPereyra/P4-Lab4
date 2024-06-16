@@ -1,4 +1,5 @@
 #include "../include/datatypes.h"
+#include <string>
 
 // DTFecha
 DTFecha::DTFecha() : dia(), mes(), anio() {};
@@ -44,6 +45,7 @@ bool DTFecha::operator>=(const DTFecha desde) const
           (this->anio == desde.anio && this->mes == desde.mes && this->dia >= desde.dia));
 }
 
+
 // DataComentario
 DTComentario::DTComentario(string text, int id, DTFecha fechaCom)
 {
@@ -67,7 +69,9 @@ int DTComentario::getId()
   return this->fechaCom;
  };
 
+
 // DTUsuario
+DTUsuario::DTUsuario(){}
 DTUsuario::DTUsuario(string nickname, string contrasena, DTFecha fechaNac)
 {
   this->nickname = nickname;
@@ -90,6 +94,56 @@ DTFecha DTUsuario::getFechaNac() const
 bool DTUsuario::operator<(const DTUsuario& otro) const{
     return (this->nickname < otro.nickname); 
 };
+
+//DTCliente
+DTCliente::DTCliente(){};
+DTCliente::DTCliente(string nickname, string contrasena, DTFecha fechaNac, string ciudad, string direccion)
+{
+  this->nickname = nickname;
+  this->contrasena = contrasena;
+  this->fechaNac = fechaNac;
+  this->ciudad = ciudad;
+  this->direccion = direccion;
+};
+
+string DTCliente::getNickname() const{
+  return this->nickname;
+};
+
+DTFecha DTCliente::getFechaNac() const{
+return this->fechaNac;
+};
+  
+string DTCliente::getCiudad(){
+  return this->ciudad;
+};
+
+string DTCliente::getDireccion(){
+  return this->direccion;
+};
+
+//DTVendedor
+DTVendedor::DTVendedor(){};
+DTVendedor::DTVendedor(string nickname, string contrasena, DTFecha fechaNac, string codigoRUT)
+{
+  this->nickname = nickname;
+  this->contrasena = contrasena;
+  this->fechaNac = fechaNac;
+  this->codigoRUT = codigoRUT;
+};
+
+string DTVendedor::getNickname() const{
+  return this->nickname;
+};
+
+DTFecha DTVendedor::getFechaNac() const{
+  return this->fechaNac;
+};
+  
+string DTVendedor::getCodigoRUT(){
+  return this->codigoRUT;
+};
+
 
 
 
@@ -136,4 +190,51 @@ DTFecha DTCompra::getFecha()
 set<DTCompra_Producto> DTCompra::getProdProm()
 {
   return this->comProd;
+};
+
+
+//DTProducto
+DTProducto::DTProducto(int id, categoria cat, string nombre, string desc, int cantStock, float precio)
+{
+  this->id = id;
+  this->cat = cat;
+  this->nombre = nombre;
+  this->descripcion = desc;
+  this->cantStock = cantStock;
+  this->precio = precio;
+};
+
+string DTProducto::getNombre()
+{
+  return this->nombre;
+};
+
+int DTProducto::getId()
+{
+  return this->id;
+};
+
+categoria DTProducto::getCat()
+{
+  return this->cat;
+};
+
+string DTProducto::getDesc()
+{
+  return this-> descripcion;
+};
+
+int DTProducto::getCantStock()
+{
+  return this->cantStock;
+};
+
+float DTProducto::getPrecio()
+{
+  return this->precio;
+};
+
+bool DTProducto::getEstaEnProm()
+{
+  return this->estaEnProm;
 };

@@ -1,9 +1,8 @@
 #include "../include/fabrica.h"
-#include "../include/CUsuario.h"
 
 //#include <cstddef>
-//#include "../include/IVenta.h"
-//#include "../include/CVenta.h"
+#include "../include/IVenta.h"
+#include "../include/CVenta.h"
 //#include "../include/INotificacion.h"
 //#include "../include/CNotificiacion.h"
 
@@ -20,15 +19,15 @@ Fabrica* Fabrica::getInstanceF()
 
 IUsuario* Fabrica::getIUsuario()
 {
-    return ControladorUsuario::getInstancia();
+    return ControladorUsuario::getInstance();
 };
 
-//IVenta* Fabrica::getIVenta()
-//{
-//    ControladorVenta* controlador = ControladorVenta::getInstancia();
-//    return controlador->getInstance();
-//};
-//
+IVenta* Fabrica::getIVenta()
+{
+    ControladorVenta* controlador = ControladorVenta::getInstancia();
+    return controlador->getInstancia();
+};
+
 //IUsuario* Fabrica::getINotificacion()
 //{
 //    ControladorNotificacion* controlador = ControladorNotificacion::getInstancia();

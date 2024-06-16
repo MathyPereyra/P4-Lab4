@@ -4,7 +4,7 @@
 #include "IUsuario.h"
 #include "CUsuario.h" // no se si va esto
 //#include "INotificacion.h"
-//#include "IVenta.h"
+#include "IVenta.h"
 
 class Fabrica
 {
@@ -15,7 +15,7 @@ private:
 public:
     static Fabrica * getInstanceF();
     IUsuario* getIUsuario();
-//    IVenta* getIVenta();
+    IVenta* getIVenta();
 //    INotificacion* getINotificacion();
 };
 

@@ -52,7 +52,7 @@ public:
 
   friend ostream &operator<<(ostream &os, const DTUsuario &dtU)
   {  
-    os << "Nickname: "<<dtU.getNickname() << ", Fecha: " << dtU.getFechaNac().getDia() << "/" << dtU.getFechaNac().getMes() << "/" << dtU.getFechaNac().getAnio() << "/n" ;
+    os << "Nickname: "<< dtU.getNickname() << ", Fecha: " << dtU.getFechaNac().getDia() << "/" << dtU.getFechaNac().getMes() << "/" << dtU.getFechaNac().getAnio() << "\n" ;
     return os;
   }
   
@@ -79,7 +79,7 @@ public:
   string getDireccion();
   friend ostream &operator<<(ostream &os, const DTCliente &dtC)
   {  
-    os << "Nickname: "<<dtC.getNickname() << ", Fecha: " << dtC.getFechaNac().getDia() << "/" << dtC.getFechaNac().getMes() << "/" << dtC.getFechaNac().getAnio() << "\n Ciudad:" << dtC.ciudad << ", Direccion: " << dtC.direccion << "/n" ;
+    os << "Nickname: "<<dtC.getNickname() << ", Fecha: " << dtC.getFechaNac().getDia() << "/" << dtC.getFechaNac().getMes() << "/" << dtC.getFechaNac().getAnio() << "\n Ciudad:" << dtC.ciudad << ", Direccion: " << dtC.direccion << "\n" ;
     return os;
   }
 
@@ -153,9 +153,10 @@ private:
   bool estaEnProm;
 
 public:
-  DTProducto();
+  
   DTProducto(int id, categoria cat, string nombre, string desc, int cantStock, float precio);
 
+  string getNombre();
   int getId();
   categoria getCat();
   string getDesc();

@@ -27,7 +27,7 @@ public:
   void agregarSuscripcion();
   void eliminarNotifiaciones();
   void notificar(string nVen, string nProm, set<DTProducto>);
-  set<DTComentario> listadoComentarioCliente();
+  //set<DTComentario> listadoComentarioCliente();
 
   DTUsuario getDatosUsuario();
   string getNickname();
@@ -36,7 +36,7 @@ public:
   string getDireccion();
   string getCiudad();
   set<DTNotificacion> getNotificaciones();
-  set<Comentario>* getComentarios();
+  map<int, Comentario*> getComentarios();
   set<Compra> getCompras();
   void notificar();
 

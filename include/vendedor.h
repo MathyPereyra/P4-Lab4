@@ -18,7 +18,7 @@ class Vendedor : public Usuario
 {
 private:
   string codigoRUT;
-  set<Producto> productos;
+  map<int , Producto*> productos;
   set<Promocion> promociones;
   //set<IObserver> suscriptores;
 
@@ -28,19 +28,20 @@ public:
   //set<DTIdNProducto> getProductosNoEnPromo();
   void seleccionarProducto(int id);
 
+  void agregarProd(Producto * prod);
   void agregarSuscriptor();
   void eliminarSuscriptor();
   void notificarSuscriptores();
   bool estaSuscrito(string nombre);
 
-  DTUsuario getDatosUsuario(); // cambie el nombre porque era igual al getdatos de usuario ver si falta cambiar en algun lado
+  DTUsuario getDatosUsuario(); 
   set<DTComentario> listadoComentarioUsuario();
   string getNickname();
   string getContrasena();
   DTFecha getFecha();
-  set<Producto> getProductos();
+  map<int, Producto*> getProductos();
   set<Promocion> getPromociones();
-  set<Comentario>* getComentarios();
+  map<int, Comentario * > getComentarios();
   //set<IObserver> getSuscriptores();
   string getCodigoRUT();
 

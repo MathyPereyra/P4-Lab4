@@ -1,12 +1,12 @@
 #include "../include/producto.h"
-//#include <string>
-//
-//using namespace std;
-//
-//Producto::Producto(int id, categoria cat, string desc, int cantStock, float precio, bool esta)
-//: id(id), cat(cat), descripcion(desc), cantStock(cantStock), precio(precio), esta(esta){}
-//
-//
+
+#include <string>
+
+using namespace std;
+Producto::Producto(int id, categoria cat, string nombre, string descripcion, int cantStock, float precio, bool estaEnProm)
+: id(id), cat(cat), nombre(nombre), descripcion(descripcion), cantStock(cantStock), precio(precio), estaEnProm(estaEnProm){}
+
+
 //bool Producto::estaEnPromo(){
 //    
 //    return this->esta;
@@ -19,10 +19,9 @@
 //};
 //
 //
-//DTProducto Producto::getDataProducto(){
-//
-//    return DTProducto(this->id, this->cat, this->descripcion, this->cantStock, this->precio);
-//};
+DTProducto Producto::getDataProducto(){
+   return DTProducto(this->id, this->cat,this->nombre, this->descripcion, this->cantStock, this->precio);
+};
 //
 //
 //int Producto::getId(){

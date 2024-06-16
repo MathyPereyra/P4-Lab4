@@ -21,6 +21,7 @@ private:
   int cantStock;
   float precio;
   bool estaEnProm; //Al crearlo esta = false, si el producto es agregado a alguna promocion esta = true
+  map<int, Comentario *> comentarios;
 
 //Habria que agregar bidireccionalidad en la asociacion Producto --- Producto_Promocion para acceder al valor del descuento
 

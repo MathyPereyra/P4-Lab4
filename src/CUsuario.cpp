@@ -22,7 +22,6 @@ void ControladorUsuario::ingresarUsuario(string nickname, string contrasena, DTF
     this->memNickname = nickname;
     this->memContrasena = contrasena;
     this->memFechaNac = fechaNac;
-//    this->memTipo = tipoUsuario;
 };
 
 bool ControladorUsuario::existeUsuarioIgualNickname(string nickname)
@@ -65,11 +64,9 @@ void ControladorUsuario::confirmarAltaUsuario()
     this->memFechaNac.~DTFecha();
 };
 
-void ControladorUsuario::setDataUsuario(string nickname, string contrasena, DTFecha fechaNac) {
+// void ControladorUsuario::setDataUsuario(string nickname, string contrasena, DTFecha fechaNac) {
 
-};
-
-
+// };
 
 
 // Se puede emprolijar sacando los if para afuera y el for dentro de cada if dependiendo el caso
@@ -103,6 +100,14 @@ set<DTUsuario> ControladorUsuario::listadoUsuarios(string tipoDeUsuario)
     return dataUsuarios;
 };
 
+Usuario* ControladorUsuario::obtenerDatosUsuarioPorNickname(const string & nickname){
+    map<string, Usuario*>::iterator it = this->usuarios.find(nickname);
+    if (it != this->usuarios.end()) {
+        return it->second;
+    }
+    throw std::runtime_error("Usuario no encontrado");
+};
+
 set<DTUsuario> ControladorUsuario::listadoUsuarios()
 {
     set<DTUsuario> dataUsuarios;
@@ -113,9 +118,26 @@ set<DTUsuario> ControladorUsuario::listadoUsuarios()
     }
 
     return dataUsuarios;
-}
+};
 
-set<string> ControladorUsuario::listadoNicknameCliente()
+void ControladorUsuario::setContadorComentario()
+{
+    this->contadorComentario = 0;
+};
+
+int ControladorUsuario::getContadorComentario()
+{
+    return this->contadorComentario;
+};
+
+void ControladorUsuario::avanzarContadorComentario()
+{
+    this->contadorComentario = this->contadorComentario + 1;
+};
+
+
+
+/*set<string> ControladorUsuario::listadoNicknameCliente()
 {
     set<string> setNicknames;
     for(DTUsuario dtU : this->listadoUsuarios("cliente"))
@@ -123,36 +145,49 @@ set<string> ControladorUsuario::listadoNicknameCliente()
         setNicknames.insert(dtU.getNickname());
     }
     return setNicknames;
-};
+};*/
 
 // aca asumi que el map usuarios de CUsuario que mapea usuarios a strings guarda como string el nickname del usuario
-//set<string> ControladorUsuario::listadoUsuarioNickname()
-//{
-//    set<string> nombres;
-//    map<string, Usuario *>::iterator it;
-//    for (it = this->usuarios.begin(); it != this->usuarios.end(); ++it)
-//    {
-//        nombres.insert(it->getNickname);
-//    }
-//
-//    return nombres;
-//};
-//
-//set<DTComentario> ControladorUsuario::listadoComentario(string){
-//
-//};
-//
-void ControladorUsuario::eliminarComentario(int) {
+/* set<string> ControladorUsuario::listadoUsuarioNickname()
+ {
+    set<string> nombres;
+    map<string, Usuario *>::iterator it;
+    for (it = this->usuarios.begin(); it != this->usuarios.end(); ++it)
+    {
+        nombres.insert((it->second)->getNickname());    
+    }
 
+    return nombres;
+};*/
+
+// set<DTComentario> ControladorUsuario::listadoComentario(string){
+
+// };
+
+void ControladorUsuario::eliminarComentario(int) 
+{
+    
+};
+
+
+void ControladorUsuario::crearComentario(string texto)
+{
+    int id = this->getContadorComentario();
+    this->avanzarContadorComentario();
+    Comentario* nuevo = new Comentario(texto, fecha, id);
+    vendedor->agregarProd(nuevo);
+    this->comentarios[id] = nuevo;
 };
 
 ControladorUsuario::ControladorUsuario()
 {
 };
 
+ControladorUsuario * ControladorUsuario::instancia = nullptr;
+
 ControladorUsuario * ControladorUsuario::getInstance() 
 {
-    if (instancia == NULL)
+    if (instancia == nullptr)
         instancia = new ControladorUsuario();
     return instancia;
 };

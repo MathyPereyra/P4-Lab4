@@ -4,7 +4,7 @@ all: principal
 # Objetivos que no son archivos.
 .PHONY: all entrega
 
-MODULOS = cliente CNotificacion comentario compra_producto compra CUsuario CVenta datatypes INotificacion IUsuario IVenta notificacion observer producto_promocion producto promocion usuario vendedor
+MODULOS = cliente CNotificacion comentario compra_producto compra CUsuario CVenta datatypes INotificacion IUsuario IVenta notificacion observer producto_promocion producto promocion usuario vendedor fabrica
 
 # directorios
 HDIR    = include
