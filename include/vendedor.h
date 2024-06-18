@@ -5,6 +5,7 @@
 #include <set>
 #include <map>
 
+#include "comentario.h"
 #include "usuario.h"
 #include "datatypes.h"
 #include "observer.h"
@@ -42,6 +43,7 @@ public:
   map<int, Producto *> getProductos();
   set<Promocion> getPromociones();
   map<int, Comentario *> getComentarios();
+  void agregarComentario(int id, Comentario * comentario);
   // set<IObserver> getSuscriptores();
   string getCodigoRUT();
 

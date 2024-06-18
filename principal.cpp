@@ -90,6 +90,9 @@ void listadoDeUsuarios(IUsuario *controlador)
     {
         cout << usuario << "\n";
     }
+    cout << "Ingrese enter para continuar...";
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    cin.get();
 }
 
 void altaDeProducto(IUsuario *controladorU, IVenta *controladorV)
@@ -116,7 +119,6 @@ void altaDeProducto(IUsuario *controladorU, IVenta *controladorV)
     getline(cin, nombreP);
     cout << "\n"
          << "Ingrese descripcion : ";
-    cin.ignore(numeric_limits<streamsize>::max(), '\n');
     getline(cin, descripcionP);
     cout << "\n"
          << "Ingrese precio : ";
@@ -155,7 +157,18 @@ void consultarProducto(IUsuario * controladorU, IVenta *controladorV)
     for (DTProducto producto : dataProductos)
     {
         cout << "Id: " << producto.getId() << "\n";
-        cout << "Categoria: " << producto.getCat() << "\n";
+        string cat;
+        switch (producto.getCat()) 
+        {
+            case ropa: 
+                cat = "ropa";
+                break;
+            case electrodomesticos:
+                cat = "electrodomestico";
+            case otro:
+                cat = "otro";
+        }
+        cout << "Categoria: " << cat << "\n";
         cout << "Nombre: " << producto.getNombre() << "\n";
         cout << "Descripcion: " << producto.getDesc() << "\n";
         cout << "Cantidad en stock: " << producto.getCantStock() << "\n";
@@ -180,7 +193,9 @@ void consultarProducto(IUsuario * controladorU, IVenta *controladorV)
         }
     }
     cout << dataP << "Nickname del vendedor: " << nicknameV << endl;
-
+    cout << "Ingrese enter para continuar...";
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    cin.get();
 }
 
 void dejarComentario(IUsuario *controladorU, IVenta *controladorV)
@@ -196,7 +211,7 @@ void dejarComentario(IUsuario *controladorU, IVenta *controladorV)
     }
     cout << "Seleccione un Usuario: ";
     cin >> nicknameU;
-
+    Usuario * usuario = controladorU->obtenerUsuarioPorNickname(nicknameU);
     // lista productos y selecciona uno
     set<DTProducto> dataProductos;
     dataProductos = controladorV->listadoProductos();
@@ -224,7 +239,7 @@ void dejarComentario(IUsuario *controladorU, IVenta *controladorV)
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
         getline(cin, textoC);
         Producto *seleccionado = controladorV->seleccionarProductoPorId(idP);
-        controladorU->crearComentario(textoC, seleccionado);
+        controladorU->crearComentario(textoC, seleccionado, usuario);
     }
     break;
 
@@ -270,9 +285,11 @@ void eliminarComentario(IUsuario *controladorU)
     map<int, Comentario *> comentarios;
     comentarios = usuario->getComentarios();
     cout << "Listado de Comentarios de " << usuarioSeleccionado << "\n";
+    if (comentarios.empty())
+        cout << "tavacio";
     for (map<int, Comentario *>::const_iterator it = comentarios.begin(); it != comentarios.end(); ++it)
     {
-        cout << "ID: " << it->second->getId() << " ";
+        cout << "ID: " << it->second->getId() << ", ";
         cout << "Contenido: " << it->second->getText() << " \n";
         cout << "Fecha: " << it->second->getFecha().getDia() << "/" << it->second->getFecha().getMes() << "/" << it->second->getFecha().getAnio() << "\n";
     }
@@ -363,7 +380,7 @@ int main()
     bool continuar = true;
     while (continuar)
     {
-        cout << "   Presione un numero para elegir un caso de uso: " << endl;
+        cout << "---Presione un numero para elegir un caso de uso: " << endl;
         cout << "1: Alta de usuario" << endl
              << "2: Listado de usuarios" << endl
              << "3: Alta de producto" << endl

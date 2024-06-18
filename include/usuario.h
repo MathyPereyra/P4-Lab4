@@ -32,6 +32,7 @@ public:
   //virtual set<DTComentario> listadoComentarioUsuario() ;
   virtual DTUsuario getDatosUsuario() = 0;
   virtual map<int, Comentario*> getComentarios() = 0;
+  virtual void agregarComentario(int id, Comentario * nuevo) = 0;
 
   virtual ~Usuario(){};
 };

@@ -66,7 +66,7 @@ public:
   // Operaciones internas
   // void limpiarMemoria();
 
-  void crearComentario(string texto, Producto *producto);
+  void crearComentario(string texto, Producto *producto, Usuario * usuario);
   void crearRespuesta(string texto, Comentario *comentarioOg);
 
   Usuario *obtenerUsuarioPorNickname(const string &nickname);

@@ -33,7 +33,7 @@ public:
     // virtual set<string> listadoUsuarioNickname() = 0;
     // virtual set<DTComentario> listadoComentario(string) = 0;
     virtual void eliminarComentario(int id) = 0;
-    virtual void crearComentario(string texto, Producto *producto) = 0;
+    virtual void crearComentario(string texto, Producto *producto, Usuario * usuario) = 0;
     virtual void liberarMemoriaUsuario() = 0;
     virtual void crearRespuesta(string texto, Comentario* comentarioOg) = 0;
 

@@ -50,6 +50,13 @@ map<int, Comentario*> Cliente::getComentarios()
 {
   return this->comentarios;
 }
+
+void Cliente::agregarComentario(int id, Comentario * comen)
+{
+  this->comentarios[id] = comen;
+}
+
+
 //
 // void Cliente::crearCompra(int id)
 //{

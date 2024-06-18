@@ -37,6 +37,7 @@ public:
   string getCiudad();
   set<DTNotificacion> getNotificaciones();
   map<int, Comentario*> getComentarios();
+  void agregarComentario(int id, Comentario * comentario);
   set<Compra> getCompras();
   void notificar();
 

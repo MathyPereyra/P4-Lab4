@@ -219,13 +219,14 @@ void ControladorUsuario::liberarMemoriaUsuario()
     delete this->memUsuario;
 }
 
-void ControladorUsuario::crearComentario(string texto, Producto *producto)
+void ControladorUsuario::crearComentario(string texto, Producto *producto, Usuario * usuario)
 {
     int id = this->getContadorComentario();
     this->avanzarContadorComentario();
     DTFecha fecha = DTFecha();
     Comentario *nuevo = new Comentario(texto, fecha, id, producto);
     producto->agregarComentario(id, nuevo);
+    usuario->agregarComentario(id, nuevo);
 };
 
 

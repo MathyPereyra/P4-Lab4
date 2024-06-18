@@ -39,6 +39,11 @@ map<int, Comentario *> Vendedor::getComentarios()
   return this->comentarios;
 };
 
+void Vendedor::agregarComentario(int id, Comentario * comen)
+{
+  this->comentarios[id] = comen;
+}
+
 // set<DTIdNProducto> Vendedor::getProductosNoEnPromo()
 //{
 //   set<DTIdNProducto> setInfoProductos;
