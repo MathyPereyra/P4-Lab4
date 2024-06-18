@@ -1,3 +1,5 @@
+#include <ios>
+#include <limits>
 #include <string>
 #include <set>
 // #include <map>
@@ -28,7 +30,7 @@ void altaDeUsuario(IUsuario *controlador)
     int dia, mes, anio;
     cout << "Ingrese nickname:";
     cin >> nickname;
-    cout << "\nIngrese contasena: ";
+    cout << "\nIngrese contrasena: ";
     cin >> contrasena;
     cout << "\nIngrese dia: ";
     cin >> dia;
@@ -52,12 +54,13 @@ void altaDeUsuario(IUsuario *controlador)
     {
     case 1:
     {
-        cout << "\nIngrese direccion: ";
-        string direccion;
-        cin >> direccion;
         cout << "\nIngrese ciudad: ";
         string ciudad;
         cin >> ciudad;
+        cout << "\nIngrese direccion: ";
+        string direccion;
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        getline(cin, direccion);
         controlador->altaCliente(direccion, ciudad);
     }
     break;
@@ -109,10 +112,12 @@ void altaDeProducto(IUsuario *controladorU, IVenta *controladorV)
     cin >> nicknameV;
     cout << "\n"
          << "Ingrese nombre : ";
-    cin >> nombreP;
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    getline(cin, nombreP);
     cout << "\n"
          << "Ingrese descripcion : ";
-    cin >> descripcionP;
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    getline(cin, descripcionP);
     cout << "\n"
          << "Ingrese precio : ";
     cin >> precioP;
@@ -216,7 +221,8 @@ void dejarComentario(IUsuario *controladorU, IVenta *controladorV)
     case 1:
     {
         cout << "Ingrese el texto del comentario: ";
-        cin >> textoC;
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        getline(cin, textoC);
         Producto *seleccionado = controladorV->seleccionarProductoPorId(idP);
         controladorU->crearComentario(textoC, seleccionado);
     }
@@ -238,7 +244,8 @@ void dejarComentario(IUsuario *controladorU, IVenta *controladorV)
         cin >> idComen;
         cout << "\n";
         cout << "Ingrese el texto de la respuesta al comentario: ";
-        cin >> textoC;
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        getline(cin, textoC);
         Comentario * comentarioOriginal = mapa.find(idComen)->second;
         controladorU->crearRespuesta(textoC, comentarioOriginal);
     }
