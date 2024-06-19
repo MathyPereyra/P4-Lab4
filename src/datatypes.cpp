@@ -85,10 +85,10 @@ string DTUsuario::getNickname() const
 };
 
 
-DTFecha DTUsuario::getFechaNac() const
-{
-  return this->fechaNac;
-};
+//DTFecha DTUsuario::getFechaNac() const
+//{
+//  return this->fechaNac;
+//};
 
 
 bool DTUsuario::operator<(const DTUsuario& otro) const{

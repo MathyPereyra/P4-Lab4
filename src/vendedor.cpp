@@ -24,15 +24,26 @@ string Vendedor::getCodigoRUT()
   return this->codigoRUT;
 };
 
+
 map<int, Producto *> Vendedor::getProductos()
 {
   return this->productos;
 };
 
-set<Promocion> Vendedor::getPromociones()
+
+map<string,Promocion * > Vendedor::getPromociones()
 {
   return this->promociones;
 };
+
+
+void Vendedor::agregarProm(Promocion * prom)
+{
+  this->promociones[prom->getNombre()] = prom;
+}
+
+
+
 
 map<int, Comentario *> Vendedor::getComentarios()
 {

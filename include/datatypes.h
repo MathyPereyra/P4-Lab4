@@ -50,7 +50,7 @@ public:
   string getNickname() const;
   DTFecha getFechaNac() const;
 
-  friend ostream &operator<<(ostream &os, const DTUsuario &dtU)
+  friend ostream &operator<<(ostream &os, const DTUsuario &dtU) 
   {  
     os << "Nickname: "<< dtU.getNickname() << ", Fecha: " << dtU.getFechaNac().getDia() << "/" << dtU.getFechaNac().getMes() << "/" << dtU.getFechaNac().getAnio() << "\n" ;
     return os;

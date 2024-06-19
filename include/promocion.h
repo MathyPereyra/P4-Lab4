@@ -11,6 +11,8 @@
 
 using namespace std;
 
+class Vendedor;
+
 class Promocion 
 {
 private:
@@ -18,19 +20,25 @@ private:
   string descripcion;
   float descuento;
   DTFecha fechaVencimiento;
-  set<Producto_Promocion> prodProms;
+  set<Producto_Promocion*> prodProms;
+  Vendedor * vendedor;
 
 public:
   Promocion();
-  Promocion(string nombre, string descripcion, float descuento, DTFecha fechaVencimiento);
+  Promocion(string nombre, string descripcion, float descuento, DTFecha fechaVencimiento, Vendedor * vendedor);
+  
   void agregarAPromocion(int id);
   set<DTProducto> getProdEnProm();
   
   string getNombre();
   string getDescripcion();
-  float getDesc();
+  float getDescuento();
+  Vendedor * getVendedor();
   DTFecha getFechaVen();
-  set<Producto_Promocion> getProdProms();
+  set<Producto_Promocion*> getProdProms();
+
+  void agregarProdProm(Producto_Promocion * prodProm);
+
 
   virtual ~Promocion(){};
 };

@@ -9,7 +9,7 @@ Cliente::Cliente(string nickname, string contrasena, DTFecha fechaNac, string di
 
 // Cliente::~Cliente(){
 //     delete compras;
-// }
+// };
 
 string Cliente::getNickname()
 {

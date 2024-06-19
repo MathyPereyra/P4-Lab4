@@ -38,10 +38,12 @@ public:
   void agregarComentario(int id, Comentario *comentario);
   DTProducto getDataProducto();
   int getId();
+  string getNombre();
   categoria getCat();
   string getDesc();
   int getCantStock();
   float getPrecio();
+  void agregadoAPromo();
 
   virtual ~Producto(){};
 };

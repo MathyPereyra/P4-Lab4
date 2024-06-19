@@ -16,14 +16,18 @@ class Producto_Promocion
 {
 private:
   int cantidadMinima;
-  set<Producto> *productos;
+  Producto* producto;
 
 public:
-  void agregarProd(Producto prod);
+
+  Producto_Promocion();
+  Producto_Promocion(int cantMin);
+
+  void agregarProd(Producto * prod);
   set<DTProducto> getProdEnProm();
 
   int getCantidadMinima();
-  set<Producto> getProductos();
+  Producto* getProducto();
 
   virtual ~Producto_Promocion(){};
 };

@@ -37,6 +37,13 @@ int Producto::getId()
    return this->id;
 };
 
+
+string Producto::getNombre()
+{
+   return this->nombre;
+}
+
+
 categoria Producto::getCat()
 {
    return this->cat;
@@ -52,7 +59,15 @@ int Producto::getCantStock()
    return this->cantStock;
 };
 
-// float Producto::getPrecio(){
-//
-//    return this->precio;
-//};
+
+void Producto::agregadoAPromo()
+{
+   this->estaEnProm = true;
+}
+
+
+float Producto::getPrecio()
+{
+
+    return this->precio;
+}
