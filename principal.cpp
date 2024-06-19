@@ -198,6 +198,41 @@ void consultarProducto(IUsuario * controladorU, IVenta *controladorV)
     cin.get();
 }
 
+
+
+void crearPromocion(IUsuario * controladorU, IVenta * controladorV)
+{
+    string nombreProm, descripcionProm;
+    float descuento;
+    int dia, mes, anio;
+    cout << "Ingrese nombre de la promocion: ";
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    getline(cin, nombreProm);    
+    cout << "\n"  << "Ingrese descripcion: ";
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    getline(cin, descripcionProm);
+    cout << "\n" << "Ingrese descuento: ";
+    cin >> descuento;
+    cout << "\nIngrese fecha de vencimiento";
+    cin >> dia >> mes >> anio;
+    DTFecha fechaVen = DTFecha(dia, mes, anio);
+
+
+    string nicknameV;
+    map<string, Usuario*> vendedores = controladorU->listadoUsuarios("vendedor");
+    map<string, Usuario*>::iterator it;
+    for (it = vendedores.begin(); it != vendedores.end(); it++)
+    {
+        cout << it->second->getNickname() << "\n";
+    }
+    cout << "Seleccione un Usuario: ";
+    cin >> nicknameV;
+
+    
+}
+
+
+
 void dejarComentario(IUsuario *controladorU, IVenta *controladorV)
 {
     // lista usuarios y selecciona uno
@@ -423,6 +458,7 @@ int main()
 
         case 5:
             cout << "Ejecutando caso de uso: Crear promocion" << endl;
+            crearPromocion(controladorU, controladorV);
             break;
 
         case 6:

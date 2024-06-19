@@ -21,6 +21,7 @@ private:
   set<Producto_Promocion> prodProms;
 
 public:
+  Promocion();
   Promocion(string nombre, string descripcion, float descuento, DTFecha fechaVencimiento);
   void agregarAPromocion(int id);
   set<DTProducto> getProdEnProm();

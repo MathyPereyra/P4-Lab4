@@ -243,5 +243,28 @@ public:
 //};
 
 
+
+// DTPROMOCION
+
+class DTPromocion 
+{
+private:
+  string nombre;
+  string descripcion;
+  float descuento;
+  DTFecha fechaVencimiento;
+public:
+  DTPromocion();
+  DTPromocion(string nombre, string descripcion, float descuento, DTFecha fechaVencimiento);
+
+  string getNombre();
+  string getDescripcion();
+  float getDescuento();
+  DTFecha getFechaVen();
+
+  virtual ~DTPromocion(){};
+};
+
+
 #endif
 
