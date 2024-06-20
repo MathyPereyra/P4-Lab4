@@ -162,7 +162,6 @@ bool ControladorVenta::agregarACompra(Producto * prod, int cantidad)
     if(prod->restaDeStock(cantidad))
     {
         compra->agregarACompra(prod, cantidad);
-        cout << "andando agregar a compra ";
         return true;
     }
     return false;
@@ -175,11 +174,17 @@ DTCompra ControladorVenta::detallesCompra()
     DTFecha fechaActual = DTFecha(4,5,6);
     float sumaPrecios = 0;
     DTProducto  productos = DTProducto();
+        cout << "error -1";
     Compra * compra = this->getMemCompra();
+        cout << "error 0";
+    
     for(Compra_Producto * it : compra->getCompProd())
     {
+        cout << "error 1";
         sumaPrecios = it->sumaPrecios() + sumaPrecios;
+        cout << "error 2";
         productos = it->getProductosEnCompra()->getDataProducto();
+        cout << "error 3";
         dataProductos.insert(productos);
     }
     

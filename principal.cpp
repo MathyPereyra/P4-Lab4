@@ -513,25 +513,34 @@ void realizarCompra(IUsuario * controladorU, IVenta * controladorV)
         }
         else  
         {
-            cout<< "Desea agregar un producto a la compra? y/n : ";
+            cout << "Desea agregar un producto a la compra? y/n : ";
             cin >> opcion;
             if (opcion == "n")
-                return;
+            {
+                flag = false;
+                break;
+            }
+
         }
+        
         cout << "Ingrese ID del producto a agregar: ";
         cin >> id;
         cout << "Ingrese la cantidad: ";
         cin >> cantidad;
         Producto * prod = controladorV->seleccionarProductoPorId(id);
+        if (prod == nullptr) 
+        {
+            cout << "Producto no encontrado. Intente nuevamente." << endl;
+        }
         flagProd = controladorV->agregarACompra(prod, cantidad);
         if (!flagProd)
         {
-            cout << "El producto seleccionado no dispone de tantas unidades como desea comprar. ";
+            cout << "El producto seleccion  /ado no dispone de tantas unidades como desea comprar. ";
         }
 
     }
     
-    
+    cout << "ante detalles compra";
     DTCompra dataCompra = controladorV->detallesCompra();
 
     
