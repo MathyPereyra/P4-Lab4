@@ -57,7 +57,7 @@ public:
    void confirmarCrearPromocion();
    void crearCompra(Usuario * cliente);
    set<DTProducto> listadoProductos();
-   void agregarACompra(Producto * prod, int cantidad);
+   bool agregarACompra(Producto * prod, int cantidad);
    // aca no pusimos datadetallecompra al final
    DTCompra detallesCompra();
  //  void confirmarCompra();

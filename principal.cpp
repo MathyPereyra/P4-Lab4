@@ -335,7 +335,7 @@ void crearPromocion(IUsuario * controladorU, IVenta * controladorV)
         cout << "El vendedor no existe. seleccione nuevamente un vendedor.\n" << "Ingrese nickname: ";
         cin >> nicknameV;
     }
-    
+
     Usuario * usuario = controladorU->obtenerUsuarioPorNickname(nicknameV);
     Vendedor *vendedor = dynamic_cast<Vendedor *>(usuario);    
     controladorV->setMemUsuario(usuario);
@@ -448,6 +448,9 @@ void consultarPromocion(IVenta * controladorV)
             cout << "Precio: " << prod->getPrecio() << "\n";
         }
     }
+    cout << "Ingrese enter para continuar...";
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    cin.get();
 }
 
 
@@ -498,23 +501,72 @@ void realizarCompra(IUsuario * controladorU, IVenta * controladorV)
 
     int id, cantidad;
     bool flag = true;
+    bool flagProd = true;
     while (flag) 
     {
-
-    cout << "Desea agregar un producto a la compra? y/n";
-    cin >> opcion;
-    if (opcion == "n")
-        return;
-    cout << "Ingrese ID del producto a agregar: ";
-    cin >> id;
-    cout << "Ingrese la cantidad: ";
-    cin >> cantidad;
-    Producto * prod = controladorV->seleccionarProductoPorId(id);
-    controladorV->agregarACompra(prod, cantidad);
+        if (!flagProd)
+        {
+            cout << "Ingrese ID nuevamente: ";
+            cin >> id;
+            cout << "Ingrese cantidad: ";
+            cin >> cantidad;
+        }
+        else  
+        {
+            cout<< "Desea agregar un producto a la compra? y/n : ";
+            cin >> opcion;
+            if (opcion == "n")
+                return;
+        }
+        cout << "Ingrese ID del producto a agregar: ";
+        cin >> id;
+        cout << "Ingrese la cantidad: ";
+        cin >> cantidad;
+        Producto * prod = controladorV->seleccionarProductoPorId(id);
+        flagProd = controladorV->agregarACompra(prod, cantidad);
+        if (!flagProd)
+        {
+            cout << "El producto seleccionado no dispone de tantas unidades como desea comprar. ";
+        }
 
     }
     
-    controladorV->detallesCompra();
+    
+    DTCompra dataCompra = controladorV->detallesCompra();
+
+    
+    cout << "Detalles de su compra \n" << "Precio: " << dataCompra.getPrecioTotal() << "\nFecha: " << dataCompra.getFecha().getDia() << "/" << dataCompra.getFecha().getMes() << "/" << dataCompra.getFecha().getAnio() << "\n";
+    cout << "Detalles de los productos en su compra: \n";
+    for (DTProducto dp : dataCompra.getProductos())
+    {
+        cout << "Id: " << dp.getId() << "\n";
+        cout << "Nombre: " << dp.getNombre() << "\n";
+        cout << "Categoria: " << dp.getCat() << "\n";
+        switch (dp.getCat()) 
+        {   case ropa: 
+            {
+                cat = "ropa";
+                break;
+            }
+            case electrodomesticos:
+            {
+                cat = "electrodomestico";
+                break;
+            }
+            case otro:
+            {         
+                cat = "otro";
+                break;
+            }
+        }
+        cout << "Categoria: " << cat << "\n";
+        cout << "Descripcion: " << dp.getDesc() << "\n";
+        cout << "Cantidad en stock: " << dp.getCantStock() << "\n";
+        cout << "Precio: " << dp.getPrecio() << "\n"; 
+    }
+    cout << "Ingrese enter para continuar...";
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    cin.get();
 }
 
 void dejarComentario(IUsuario *controladorU, IVenta *controladorV)
@@ -820,7 +872,7 @@ void eliminarComentario(IUsuario *controladorU)
 //    vector<int> cantComp4 = {1,1,1};
 //    vector<int> idComp5 = {3,6};
 //    vector<int> cantComp5 = {2,3};
-//    vector<int> idComp6 = {11,12,13};
+//    vector<int> idComp6 = {};
 //    vector<int> cantComp6 = {1,1,1};
 //    void realizarCompraCARGARDATOSPREESTABLECIDOS(controladorU,controladorV,juan87,idComp1,cantComp1);
 //}

@@ -10,22 +10,31 @@ Compra_Producto::Compra_Producto(int cantidad, bool envio) : cantidad(cantidad),
 void Compra_Producto::agregarProducto(Producto * prod)
 {
     int id = prod->getId();
-    this->productosEnCompra[id] = prod;
+    this->productosEnCompra = prod;
     prod->agregadoACompra();
 }
 
 
 float Compra_Producto::sumaPrecios()
 {
+    DTFecha fechaActual = DTFecha(9,9,9);
     float suma = 0;
-    map<int, Producto*> productos = this->getProductosEnCompra();
-    for(map<int, Producto*>::iterator iter = productos.begin(); iter != productos.end(); iter++)
-    {
-        suma = suma + iter->second->getPrecio();
-    }    
+    Producto * productos = this->getProductosEnCompra();
+    if(productos->restaDeStock(this->getCantidad()))
+    { 
+        Promocion * promo = productos->getPromo();
+        bool habilPromo = promo->habilPromo(productos, fechaActual, this->getCantidad());
+
+        if(habilPromo)
+        {
+            return suma = (productos->getPrecio() * this->getCantidad()) * promo->getDescuento();
+        }
+        return suma = productos->getPrecio() * this->getCantidad(); // a priori falta la prom
+    }
+    else return -1;
 }
 
-map<int, Producto*> Compra_Producto::getProductosEnCompra()
+Producto * Compra_Producto::getProductosEnCompra()
 {
     return this->productosEnCompra;
 }

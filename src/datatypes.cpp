@@ -170,11 +170,12 @@ set<DTProducto> DTNotificacion::getProductos()
 };
    
 //DTCompra
-DTCompra::DTCompra(float precioTotal, DTFecha fechaCompra, set<DTCompra_Producto> comProd)
+
+DTCompra::DTCompra(float precioTotal, DTFecha fechaCompra, set<DTProducto> productos)
 {
   this->precioTotal = precioTotal;
   this->fechaCompra = fechaCompra;
-  this->comProd = comProd;
+  this->productos = productos;
 };
 
 float DTCompra::getPrecioTotal()
@@ -187,13 +188,15 @@ DTFecha DTCompra::getFecha()
   return this->fechaCompra;
 };
 
-set<DTCompra_Producto> DTCompra::getProdProm()
+set<DTProducto> DTCompra::getProductos()
 {
-  return this->comProd;
+  return this->productos;
 };
 
 
 //DTProducto
+DTProducto::DTProducto(){};
+
 DTProducto::DTProducto(int id, categoria cat, string nombre, string desc, int cantStock, float precio)
 {
   this->id = id;

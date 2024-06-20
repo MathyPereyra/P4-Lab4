@@ -153,7 +153,7 @@ private:
   bool estaEnProm;
 
 public:
-  
+  DTProducto();
   DTProducto(int id, categoria cat, string nombre, string desc, int cantStock, float precio);
 
   string getNombre();
@@ -215,13 +215,13 @@ class DTCompra
 private:
   float precioTotal;
   DTFecha fechaCompra;
-  set<DTCompra_Producto> comProd;
+  set<DTProducto> productos;
 
 public:
-  DTCompra(float precioTotal, DTFecha fechaCompra, set<DTCompra_Producto> comProd);
+  DTCompra(float precioTotal, DTFecha fechaCompra, set<DTProducto> comProd);
   float getPrecioTotal();
   DTFecha getFecha();
-  set<DTCompra_Producto> getProdProm();
+  set<DTProducto> getProductos();
 
   virtual ~DTCompra(){};
 };

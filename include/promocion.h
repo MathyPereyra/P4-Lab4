@@ -6,10 +6,12 @@
 #include <map>
 
 #include "datatypes.h"
+#include "producto.h"
 #include "producto_promocion.h"
 #include "observer.h"
 
 using namespace std;
+
 
 class Vendedor;
 
@@ -37,6 +39,7 @@ public:
   DTFecha getFechaVen();
   set<Producto_Promocion*> getProdProms();
 
+  bool habilPromo(Producto * producto, DTFecha fechaActual, int cantidadCompra);
   void agregarProdProm(Producto_Promocion * prodProm);
 
 

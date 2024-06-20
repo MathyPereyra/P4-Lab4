@@ -9,6 +9,7 @@
 #include "datatypes.h"
 #include "observer.h"
 #include "producto.h"
+#include "promocion.h"
 
 using namespace std;
 
@@ -17,7 +18,7 @@ class Compra_Producto
 private:
   bool envio;
   int cantidad;
-  map<int ,Producto*> productosEnCompra;
+  Producto * productosEnCompra;
 
 public:
   Compra_Producto();
@@ -29,7 +30,7 @@ public:
 
   bool getEnvio();
   int getCantidad();
-  map<int, Producto*> getProductosEnCompra();
+  Producto * getProductosEnCompra();
 
   virtual ~Compra_Producto(){};
 };

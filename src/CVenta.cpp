@@ -5,7 +5,7 @@ void ControladorVenta::crearProducto(Vendedor *vendedor, string nombreP, string 
 {
     int id = this->getContador();
     this->avanzarContador();
-    Producto *nuevo = new Producto(id, cat, nombreP, descripcionP, cantStockP, precioP, false, false);
+    Producto *nuevo = new Producto(id, cat, nombreP, descripcionP, cantStockP, precioP, NULL, false);
     vendedor->agregarProd(nuevo);
     this->productos[id] = nuevo;
 }
@@ -129,7 +129,7 @@ void ControladorVenta::seleccionarProductoAProm(int id, int cantMinima)
 
     prom->agregarProdProm(prodProm);
     prodProm->agregarProd(prod);
-    prod->agregadoAPromo();
+    prod->agregadoAPromo(prom);
 
     //aca siguen las notis en un futuro
 }
@@ -156,31 +156,35 @@ void ControladorVenta::crearCompra(Usuario * cliente)
 }
 
 
-void ControladorVenta::agregarACompra(Producto * prod, int cantidad)
+bool ControladorVenta::agregarACompra(Producto * prod, int cantidad)
 {
     Compra * compra = getMemCompra();
-    compra->agregarACompra(prod, cantidad);
+    if(prod->restaDeStock(cantidad))
+    {
+        compra->agregarACompra(prod, cantidad);
+        cout << "andando agregar a compra ";
+        return true;
+    }
+    return false;
 }
 
 
 DTCompra ControladorVenta::detallesCompra()
 {
-    map<int, Producto*> productos;
+    set<DTProducto> dataProductos;
+    DTFecha fechaActual = DTFecha(4,5,6);
+    float sumaPrecios = 0;
+    DTProducto  productos = DTProducto();
     Compra * compra = this->getMemCompra();
     for(Compra_Producto * it : compra->getCompProd())
     {
-        productos = it->getProductosEnCompra();
-        for(map<int, Producto*>::iterator iter = productos.begin(); iter != productos.end(); iter++)
-        {
-            
-        }
-
-        it->sumaPrecios();
-        it->getCantidad();
-
-
-
+        sumaPrecios = it->sumaPrecios() + sumaPrecios;
+        productos = it->getProductosEnCompra()->getDataProducto();
+        dataProductos.insert(productos);
     }
+    
+    DTCompra dataCompra = DTCompra(sumaPrecios, fechaActual, dataProductos);
+    return dataCompra;
 }
 
 

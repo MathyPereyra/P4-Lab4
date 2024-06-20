@@ -11,6 +11,7 @@
 
 using namespace std;
 
+class Comentario;
 class Compra;
 
 class Usuario

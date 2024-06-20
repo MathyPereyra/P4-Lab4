@@ -41,6 +41,26 @@ set<Producto_Promocion*> Promocion::getProdProms()
 };
 
 
+bool Promocion::habilPromo(Producto * producto, DTFecha fechaActual, int cantidadCompra)
+{
+    bool cantidadValida = false;
+    bool expirado = fechaActual >= this->getFechaVen();
+    for (Producto_Promocion * prodProm : this->getProdProms())
+    {
+        if(prodProm->getProducto() == producto)
+        {
+            cantidadValida = prodProm->getCantidadMinima() < cantidadCompra;
+            break;
+        }
+    }
+    if (!expirado && cantidadValida)
+    {
+        return true;
+    }
+    return false;
+}
+
+
 void Promocion::agregarProdProm(Producto_Promocion * prodProm)
 {
     this->prodProms.insert(prodProm);

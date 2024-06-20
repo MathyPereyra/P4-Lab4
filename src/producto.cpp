@@ -3,13 +3,13 @@
 #include <string>
 
 using namespace std;
-Producto::Producto(int id, categoria cat, string nombre, string descripcion, int cantStock, float precio, bool estaEnPromo, bool enCompra)
-    : id(id), cat(cat), nombre(nombre), descripcion(descripcion), cantStock(cantStock), precio(precio), estaEnProm(estaEnPromo), enCompra(enCompra) {}
+Producto::Producto(int id, categoria cat, string nombre, string descripcion, int cantStock, float precio, Promocion * promo, bool enCompra)
+    : id(id), cat(cat), nombre(nombre), descripcion(descripcion), cantStock(cantStock), precio(precio), promo(promo), enCompra(enCompra) {}
 
 
 bool Producto::estaEnPromo()
 {
-   return this->estaEnProm;
+   return (this->promo != NULL);
 };
 
 
@@ -68,9 +68,15 @@ int Producto::getCantStock()
 };
 
 
-void Producto::agregadoAPromo()
+Promocion * Producto::getPromo()
 {
-   this->estaEnProm = true;
+   return this->promo;
+}
+
+
+void Producto::agregadoAPromo(Promocion * promo)
+{
+   this->promo = promo;
 }
 
 
@@ -85,4 +91,15 @@ float Producto::getPrecio()
 {
 
     return this->precio;
+}
+
+
+bool Producto::restaDeStock(int cantidad)
+{
+   if(this->cantStock >= cantidad)
+   {
+      this->cantStock = this->cantStock - cantidad;
+      return true;
+   }
+   return false;
 }

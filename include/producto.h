@@ -13,6 +13,7 @@
 using namespace std;
 
 class Comentario;
+class Promocion;
 
 class Producto
 {
@@ -23,14 +24,14 @@ private:
   string descripcion;
   int cantStock;
   float precio;
-  bool estaEnProm; // Al crearlo esta = false, si el producto es agregado a alguna promocion esta = true
-  bool enCompra;
+  Promocion * promo; 
+  bool enCompra;  // Al crearlo esta = false, si el producto es agregado a alguna promocion esta = true
   map<int, Comentario *> comentarios;
 
   // Habria que agregar bidireccionalidad en la asociacion Producto --- Producto_Promocion para acceder al valor del descuento
 
 public:
-  Producto(int id, categoria cat, string nombre, string descripcion, int cantStock, float precio, bool estaEnProm, bool enCompra);
+  Producto(int id, categoria cat, string nombre, string descripcion, int cantStock, float precio, Promocion * promo, bool enCompra);
   
   
   bool estaEnPromo();
@@ -42,15 +43,17 @@ public:
   
   void agregarComentario(int id, Comentario *comentario);
   
+  bool restaDeStock(int cantidad);
   DTProducto getDataProducto();
   int getId();
   string getNombre();
   categoria getCat();
   string getDesc();
   int getCantStock();
-  
+  Promocion * getPromo();
   float getPrecio();
-  void agregadoAPromo();
+  
+  void agregadoAPromo(Promocion * promo);
   void agregadoACompra();
 
   virtual ~Producto(){};
