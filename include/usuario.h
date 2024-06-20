@@ -11,6 +11,8 @@
 
 using namespace std;
 
+class Compra;
+
 class Usuario
 {
 protected:
@@ -33,6 +35,7 @@ public:
   virtual DTUsuario getDatosUsuario() = 0;
   virtual map<int, Comentario*> getComentarios() = 0;
   virtual void agregarComentario(int id, Comentario * nuevo) = 0;
+  virtual void crearCompra(Compra * compra) = 0;
 
   virtual ~Usuario(){};
 };

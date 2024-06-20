@@ -79,6 +79,8 @@ void Vendedor::eliminarSuscriptor()
 {
 }
 
+void Vendedor::crearCompra(Compra * compra){}
+
 DTUsuario Vendedor::getDatosUsuario()
 {
   DTUsuario DV = DTVendedor(this->nickname, this->contrasena, this->fechaNac, this->codigoRUT);

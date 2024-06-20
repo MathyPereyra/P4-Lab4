@@ -5,14 +5,14 @@ void ControladorVenta::crearProducto(Vendedor *vendedor, string nombreP, string 
 {
     int id = this->getContador();
     this->avanzarContador();
-    Producto *nuevo = new Producto(id, cat, nombreP, descripcionP, cantStockP, precioP, false);
+    Producto *nuevo = new Producto(id, cat, nombreP, descripcionP, cantStockP, precioP, false, false);
     vendedor->agregarProd(nuevo);
     this->productos[id] = nuevo;
 }
 
 void ControladorVenta::setContador()
 {
-    this->contador = 0;
+    this->contador = 1;
 }
 
 int ControladorVenta::getContador()
@@ -25,6 +25,21 @@ void ControladorVenta::avanzarContador()
     this->contador = this->contador + 1;
 }
 
+
+void ControladorVenta::setContadorCompra()
+{
+    this->contadorCompra = 1;
+}
+
+int ControladorVenta::getContadorCompra()
+{
+    return this->contadorCompra;
+}
+
+void ControladorVenta::avanzarContadorCompra()
+{
+    this->contadorCompra = this->contadorCompra + 1;
+}
 
 Usuario * ControladorVenta::getMemUsuario()
 {
@@ -50,7 +65,16 @@ void ControladorVenta::setMemPromocion(Promocion * prom)
 }
 
 
+Compra * ControladorVenta::getMemCompra()
+{
+    return this->memCompra;
+}
 
+
+void ControladorVenta::setMemCompra(Compra * compra)
+{
+    this->memCompra = compra;
+}
 
 map<string, Promocion *> ControladorVenta::listadoPromociones()
 {
@@ -72,12 +96,11 @@ set<DTProducto> ControladorVenta::listadoProductos()
 
 Producto *ControladorVenta::seleccionarProductoPorId(int productoId)
 {
-    auto it = this->productos.find(productoId);
-    if (it != this->productos.end())
-    {
+    map<int, Producto*>::iterator it = this->productos.find(productoId);
+    if (it != this->productos.end()) {
         return it->second;
     }
-    return NULL;
+    return nullptr;
 }
 
 
@@ -117,6 +140,50 @@ void ControladorVenta::confirmarCrearPromocion()
     delete this->memPromocion;
     delete this->memUsuario;
 }
+
+
+void ControladorVenta::crearCompra(Usuario * cliente)
+{
+    int id = this->getContadorCompra();
+    this->avanzarContadorCompra();
+    DTFecha fechaActual = DTFecha(0,0,0);
+
+    Compra * compra = new Compra(fechaActual, 0, id);
+    this->setMemCompra(compra);
+
+    cliente->crearCompra(compra);
+    this->compras[id] = compra;
+}
+
+
+void ControladorVenta::agregarACompra(Producto * prod, int cantidad)
+{
+    Compra * compra = getMemCompra();
+    compra->agregarACompra(prod, cantidad);
+}
+
+
+DTCompra ControladorVenta::detallesCompra()
+{
+    map<int, Producto*> productos;
+    Compra * compra = this->getMemCompra();
+    for(Compra_Producto * it : compra->getCompProd())
+    {
+        productos = it->getProductosEnCompra();
+        for(map<int, Producto*>::iterator iter = productos.begin(); iter != productos.end(); iter++)
+        {
+            
+        }
+
+        it->sumaPrecios();
+        it->getCantidad();
+
+
+
+    }
+}
+
+
 
 
 

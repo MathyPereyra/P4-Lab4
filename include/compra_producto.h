@@ -17,16 +17,19 @@ class Compra_Producto
 private:
   bool envio;
   int cantidad;
-  set<Producto> *productosEnCompra;
+  map<int ,Producto*> productosEnCompra;
 
 public:
-  void agregarProd(Producto prod);
+  Compra_Producto();
+  Compra_Producto(int cantidad, bool envio);
+
+  void agregarProducto(Producto * prod);
   float sumaPrecios();
   DTProducto getDatosProductos();
 
   bool getEnvio();
   int getCantidad();
-  set<Producto> getProductosEnCompra();
+  map<int, Producto*> getProductosEnCompra();
 
   virtual ~Compra_Producto(){};
 };

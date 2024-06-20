@@ -44,6 +44,7 @@ public:
   map<string, Promocion * > getPromociones();
   void agregarProm(Promocion * prom);
   void agregarProdAProm();
+  void crearCompra(Compra * compra);
 
   map<int, Comentario *> getComentarios();
   void agregarComentario(int id, Comentario * comentario);

@@ -1,22 +1,33 @@
 //#include "../include/producto.h"
 #include "../include/compra.h"
-//#include <string>
-//
-//using namespace std;
-//
-//Compra(DTFecha fechaCompra, float montoTotal, set<Compra_Producto> com_Prods, int id){
-//: fecha(fechaCompra), montoTotal(montototal), com_Prods(com_Prods), id(id){};
-//
-//};
-//
-//
-//void Compra::agregarACompra(Producto prod, int cantidad)
-//{
-//    Compra_Producto nuevoCP = new Compra_Producto(cantidad, false);
-//    nuevoCP.agregarACompra(prod);
-//    this->com_Prod;
-//};
-//
+
+using namespace std;
+
+Compra::Compra(){}
+
+
+
+
+Compra::Compra(DTFecha fechaCompra, float montoTotal, int id)
+: fecha(fechaCompra), montoTotal(montoTotal), id(id){};
+
+
+
+
+void Compra::agregarACompra(Producto * prod, int cantidad)
+{
+    Compra_Producto * nuevoCP = new Compra_Producto(cantidad, false);
+    nuevoCP->agregarProducto(prod);
+    this->com_Prods.insert(nuevoCP);
+};
+
+
+
+
+
+
+
+
 //bool Compra::productoEnCompra(int id_prod)
 //{
 //    bool enCompra = false;
@@ -35,39 +46,36 @@
 //};
 //*/
 //
-//int Compra::getId()
-//{
-//    return this->id;
-//};
-//
-//
-//
-//DTFecha Compra::getFecha()
-//{
-//    return this->fecha;
-//};
-//
-//float Compra::getMontoTotal()
-//{
-//    return this->montoTotal;
-//};
-//
-//set<Compra_Producto> Compra::getCompProd()
-//{
-//    return this->com_Prods;
-//};
-//
-//int Compra::getId()
-//{
-//    return this->id;
-//};
-//
-//void Compra::setId(int id)
-//{
-//    this->id = id;
-//};
-//
-//DTCompra Compra::infoCompra()
-//{
-//    //arreglar diagrama comunicacion crear compra!
-//}
+int Compra::getId()
+{
+    return this->id;
+};
+
+
+
+DTFecha Compra::getFecha()
+{
+    return this->fecha;
+};
+
+float Compra::getMontoTotal()
+{
+    return this->montoTotal;
+};
+
+
+set<Compra_Producto*> Compra::getCompProd()
+{
+    return this->com_Prods;
+}
+
+
+void Compra::setId(int id)
+{
+    this->id = id;
+};
+
+DTCompra Compra::infoCompra()
+{
+    //arreglar diagrama comunicacion crear compra!
+}

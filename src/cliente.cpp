@@ -41,7 +41,7 @@ string Cliente::getCiudad()
 //  // return this->notificaciones; //esto estaba porque en el constructor pasabamos por parámetro el set DTNotificaciones, pero eso es incorrecto
 //};
 //
-set<Compra> Cliente::getCompras()
+map<int, Compra*> Cliente::getCompras()
 {
  return this->compras;
 }
@@ -57,13 +57,12 @@ void Cliente::agregarComentario(int id, Comentario * comen)
 }
 
 
-//
-// void Cliente::crearCompra(int id)
-//{
-//  Compra d = Compra();
-//  d.setId(id);
-//  this->compras->insert(d); // donde está el set/map compras?
-//}
+
+ void Cliente::crearCompra( Compra * compra)
+{
+  int id = compra->getId();
+  this->compras[id] = compra;
+}
 
 DTUsuario Cliente::getDatosUsuario()
 {

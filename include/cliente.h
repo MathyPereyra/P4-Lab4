@@ -18,7 +18,7 @@ private:
   string direccion;
   string ciudad;
   set<DTNotificacion> *notificaciones;
-  set<Compra> compras;
+  map<int, Compra*> compras;
 
 public:
   Cliente(string nickname, string contrasena, DTFecha fechaNac, string dir, string ciud);
@@ -27,8 +27,8 @@ public:
   void agregarSuscripcion();
   void eliminarNotifiaciones();
   void notificar(string nVen, string nProm, set<DTProducto>);
-  //set<DTComentario> listadoComentarioCliente();
 
+  void crearCompra(Compra * compra);
   DTUsuario getDatosUsuario();
   string getNickname();
   string getContrasena(); //debería ir? solo lo agregué porque estaría faltando para usar en cliente.cpp
@@ -38,7 +38,7 @@ public:
   set<DTNotificacion> getNotificaciones();
   map<int, Comentario*> getComentarios();
   void agregarComentario(int id, Comentario * comentario);
-  set<Compra> getCompras();
+  map<int, Compra*> getCompras();
   void notificar();
 
 
