@@ -31,8 +31,9 @@ public:
   void seleccionarProducto(int id);
 
   void agregarProd(Producto *prod);
-  void agregarSuscriptor();
-  void eliminarSuscriptor();
+  // tal vez tendria q ser clietne no usuario
+  void agregarSuscriptor(Usuario *usuario);
+  void eliminarSuscriptor(Usuario *usuario);
   void notificarSuscriptores();
   bool estaSuscrito(string nombre);
 
