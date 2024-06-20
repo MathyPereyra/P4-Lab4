@@ -20,7 +20,8 @@ class Vendedor : public Usuario
 private:
   string codigoRUT;
   map<int, Producto *> productos;
-  map<string, Promocion*> promociones;
+  map<string, Promocion *> promociones;
+  map<string, Usuario *> suscriptores;
   // set<IObserver> suscriptores;
 
 public:
@@ -41,13 +42,13 @@ public:
   string getContrasena();
   DTFecha getFecha();
   map<int, Producto *> getProductos();
-  map<string, Promocion * > getPromociones();
-  void agregarProm(Promocion * prom);
+  map<string, Promocion *> getPromociones();
+  void agregarProm(Promocion *prom);
   void agregarProdAProm();
-  void crearCompra(Compra * compra);
+  void crearCompra(Compra *compra);
 
   map<int, Comentario *> getComentarios();
-  void agregarComentario(int id, Comentario * comentario);
+  void agregarComentario(int id, Comentario *comentario);
   // set<IObserver> getSuscriptores();
   string getCodigoRUT();
 

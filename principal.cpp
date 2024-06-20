@@ -5,7 +5,7 @@
 #include <map>
 #include <iostream>
 
-//#include "include/CUsuario.h"
+// #include "include/CUsuario.h"
 #include "include/IVenta.h"
 #include "include/cliente.h"
 #include "include/comentario.h"
@@ -32,12 +32,13 @@ void altaDeUsuario(IUsuario *controlador)
     cin >> nickname;
     cout << "\nIngrese contrasena: ";
     cin >> contrasena;
-    while (contrasena.length() < 6) {
+    while (contrasena.length() < 6)
+    {
         cout << "La contraseña debe tener al menos 6 caracteres. Intente de nuevo.\n";
         cout << "\nIngrese contraseña: ";
         cin >> contrasena;
     }
-    
+
     cout << "\nIngrese dia: ";
     cin >> dia;
     cout << "\nIngrese mes: ";
@@ -76,7 +77,7 @@ void altaDeUsuario(IUsuario *controlador)
         cout << "\nIngrese codigoRUT (debe tener exactamente 12 caracteres): ";
         string codigoRUT;
         cin >> codigoRUT;
-        while (codigoRUT.length() != 12) 
+        while (codigoRUT.length() != 12)
         {
             cout << "El codigoRUT debe tener exactamente 12 caracteres. Intente de nuevo.\n";
             cout << "\nIngrese codigoRUT (debe tener exactamente 12 caracteres): ";
@@ -91,36 +92,36 @@ void altaDeUsuario(IUsuario *controlador)
 }
 
 void listadoDeUsuarios(IUsuario *controlador)
-{   
-    map<string, Vendedor*> vendedores;
-    map<string, Cliente*> clientes;
+{
+    map<string, Vendedor *> vendedores;
+    map<string, Cliente *> clientes;
     set<DTUsuario> dataUsuarios;
-    map<string, Usuario*> usuarios = controlador->listadoUsuarios();
-    for(map<string, Usuario*>::iterator it = usuarios.begin(); it != usuarios.end(); ++it)
+    map<string, Usuario *> usuarios = controlador->listadoUsuarios();
+    for (map<string, Usuario *>::iterator it = usuarios.begin(); it != usuarios.end(); ++it)
     {
-        Vendedor* vendedor = dynamic_cast<Vendedor*>(it->second);
+        Vendedor *vendedor = dynamic_cast<Vendedor *>(it->second);
         if (vendedor != NULL)
         {
             vendedores[vendedor->getNickname()] = vendedor;
         }
-        else 
+        else
         {
-            Cliente* cliente = dynamic_cast<Cliente*>(it->second);
+            Cliente *cliente = dynamic_cast<Cliente *>(it->second);
             clientes[cliente->getNickname()] = cliente;
         }
     }
-    cout << "Listado de Usuarios: " << "\n";    
-    for(map<string, Vendedor*>::iterator it = vendedores.begin(); it != vendedores.end(); ++it)
+    cout << "Listado de Usuarios: " << "\n";
+    for (map<string, Vendedor *>::iterator it = vendedores.begin(); it != vendedores.end(); ++it)
     {
         cout << "Nickname: " << it->second->getNickname() << ", Fecha nacimiento: " << it->second->getFechaNac().getDia() << "/" << it->second->getFechaNac().getMes() << "/" << it->second->getFechaNac().getAnio() << ", Codigo RUT: " << it->second->getCodigoRUT() << "\n";
     }
 
-    for(map<string, Cliente*>::iterator iter = clientes.begin(); iter != clientes.end(); ++iter)
+    for (map<string, Cliente *>::iterator iter = clientes.begin(); iter != clientes.end(); ++iter)
     {
-        cout << "Nickname: "<< iter->second->getNickname() << ", Fecha nacimiento: " << iter->second->getFechaNac().getDia() << "/" << iter->second->getFechaNac().getMes() << "/" << iter->second->getFechaNac().getAnio() << ", Dirección: "<< iter->second->getDireccion() << ", Ciudad: " << iter->second->getCiudad() << "\n";
+        cout << "Nickname: " << iter->second->getNickname() << ", Fecha nacimiento: " << iter->second->getFechaNac().getDia() << "/" << iter->second->getFechaNac().getMes() << "/" << iter->second->getFechaNac().getAnio() << ", Dirección: " << iter->second->getDireccion() << ", Ciudad: " << iter->second->getCiudad() << "\n";
     }
     cout << "\n";
-    
+
     cout << "Ingrese enter para continuar...\n";
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
     cin.get();
@@ -129,16 +130,16 @@ void listadoDeUsuarios(IUsuario *controlador)
 void altaDeProducto(IUsuario *controladorU, IVenta *controladorV)
 {
     set<DTUsuario> dataVendedores;
-    map<string, Usuario*> usuarios = controladorU->listadoUsuarios();
-    for(map<string, Usuario*>::iterator it = usuarios.begin(); it != usuarios.end(); ++it)
+    map<string, Usuario *> usuarios = controladorU->listadoUsuarios();
+    for (map<string, Usuario *>::iterator it = usuarios.begin(); it != usuarios.end(); ++it)
     {
-        Vendedor* vendedor = dynamic_cast<Vendedor*>(it->second);
-        if (vendedor) 
+        Vendedor *vendedor = dynamic_cast<Vendedor *>(it->second);
+        if (vendedor)
         {
             dataVendedores.insert(vendedor->getDatosUsuario());
         }
     }
-    cout << "Listado de Vendedores: " << "\n";    
+    cout << "Listado de Vendedores: " << "\n";
     for (DTUsuario vendedor : dataVendedores)
     {
         cout << vendedor.getNickname() << "\n";
@@ -153,18 +154,18 @@ void altaDeProducto(IUsuario *controladorU, IVenta *controladorV)
     // Agregar precondición de que el vendedor sea correcto
 
     bool encontrado = false;
-    while(!encontrado)
+    while (!encontrado)
     {
         set<DTUsuario>::iterator iter;
         for (iter = dataVendedores.begin(); iter != dataVendedores.end(); iter++)
         {
-            if(iter->getNickname() == nicknameV)
+            if (iter->getNickname() == nicknameV)
             {
-                encontrado = true;  
+                encontrado = true;
                 break;
             }
         }
-        if(!encontrado)
+        if (!encontrado)
         {
             cout << "El vendedor ingresado no existe. Vuelva a intentar.\n";
             cin >> nicknameV;
@@ -180,8 +181,9 @@ void altaDeProducto(IUsuario *controladorU, IVenta *controladorV)
     cout << "\n"
          << "Ingrese precio del producto: ";
     cin >> precioP;
-    while (cin.fail()) {
-        cin.clear(); 
+    while (cin.fail())
+    {
+        cin.clear();
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
         cout << "El precio del producto debe ser de tipo float, ingrese nuevamente el precio del producto:\n";
         cin >> precioP;
@@ -189,8 +191,9 @@ void altaDeProducto(IUsuario *controladorU, IVenta *controladorV)
     cout << "\n"
          << "Ingrese cantidad en stock: ";
     cin >> cantStockP;
-    while (cin.fail()) {
-        cin.clear(); 
+    while (cin.fail())
+    {
+        cin.clear();
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
         cout << "El valor de stock debe ser de tipo integer, ingrese nuevamente la cantidad en stock:\n";
         cin >> cantStockP;
@@ -198,11 +201,12 @@ void altaDeProducto(IUsuario *controladorU, IVenta *controladorV)
     cout << "\n"
          << "Ingrese 1 si es electrodomestico, 2 si es ropa, 3 si es otro: ";
     cin >> opcion;
-    while (cin.fail() || opcion < 1 || opcion > 3) {
-       cin.clear(); 
-       cin.ignore(numeric_limits<streamsize>::max(), '\n');
-       cout << "Opción incorrecta, Ingrese 1 si es electrodomestico, 2 si es ropa, 3 si es otro:\n";
-       cin >> opcion;
+    while (cin.fail() || opcion < 1 || opcion > 3)
+    {
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        cout << "Opción incorrecta, Ingrese 1 si es electrodomestico, 2 si es ropa, 3 si es otro:\n";
+        cin >> opcion;
     }
     switch (opcion)
     {
@@ -224,7 +228,7 @@ void altaDeProducto(IUsuario *controladorU, IVenta *controladorV)
     }
 }
 
-void consultarProducto(IUsuario * controladorU, IVenta *controladorV) // agregar precondicion de no hay producto
+void consultarProducto(IUsuario *controladorU, IVenta *controladorV) // agregar precondicion de no hay producto
 {
 
     int idProducto;
@@ -236,14 +240,14 @@ void consultarProducto(IUsuario * controladorU, IVenta *controladorV) // agregar
         cout << "Id: " << producto.getId() << "\n";
         cout << "Nombre: " << producto.getNombre() << "\n";
     }
-    
+
     cout << "\n";
     cout << "Seleccione un Producto con su id: ";
     cin >> idProducto;
     Producto *productoConsultado = controladorV->seleccionarProductoPorId(idProducto);
-    while(cin.fail() || productoConsultado == NULL)
+    while (cin.fail() || productoConsultado == NULL)
     {
-        cin.clear(); 
+        cin.clear();
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
         cout << "Id incorrecto, seleccione un producto nuevamente con su id:\n";
         cin >> idProducto;
@@ -259,29 +263,30 @@ void consultarProducto(IUsuario * controladorU, IVenta *controladorV) // agregar
     cout << "Cantidad en stock: " << dataP.getCantStock() << "\n";
     cout << "Descripcion: " << dataP.getDesc() << "\n";
     string cat;
-    switch (dataP.getCat()) 
-    {   case ropa: 
-        {
-            cat = "ropa";
-            break;
-        }
-        case electrodomesticos:
-        {
-            cat = "electrodomestico";
-            break;
-        }
-        case otro:
-        {         
-            cat = "otro";
-            break;
-        }
+    switch (dataP.getCat())
+    {
+    case ropa:
+    {
+        cat = "ropa";
+        break;
+    }
+    case electrodomesticos:
+    {
+        cat = "electrodomestico";
+        break;
+    }
+    case otro:
+    {
+        cat = "otro";
+        break;
+    }
     }
     cout << "Categoria: " << cat << "\n";
-    
-    map<string, Usuario*> vendedores;
+
+    map<string, Usuario *> vendedores;
     vendedores = controladorU->listadoUsuarios("vendedor");
     string nicknameV;
-    for(map<string, Usuario*>::iterator it = vendedores.begin(); it != vendedores.end(); ++it)
+    for (map<string, Usuario *>::iterator it = vendedores.begin(); it != vendedores.end(); ++it)
     {
         Vendedor *vendedor = dynamic_cast<Vendedor *>(it->second);
         if (vendedor->getProductos().find(idProducto) != vendedor->getProductos().end())
@@ -296,21 +301,21 @@ void consultarProducto(IUsuario * controladorU, IVenta *controladorV) // agregar
     cin.get();
 }
 
-
-
-void crearPromocion(IUsuario * controladorU, IVenta * controladorV)
+void crearPromocion(IUsuario *controladorU, IVenta *controladorV)
 {
     string nombreProm, descripcionProm;
     float descuento;
     int dia, mes, anio;
     cout << "Ingrese nombre de la promocion: ";
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
-    getline(cin, nombreProm);    
-    cout << "\n"  << "Ingrese descripcion: ";
+    getline(cin, nombreProm);
+    cout << "\n"
+         << "Ingrese descripcion: ";
     getline(cin, descripcionProm);
-    cout << "\n" << "Ingrese descuento: ";
+    cout << "\n"
+         << "Ingrese descuento: ";
     cin >> descuento;
-    cout << "\nIngrese fecha de vencimiento. " ;
+    cout << "\nIngrese fecha de vencimiento. ";
     cout << "\n Dia: ";
     cin >> dia;
     cout << " Mes: ";
@@ -318,35 +323,54 @@ void crearPromocion(IUsuario * controladorU, IVenta * controladorV)
     cout << " Anio: ";
     cin >> anio;
     cout << "\n";
-    
+
     DTFecha fechaVen = DTFecha(dia, mes, anio);
     string nicknameV;
-    cout << "Listado de vendedores: \n";
-    map<string, Usuario*> vendedores = controladorU->listadoUsuarios("vendedor");
-    map<string, Usuario*>::iterator it;
-    for (it = vendedores.begin(); it != vendedores.end(); it++)
+    // cout << "Listado de vendedores: \n";
+    //  map<string, Usuario *> vendedores = controladorU->listadoUsuarios("vendedor");
+    //  map<string, Usuario *>::iterator it;
+    //  for (it = vendedores.begin(); it != vendedores.end(); it++)
+    //  {
+    //      cout << it->second->getNickname() << "\n";
+    //  }
+    set<DTUsuario> dataVendedores;
+    map<string, Usuario *> usuarios = controladorU->listadoUsuarios();
+    for (map<string, Usuario *>::iterator it = usuarios.begin(); it != usuarios.end(); ++it)
     {
-        cout << it->second->getNickname() << "\n";
+        Vendedor *vendedor = dynamic_cast<Vendedor *>(it->second);
+        if (vendedor)
+        {
+            dataVendedores.insert(vendedor->getDatosUsuario());
+        }
     }
+    cout << "Listado de Vendedores: " << "\n";
+    for (DTUsuario vendedor : dataVendedores)
+    {
+        cout << vendedor.getNickname() << "\n";
+    }
+    cout << "\n";
+
+    /////////
     cout << "Seleccione un vendedor: ";
     cin >> nicknameV;
-    while (!controladorU->existeUsuarioIgualNickname(nicknameV)) 
-    {   
-        cout << "El vendedor no existe. seleccione nuevamente un vendedor.\n" << "Ingrese nickname: ";
+    while (!controladorU->existeUsuarioIgualNickname(nicknameV))
+    {
+        cout << "El vendedor no existe. seleccione nuevamente un vendedor.\n"
+             << "Ingrese nickname: ";
         cin >> nicknameV;
     }
 
-    Usuario * usuario = controladorU->obtenerUsuarioPorNickname(nicknameV);
-    Vendedor *vendedor = dynamic_cast<Vendedor *>(usuario);    
+    Usuario *usuario = controladorU->obtenerUsuarioPorNickname(nicknameV);
+    Vendedor *vendedor = dynamic_cast<Vendedor *>(usuario);
     controladorV->setMemUsuario(usuario);
 
     controladorV->crearPromocion(nombreProm, descripcionProm, descuento, fechaVen);
-    
-    map<int, Producto*> productosNoEnPromo; //mapa de productos no en promoción
-    map<int, Producto*> dataProductos = vendedor->getProductos();
-    cout << "Listado de productos disponibles para el vendedor "<< nicknameV << " :\n";
-    for (map<int,Producto *>::iterator it = dataProductos.begin(); it != dataProductos.end(); it++)
-    {   
+
+    map<int, Producto *> productosNoEnPromo; // mapa de productos no en promoción
+    map<int, Producto *> dataProductos = vendedor->getProductos();
+    cout << "Listado de productos disponibles para el vendedor " << nicknameV << " :\n";
+    for (map<int, Producto *>::iterator it = dataProductos.begin(); it != dataProductos.end(); it++)
+    {
         if (!it->second->estaEnPromo())
         {
             cout << "Id: " << it->second->getId();
@@ -361,35 +385,37 @@ void crearPromocion(IUsuario * controladorU, IVenta * controladorV)
     cout << "Ingrese los productos que van a componer la promo (ingrese -1 para dejar de agregar)\n";
     string SoN;
     while (flag)
-    {   
+    {
         cout << "Producto a agregar\n";
         cout << "Id: ";
         cin >> id;
         cout << "Cantidad Mínima: ";
         cin >> cantMinima;
         /////Precondición id no exista en otra promo
-        map<int, Producto*>::iterator it = productosNoEnPromo.find(id);
+        map<int, Producto *>::iterator it = productosNoEnPromo.find(id);
         if (it != productosNoEnPromo.end())
         {
-            controladorV->seleccionarProductoAProm(id , cantMinima);
+            controladorV->seleccionarProductoAProm(id, cantMinima);
             productosNoEnPromo.erase(id);
             cout << "Producto ingresado correctamente. \n";
-        } else {
+        }
+        else
+        {
             cout << "El producto ya se encuentra en una promoción.\n";
         }
         cout << "Quiere continuar?  si o no: ";
-            cin >> SoN;
-            cout << endl;
-            if (SoN == "no")
-            {
-                break;
-            }    
+        cin >> SoN;
+        cout << endl;
+        if (SoN == "no")
+        {
+            break;
+        }
     }
 }
 
-void consultarPromocion(IVenta * controladorV)
+void consultarPromocion(IVenta *controladorV)
 {
-    //Imprime todas las Promociones vigentes en el sistema  (HABRIA Q PREGUNTAR PRECOND PARA IMPRIMIR: FECHA VENC < FECHA SISTEMA)
+    // Imprime todas las Promociones vigentes en el sistema  (HABRIA Q PREGUNTAR PRECOND PARA IMPRIMIR: FECHA VENC < FECHA SISTEMA)
     string opcion;
     cout << "este";
     map<string, Promocion *> dataPromos = controladorV->listadoPromociones();
@@ -404,42 +430,43 @@ void consultarPromocion(IVenta * controladorV)
     }
     cout << "Si desea ver los productos dentro de una promoción ingrese el nombre de esta. De lo contrario, escriba Salir: ";
     cin >> opcion;
-    //aca faltaria ver precond q opcion sea un nombre valido
+    // aca faltaria ver precond q opcion sea un nombre valido
     if (opcion != "Salir")
     {
-        //Imprime informacion del vendedor de la Promocion
-        Promocion *prom =  dataPromos.find(opcion)->second;
-        Vendedor * vendedor = prom->getVendedor();
+        // Imprime informacion del vendedor de la Promocion
+        Promocion *prom = dataPromos.find(opcion)->second;
+        Vendedor *vendedor = prom->getVendedor();
         cout << "Vendedor: " << vendedor->getNickname() << "\n";
         cout << "Codigo RUT: " << vendedor->getCodigoRUT() << "\n";
-        cout << "Fecha de nacimiento: " << vendedor->getFechaNac().getDia() << "/" << vendedor->getFechaNac().getMes() << "/" << vendedor->getFechaNac().getAnio()  << "\n";
-       
-        //Imprime informacion de todos los productos de la Promocion
-        set<Producto_Promocion*> prodproms = prom->getProdProms();
-        set<Producto_Promocion*>::iterator it;
+        cout << "Fecha de nacimiento: " << vendedor->getFechaNac().getDia() << "/" << vendedor->getFechaNac().getMes() << "/" << vendedor->getFechaNac().getAnio() << "\n";
+
+        // Imprime informacion de todos los productos de la Promocion
+        set<Producto_Promocion *> prodproms = prom->getProdProms();
+        set<Producto_Promocion *>::iterator it;
         string cat;
         for (it = prodproms.begin(); it != prodproms.end(); it++)
         {
-            Producto* prod = (*it)->getProducto();
+            Producto *prod = (*it)->getProducto();
             cout << "Id: " << prod->getId() << "\n";
             cout << "Nombre: " << prod->getNombre() << "\n";
             cout << "Categoria: " << prod->getCat() << "\n";
-            switch (prod->getCat()) 
-            {   case ropa: 
-                {
-                    cat = "ropa";
-                    break;
-                }
-                case electrodomesticos:
-                {
-                    cat = "electrodomestico";
-                    break;
-                }
-                case otro:
-                {         
-                    cat = "otro";
-                    break;
-                }
+            switch (prod->getCat())
+            {
+            case ropa:
+            {
+                cat = "ropa";
+                break;
+            }
+            case electrodomesticos:
+            {
+                cat = "electrodomestico";
+                break;
+            }
+            case otro:
+            {
+                cat = "otro";
+                break;
+            }
             }
             cout << "Categoria: " << cat << "\n";
             cout << "Descripcion: " << prod->getDesc() << "\n";
@@ -453,20 +480,19 @@ void consultarPromocion(IVenta * controladorV)
     cin.get();
 }
 
-
-void realizarCompra(IUsuario * controladorU, IVenta * controladorV)
+void realizarCompra(IUsuario *controladorU, IVenta *controladorV)
 {
     string nicknameC, cat, opcion;
-    map<string, Usuario*> clientes = controladorU->listadoUsuarios("cliente");
-    map<string, Usuario*>::iterator it;
+    map<string, Usuario *> clientes = controladorU->listadoUsuarios("cliente");
+    map<string, Usuario *>::iterator it;
     for (it = clientes.begin(); it != clientes.end(); it++)
     {
         cout << it->second->getNickname() << "\n";
     }
     cout << "Seleccione un cliente: ";
     cin >> nicknameC;
-    Usuario * usuario = controladorU->obtenerUsuarioPorNickname(nicknameC);
-    Cliente *cliente = dynamic_cast<Cliente *>(usuario);    
+    Usuario *usuario = controladorU->obtenerUsuarioPorNickname(nicknameC);
+    Cliente *cliente = dynamic_cast<Cliente *>(usuario);
 
     set<DTProducto> dataProductos = controladorV->listadoProductos();
     for (DTProducto prod : dataProductos)
@@ -474,27 +500,28 @@ void realizarCompra(IUsuario * controladorU, IVenta * controladorV)
         cout << "Id: " << prod.getId() << "\n";
         cout << "Nombre: " << prod.getNombre() << "\n";
         cout << "Categoria: " << prod.getCat() << "\n";
-        switch (prod.getCat()) 
-        {   case ropa: 
-            {
-                cat = "ropa";
-                break;
-            }
-            case electrodomesticos:
-            {
-                cat = "electrodomestico";
-                break;
-            }
-            case otro:
-            {         
-                cat = "otro";
-                break;
-            }
+        switch (prod.getCat())
+        {
+        case ropa:
+        {
+            cat = "ropa";
+            break;
+        }
+        case electrodomesticos:
+        {
+            cat = "electrodomestico";
+            break;
+        }
+        case otro:
+        {
+            cat = "otro";
+            break;
+        }
         }
         cout << "Categoria: " << cat << "\n";
         cout << "Descripcion: " << prod.getDesc() << "\n";
         cout << "Cantidad en stock: " << prod.getCantStock() << "\n";
-        cout << "Precio: " << prod.getPrecio() << "\n";        
+        cout << "Precio: " << prod.getPrecio() << "\n";
     }
 
     controladorV->crearCompra(cliente);
@@ -502,7 +529,7 @@ void realizarCompra(IUsuario * controladorU, IVenta * controladorV)
     int id, cantidad;
     bool flag = true;
     bool flagProd = true;
-    while (flag) 
+    while (flag)
     {
         if (!flagProd)
         {
@@ -511,7 +538,7 @@ void realizarCompra(IUsuario * controladorU, IVenta * controladorV)
             cout << "Ingrese cantidad: ";
             cin >> cantidad;
         }
-        else  
+        else
         {
             cout << "Desea agregar un producto a la compra? y/n : ";
             cin >> opcion;
@@ -520,15 +547,14 @@ void realizarCompra(IUsuario * controladorU, IVenta * controladorV)
                 flag = false;
                 break;
             }
-
         }
-        
+
         cout << "Ingrese ID del producto a agregar: ";
         cin >> id;
         cout << "Ingrese la cantidad: ";
         cin >> cantidad;
-        Producto * prod = controladorV->seleccionarProductoPorId(id);
-        if (prod == nullptr) 
+        Producto *prod = controladorV->seleccionarProductoPorId(id);
+        if (prod == nullptr)
         {
             cout << "Producto no encontrado. Intente nuevamente." << endl;
         }
@@ -537,41 +563,41 @@ void realizarCompra(IUsuario * controladorU, IVenta * controladorV)
         {
             cout << "El producto seleccion  /ado no dispone de tantas unidades como desea comprar. ";
         }
-
     }
-    
+
     cout << "ante detalles compra";
     DTCompra dataCompra = controladorV->detallesCompra();
 
-    
-    cout << "Detalles de su compra \n" << "Precio: " << dataCompra.getPrecioTotal() << "\nFecha: " << dataCompra.getFecha().getDia() << "/" << dataCompra.getFecha().getMes() << "/" << dataCompra.getFecha().getAnio() << "\n";
+    cout << "Detalles de su compra \n"
+         << "Precio: " << dataCompra.getPrecioTotal() << "\nFecha: " << dataCompra.getFecha().getDia() << "/" << dataCompra.getFecha().getMes() << "/" << dataCompra.getFecha().getAnio() << "\n";
     cout << "Detalles de los productos en su compra: \n";
     for (DTProducto dp : dataCompra.getProductos())
     {
         cout << "Id: " << dp.getId() << "\n";
         cout << "Nombre: " << dp.getNombre() << "\n";
         cout << "Categoria: " << dp.getCat() << "\n";
-        switch (dp.getCat()) 
-        {   case ropa: 
-            {
-                cat = "ropa";
-                break;
-            }
-            case electrodomesticos:
-            {
-                cat = "electrodomestico";
-                break;
-            }
-            case otro:
-            {         
-                cat = "otro";
-                break;
-            }
+        switch (dp.getCat())
+        {
+        case ropa:
+        {
+            cat = "ropa";
+            break;
+        }
+        case electrodomesticos:
+        {
+            cat = "electrodomestico";
+            break;
+        }
+        case otro:
+        {
+            cat = "otro";
+            break;
+        }
         }
         cout << "Categoria: " << cat << "\n";
         cout << "Descripcion: " << dp.getDesc() << "\n";
         cout << "Cantidad en stock: " << dp.getCantStock() << "\n";
-        cout << "Precio: " << dp.getPrecio() << "\n"; 
+        cout << "Precio: " << dp.getPrecio() << "\n";
     }
     cout << "Ingrese enter para continuar...";
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
@@ -583,15 +609,15 @@ void dejarComentario(IUsuario *controladorU, IVenta *controladorV)
     // lista usuarios y selecciona uno
     string nicknameU, textoC;
     int idP;
-    map<string, Usuario*> dataUsuarios = controladorU->listadoUsuarios();
-    map<string, Usuario*>::iterator it;
+    map<string, Usuario *> dataUsuarios = controladorU->listadoUsuarios();
+    map<string, Usuario *>::iterator it;
     for (it = dataUsuarios.begin(); it != dataUsuarios.end(); it++)
     {
         cout << it->second->getNickname() << "\n";
     }
     cout << "Seleccione un Usuario: ";
     cin >> nicknameU;
-    Usuario * usuario = controladorU->obtenerUsuarioPorNickname(nicknameU);
+    Usuario *usuario = controladorU->obtenerUsuarioPorNickname(nicknameU);
     // lista productos y selecciona uno
     set<DTProducto> dataProductos;
     dataProductos = controladorV->listadoProductos();
@@ -629,7 +655,7 @@ void dejarComentario(IUsuario *controladorU, IVenta *controladorV)
         Producto *seleccionado = controladorV->seleccionarProductoPorId(idP);
         map<int, Comentario *>::iterator it;
         map<int, Comentario *> mapa = seleccionado->listadoComentarios();
-        //lista todos los comentarios asociados al producto seleccionado
+        // lista todos los comentarios asociados al producto seleccionado
         for (it = mapa.begin(); it != mapa.end(); ++it)
         {
             cout << "Id comentario: " << it->second->getId() << "\n";
@@ -641,7 +667,7 @@ void dejarComentario(IUsuario *controladorU, IVenta *controladorV)
         cout << "Ingrese el texto de la respuesta al comentario: ";
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
         getline(cin, textoC);
-        Comentario * comentarioOriginal = mapa.find(idComen)->second;
+        Comentario *comentarioOriginal = mapa.find(idComen)->second;
         controladorU->crearRespuesta(textoC, comentarioOriginal);
     }
     break;
@@ -650,8 +676,8 @@ void dejarComentario(IUsuario *controladorU, IVenta *controladorV)
 
 void eliminarComentario(IUsuario *controladorU)
 {
-    map<string, Usuario*> dataUsuarios = controladorU->listadoUsuarios();
-    map<string, Usuario*>::iterator it;
+    map<string, Usuario *> dataUsuarios = controladorU->listadoUsuarios();
+    map<string, Usuario *>::iterator it;
     for (it = dataUsuarios.begin(); it != dataUsuarios.end(); it++)
     {
         cout << it->second->getNickname() << "\n";
@@ -681,165 +707,193 @@ void eliminarComentario(IUsuario *controladorU)
     cout << "Comentario " << id << "eliminado. ";
 }
 
-//void expedienteDeUsuario(IUsuario *controlador)
+void suscribirANotificaciones(IUsuario *controladorU, IVenta *controladorV)
+{
+    // Lista los vendedores a los que no esta suscrito el cliente
+    string nombreCliente;
+    cout << "Ingrese el nombre del cliente que desea suscribir: " << " \n";
+    cin >> nombreCliente;
+    map<string, Usuario *>::iterator it;
+    map<string, Usuario *> vendedores = controladorU->listadoUsuarios();
+    for (it = vendedores.begin(); it != vendedores.end(); it++)
+    {
+        Vendedor *vendedor = dynamic_cast<Vendedor *>(it->second);
+        if (vendedor != NULL && vendedor->estaSuscrito(nombreCliente) == false)
+        {
+            cout << "Vendedor: " << vendedor->getNickname() << " \n";
+        }
+    }
+    string nombreVend;
+    cout << "Ingrese el nombre del vendedor al que desea suscribirse: " << " \n";
+    cin >> nombreVend;
+    Usuario *cliente = vendedores.find(nombreCliente)->second;
+
+    for (; nombreVend != "0";)
+    {
+        cout << "Si desea suscribirse a otro vendedor ingrese su nombre, de lo contrario ingrese 0: " << " \n";
+        cin >> nombreVend;
+    }
+}
+
+void expedienteDeUsuario(IUsuario *controlador)
+{
+    string nicknameU;
+
+    cout << "Usuarios registrados:\n";
+    set<DTUsuario> dataUsuarios;
+    dataUsuarios = controlador->listadoUsuarios();
+    for (DTUsuario usuario : dataUsuarios)
+    {
+        cout << usuario.getNickname() << "\n";
+    }
+
+    // cout << "Seleccione un usuario: ";
+    // cin >> nicknameU;
+    // cout << "\n";
+    // Usuario *usuario;
+    // usuario = controlador->obtenerUsuarioPorNickname(nicknameU);
+    // DTUsuario dataUsuario;
+    // dataUsuario = usuario->getDatosUsuario();
+    // cout << "Datos del usuario seleccionado:\n"
+    //      << dataUsuario << endl;
+
+    // Vendedor *vendedor = dynamic_cast<Vendedor *>(usuario);
+    // if (vendedor != NULL)
+    // {
+    //     // Usuario es vendedor
+    //     // lista todos los productos del vendedor
+    //     map<int, Producto *> productos = vendedor->getProductos();
+    //     cout << "Productos del vendedor " << vendedor->getNickname() << ": \n"
+    //          << endl;
+    //     for (map<int, Producto *>::const_iterator it = productos.begin(); it != productos.end(); ++it)
+    //     {
+    //         Producto *producto = it->second;
+    //         cout << producto->getDataProducto() << endl;
+    //     }
+
+    //     // Lista todos las promociones activas
+    //     set<Promocion> promociones = vendedor->getPromociones();
+    //     cout << "\nPromociones del vendedor " << vendedor->getNickname() << ": \n"
+    //          << endl;
+    //     for (set<Promocion>::const_iterator it = promociones.begin(); it != promociones.end(); ++it)
+    //     {
+    //         Promocion promocion = *it;
+    //         cout << promocion.getNombre() << endl; // Muestro el nombre de la promo
+    //     }
+    // }
+    // else
+    // {
+    //     // El usuario es cliente
+    //     Cliente *cliente = dynamic_cast<Cliente *>(usuario);
+    //     set<Compra> compras = cliente->getCompras();
+    //     cout << "\nCompras del cliente " << cliente->getNickname() << ": \n"
+    //          << endl;
+    //     for (set<Compra>::const_iterator it = compras.begin(); it != compras.end(); ++it)
+    //     {
+    //         Compra pcompra = *it;
+    //         cout << "Id de la compra:" << endl;
+    //         cout << pcompra.getId() << endl; // Muestro el nombre de la promo
+    //         for (const Producto &producto : pcompra.getCompProd().())
+    //         {
+    //             cout << "Nombre del producto: " << producto.getNombre() << endl;
+    //         }
+    //     }
+    // }
+}
+
+// void altaDeUsuarioCARGARDATOSPREESTABLECIDOS(IUsuario *controlador, string nickname, string constrasena, int dia, int mes, int anio, int opcion, string ciudad, string direccion, string codigoRUT)
+//{ //Pasar opcion = 1 si es cliente y 2 si es vendedor.
+//     DTFecha fecha(dia, mes, anio);
+//     controlador->ingresarUsuario(nickname, contrasena, fecha);
+//     if (controlador->existeUsuarioIgualNickname(nickname))
+//     {
+//         cout << "\nYa existe usuario con nickname:" << nickname;
+//         controlador->terminarAlta();
+//         return;
+//     }
+//     switch (opcion)
+//     {∏
+//     case 1:
+//     {
+//         controlador->altaCliente(direccion, ciudad);
+//     }
+//     break;
+//     case 2:
+//     {
+//         if (codigoRUT.length() != 12) {
+//         {
+//             cout << "El codigoRUT debe tener exactamente 12 caracteres.\n";
+//         }
+//         controlador->altaVendedor(codigoRUT);
+//     }
+//     break;
+//     }
+//     controlador->confirmarAltaUsuario();
+//     return;
+// }
+
+// void altaDeProductoCARGARDATOSPREESTABLECIDOS(IUsuario *controladorU, IVenta *controladorV, string nicknameV, string nombreP, string descripcionP, float precioP, int cantStockP, int opcion)
 //{
-//    string nicknameU;
+//    set<DTUsuario> dataVendedores;
+//     map<string, Usuario*> usuarios = controladorU->listadoUsuarios();
 //
-//    cout << "Usuarios registrados:\n";
-//    set<DTUsuario> dataUsuarios;
-//    dataUsuarios = controlador->listadoUsuarios();
-//    for (DTUsuario usuario : dataUsuarios)
-//    {
-//        cout << usuario.getNickname() << "\n";
+//    for(map<string, Usuario*>::iterator it = usuarios.begin(); it != usuarios.end(); ++it)
+//     {
+//         Vendedor* vendedor = dynamic_cast<Vendedor*>(it->second);
+//        if (vendedor)
+//         {
+//             dataVendedores.insert(vendedor->getDatosUsuario());
+//         }
+//     }
+//    for (DTUsuario vendedor : dataVendedores)
+//     {
+//        cout << vendedor.getNickname() << "\n";
 //    }
+//    categoria cat;
+//    switch (opcion)     //1 si es electrodomestico, 2 si es ropa, 3 si es otro
+//    {
+//   case 1:
+//      cat = electrodomesticos;
+//         break;
+//     case 2:
+//         cat = ropa;
+//         break;
+//     case 3:
+//         cat = otro;
+//        break;
+//    }
+//     Usuario *usuario = controladorU->obtenerUsuarioPorNickname(nicknameV);
+//     Vendedor *vendedor = dynamic_cast<Vendedor *>(usuario);
+//     if (vendedor != NULL)
+//     {
+//         controladorV->crearProducto(vendedor, nombreP, descripcionP, precioP, cantStockP, cat);
+//     }
+// }
 //
-//    cout << "Seleccione un usuario: ";
-//    cin >> nicknameU;
-//    cout << "\n";
-//    Usuario *usuario;
-//    usuario = controlador->obtenerUsuarioPorNickname(nicknameU);
-//    DTUsuario dataUsuario;
-//    dataUsuario = usuario->getDatosUsuario();
-//    cout << "Datos del usuario seleccionado:\n"
-//         << dataUsuario << endl;
-//
-//    Vendedor *vendedor = dynamic_cast<Vendedor *>(usuario);
-//    if (vendedor != NULL)
-//    {
-//        // Usuario es vendedor
-//        // lista todos los productos del vendedor
-//        map<int, Producto *> productos = vendedor->getProductos();
-//        cout << "Productos del vendedor " << vendedor->getNickname() << ": \n"
-//             << endl;
-//        for (map<int, Producto *>::const_iterator it = productos.begin(); it != productos.end(); ++it)
-//        {
-//            Producto *producto = it->second;
-//            cout << producto->getDataProducto() << endl;
-//        }
-//
-//        // Lista todos las promociones activas
-//        set<Promocion> promociones = vendedor->getPromociones();
-//        cout << "\nPromociones del vendedor " << vendedor->getNickname() << ": \n"
-//             << endl;
-//        for (set<Promocion>::const_iterator it = promociones.begin(); it != promociones.end(); ++it)
-//        {
-//            Promocion promocion = *it;
-//            cout << promocion.getNombre() << endl; // Muestro el nombre de la promo
-//        }
-//    }
-//    else
-//    {
-//        // El usuario es cliente
-//        Cliente *cliente = dynamic_cast<Cliente *>(usuario);
-//        set<Compra> compras = cliente->getCompras();
-//        cout << "\nCompras del cliente " << cliente->getNickname() << ": \n"
-//             << endl;
-//        for (set<Compra>::const_iterator it = compras.begin(); it != compras.end(); ++it)
-//        {
-//            Compra pcompra = *it;
-//            cout << "Id de la compra:" << endl;
-//            cout << pcompra.getId() << endl; // Muestro el nombre de la promo
-//            for (const Producto& producto : pcompra.getCompProd(). ()) {
-//                cout << "Nombre del producto: " << producto.getNombre() << endl;
-//            }
-//        }
-//
-//    }
-//}
-//
-//void altaDeUsuarioCARGARDATOSPREESTABLECIDOS(IUsuario *controlador, string nickname, string constrasena, int dia, int mes, int anio, int opcion, string ciudad, string direccion, string codigoRUT)
-//{ //Pasar opcion = 1 si es cliente y 2 si es vendedor. 
-//    DTFecha fecha(dia, mes, anio);
-//    controlador->ingresarUsuario(nickname, contrasena, fecha);
-//    if (controlador->existeUsuarioIgualNickname(nickname))
-//    {
-//        cout << "\nYa existe usuario con nickname:" << nickname;
-//        controlador->terminarAlta();
-//        return;
-//    }
-//    switch (opcion)
-//    {∏
-//    case 1:
-//    {
-//        controlador->altaCliente(direccion, ciudad);
-//    }
-//    break;
-//    case 2:
-//    {
-//        if (codigoRUT.length() != 12) {
-//        {
-//            cout << "El codigoRUT debe tener exactamente 12 caracteres.\n";
-//        }
-//        controlador->altaVendedor(codigoRUT);
-//    }
-//    break;
-//    }
-//    controlador->confirmarAltaUsuario();
-//    return;
-//}
-//void altaDeProductoCARGARDATOSPREESTABLECIDOS(IUsuario *controladorU, IVenta *controladorV, string nicknameV, string nombreP, string descripcionP, float precioP, int cantStockP, int opcion)
+// void crearPromocionCARGARDATOSPREESTABLECIDOS(IUsuario * controladorU, IVenta * controladorV, string nombreProm, string descripcionProm, float descuento,int dia, int mes, int anio, vector<int> id, vector<int> cantMinima, string nicknameV)
 //{
-//   set<DTUsuario> dataVendedores;
-//    map<string, Usuario*> usuarios = controladorU->listadoUsuarios();
-//
-//   for(map<string, Usuario*>::iterator it = usuarios.begin(); it != usuarios.end(); ++it)
-//    {
-//        Vendedor* vendedor = dynamic_cast<Vendedor*>(it->second);
-//       if (vendedor) 
-//        {
-//            dataVendedores.insert(vendedor->getDatosUsuario());
-//        }
-//    }    
-//   for (DTUsuario vendedor : dataVendedores)
-//    {
-//       cout << vendedor.getNickname() << "\n";
-//   }
-//   categoria cat;
-//   switch (opcion)     //1 si es electrodomestico, 2 si es ropa, 3 si es otro
-//   {
-//  case 1:
-//     cat = electrodomesticos;
-//        break;
-//    case 2:
-//        cat = ropa;
-//        break;
-//    case 3:
-//        cat = otro;
-//       break;
-//   }
-//    Usuario *usuario = controladorU->obtenerUsuarioPorNickname(nicknameV);
-//    Vendedor *vendedor = dynamic_cast<Vendedor *>(usuario);
-//    if (vendedor != NULL)
-//    {
-//        controladorV->crearProducto(vendedor, nombreP, descripcionP, precioP, cantStockP, cat);
-//    }
-//}
-//
-//void crearPromocionCARGARDATOSPREESTABLECIDOS(IUsuario * controladorU, IVenta * controladorV, string nombreProm, string descripcionProm, float descuento,int dia, int mes, int anio, vector<int> id, vector<int> cantMinima, string nicknameV)
-//{    
-//    DTFecha fechaVen = DTFecha(dia, mes, anio);
-//    controladorV->crearPromocion(nombreProm, descripcionProm, descuento, fechaVen);
-//    for (size_t i = 0; i < id.size(); ++i) {
-//        controladorV->seleccionarProductoAProm(id[i],cantMinima[i]);   
-//    }
-//}
+//     DTFecha fechaVen = DTFecha(dia, mes, anio);
+//     controladorV->crearPromocion(nombreProm, descripcionProm, descuento, fechaVen);
+//     for (size_t i = 0; i < id.size(); ++i) {
+//         controladorV->seleccionarProductoAProm(id[i],cantMinima[i]);
+//     }
+// }
 
 // void realizarCompraCARGARDATOSPREESTABLECIDOS(IUsuario *controladorU, IVenta *controladorV, string nicknameC,string cat,vector<int> id vector<int> cantidado){}
 
-
-//void cargarDatosPreestablecidos(){
-//    //altaDeUsuarioCARGARDATOSPREESTABLECIDOS le paso el controlador, nombre, fecha, opcion = 1 si es cliente y 2 si es vendedor
-//    // si es cliente le paso ciudad y direecion y en codigo rut le paso x, si es vendedor le paso codigoRUT y en ciudad, y direccion le pongo x.
-//    altaDeUsuarioCARGARDATOSPREESTABLECIDOS(controladorU,"ana23","qwer1234",15,05,1988,2,"x","x","212345678001");
-//    altaDeUsuarioCARGARDATOSPREESTABLECIDOS(controladorU,"carlos78","asdfghj",18,06,1986,2,"x","x","356789012345");
-//    altaDeUsuarioCARGARDATOSPREESTABLECIDOS(controladorU,"diegom","zxcvbn",28,07,1993,2,"x",""x","190123456789");
-//    altaDeUsuarioCARGARDATOSPREESTABLECIDOS(controladorU,"juan87","1qaz2wsx",20,10,1992,1,"Melo","Av. 18 de Julio 456","x");
-//    altaDeUsuarioCARGARDATOSPREESTABLECIDOS(controladorU,"laura","3edc4rfv",22,09,1979,1,Montevideo","Rondeau 1617","x");
-//    altaDeUsuarioCARGARDATOSPREESTABLECIDOS(controladorU,"maria01","5tgb6yhn",2,03,1985,2,"x","x","321098765432");
-//    altaDeUsuarioCARGARDATOSPREESTABLECIDOS(controladorU,"natalia","poiuyt",14,04,1982,1,"Salto","Paysandu 2021","x");
-//    altaDeUsuarioCARGARDATOSPREESTABLECIDOS(controladorU,"pablo10","lkjhgv",30,11,1995,1,"Mercedes","Av. Rivera 1819","x");
-//    altaDeUsuarioCARGARDATOSPREESTABLECIDOS(controladorU,"roberto","mnbvcx",12,08,1990,1,"Montevideo","Av. Brasil 1011","x");
-//    altaDeUsuarioCARGARDATOSPREESTABLECIDOS(controladorU,"sofia25","1234asdf",07,12,1983,2,"x","x","445678901234");
+// void cargarDatosPreestablecidos(){
+//     //altaDeUsuarioCARGARDATOSPREESTABLECIDOS le paso el controlador, nombre, fecha, opcion = 1 si es cliente y 2 si es vendedor
+//     // si es cliente le paso ciudad y direecion y en codigo rut le paso x, si es vendedor le paso codigoRUT y en ciudad, y direccion le pongo x.
+//     altaDeUsuarioCARGARDATOSPREESTABLECIDOS(controladorU,"ana23","qwer1234",15,05,1988,2,"x","x","212345678001");
+//     altaDeUsuarioCARGARDATOSPREESTABLECIDOS(controladorU,"carlos78","asdfghj",18,06,1986,2,"x","x","356789012345");
+//     altaDeUsuarioCARGARDATOSPREESTABLECIDOS(controladorU,"diegom","zxcvbn",28,07,1993,2,"x",""x","190123456789");
+//     altaDeUsuarioCARGARDATOSPREESTABLECIDOS(controladorU,"juan87","1qaz2wsx",20,10,1992,1,"Melo","Av. 18 de Julio 456","x");
+//     altaDeUsuarioCARGARDATOSPREESTABLECIDOS(controladorU,"laura","3edc4rfv",22,09,1979,1,Montevideo","Rondeau 1617","x");
+//     altaDeUsuarioCARGARDATOSPREESTABLECIDOS(controladorU,"maria01","5tgb6yhn",2,03,1985,2,"x","x","321098765432");
+//     altaDeUsuarioCARGARDATOSPREESTABLECIDOS(controladorU,"natalia","poiuyt",14,04,1982,1,"Salto","Paysandu 2021","x");
+//     altaDeUsuarioCARGARDATOSPREESTABLECIDOS(controladorU,"pablo10","lkjhgv",30,11,1995,1,"Mercedes","Av. Rivera 1819","x");
+//     altaDeUsuarioCARGARDATOSPREESTABLECIDOS(controladorU,"roberto","mnbvcx",12,08,1990,1,"Montevideo","Av. Brasil 1011","x");
+//     altaDeUsuarioCARGARDATOSPREESTABLECIDOS(controladorU,"sofia25","1234asdf",07,12,1983,2,"x","x","445678901234");
 
 //    altaDeProductoCARGARDATOSPREESTABLECIDOS(controladorU,controladorV,"carlos78","Camiseta Azul","Camiseta de poliester, color azul",1400,50,2);
 //    altaDeProductoCARGARDATOSPREESTABLECIDOS(controladorU,controladorV,"ana23","Televisor LED","Televisor LED 55 pulgadas",40500,30,1);
@@ -931,7 +985,7 @@ int main()
 
         case 3:
             cout << "Ejecutando caso de uso: Alta de producto" << endl;
-            altaDeProducto(controladorU,  controladorV);
+            altaDeProducto(controladorU, controladorV);
             break;
 
         case 4:
@@ -970,7 +1024,7 @@ int main()
 
         case 11:
             cout << "Ejecutando caso de uso: Expediente de Usuario" << endl;
-            //expedienteDeUsuario(controladorU);
+            // expedienteDeUsuario(controladorU);
             break;
 
         case 12:
