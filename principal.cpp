@@ -1,3 +1,4 @@
+#include <cinttypes>
 #include <ios>
 #include <limits>
 #include <string>
@@ -6,6 +7,7 @@
 #include <iostream>
 
 // #include "include/CUsuario.h"
+#include "include/INotificacion.h"
 #include "include/IVenta.h"
 #include "include/cliente.h"
 #include "include/comentario.h"
@@ -289,7 +291,12 @@ void consultarProducto(IUsuario *controladorU, IVenta *controladorV) // agregar 
     for (map<string, Usuario *>::iterator it = vendedores.begin(); it != vendedores.end(); ++it)
     {
         Vendedor *vendedor = dynamic_cast<Vendedor *>(it->second);
-        if (vendedor->getProductos().find(idProducto) != vendedor->getProductos().end())
+        if (vendedor == nullptr)
+        {
+            cout << "error downcast";
+            continue;
+        }
+        if ( vendedor->getProductos().find(idProducto) != vendedor->getProductos().end() && vendedor->getProductos().find(idProducto)->second == productoConsultado)
         {
             nicknameV = vendedor->getNickname();
             break;
@@ -529,53 +536,38 @@ void realizarCompra(IUsuario *controladorU, IVenta *controladorV)
     int id, cantidad;
     bool flag = true;
     bool flagProd = true;
+    cout << "Ingrese ID y cantidad del producto que desea agregar a su compra.";
     while (flag)
     {
-        if (!flagProd)
-        {
-            cout << "Ingrese ID nuevamente: ";
-            cin >> id;
-            cout << "Ingrese cantidad: ";
-            cin >> cantidad;
-        }
-        else
-        {
-            cout << "Desea agregar un producto a la compra? y/n : ";
-            cin >> opcion;
-            if (opcion == "n")
-            {
-                flag = false;
-                break;
-            }
-        }
-
-        cout << "Ingrese ID del producto a agregar: ";
+        cout << "Ingrese ID: ";
         cin >> id;
-        cout << "Ingrese la cantidad: ";
+        cout << "Ingrese Cantidad: ";
         cin >> cantidad;
         Producto *prod = controladorV->seleccionarProductoPorId(id);
         if (prod == nullptr)
         {
             cout << "Producto no encontrado. Intente nuevamente." << endl;
         }
-        flagProd = controladorV->agregarACompra(prod, cantidad);
-        if (!flagProd)
+        controladorV->agregarACompra(prod, cantidad);
+        flagProd = prod->getCantStock() >= cantidad;
+        if(!flagProd)
         {
-            cout << "El producto seleccion  /ado no dispone de tantas unidades como desea comprar. ";
+            cout << "El producto seleccionado no dispone de tantas unidades como desea comprar. ";
         }
+        cout << "Desea agregar otro producto? Ingrese y/n";
+        cin >> opcion;
+        flag = !(opcion == "n");
     }
 
-    cout << "ante detalles compra";
     DTCompra dataCompra = controladorV->detallesCompra();
 
-    cout << "Detalles de su compra \n"
-         << "Precio: " << dataCompra.getPrecioTotal() << "\nFecha: " << dataCompra.getFecha().getDia() << "/" << dataCompra.getFecha().getMes() << "/" << dataCompra.getFecha().getAnio() << "\n";
-    cout << "Detalles de los productos en su compra: \n";
+    cout << "---Detalles de su compra: \n"
+         << "Precio Total: " << dataCompra.getPrecioTotal() << "\nFecha: " << dataCompra.getFecha().getDia() << "/" << dataCompra.getFecha().getMes() << "/" << dataCompra.getFecha().getAnio() << "\n";
+    cout << "---Detalles de los productos en su compra: \n";
     for (DTProducto dp : dataCompra.getProductos())
     {
         cout << "Id: " << dp.getId() << "\n";
         cout << "Nombre: " << dp.getNombre() << "\n";
-        cout << "Categoria: " << dp.getCat() << "\n";
         switch (dp.getCat())
         {
         case ropa:
@@ -709,16 +701,16 @@ void eliminarComentario(IUsuario *controladorU)
 
 void suscribirANotificaciones(IUsuario *controladorU, IVenta *controladorV)
 {
-    // Lista los vendedores a los que no esta suscrito el cliente
+    //Lista los vendedores a los que no esta suscrito el cliente
     string nombreCliente;
     cout << "Ingrese el nombre del cliente que desea suscribir: " << " \n";
     cin >> nombreCliente;
     map<string, Usuario *>::iterator it;
-    map<string, Usuario *> vendedores = controladorU->listadoUsuarios();
+    map<string, Usuario *> vendedores = controladorU->listadoUsuarios("vendedor");
     for (it = vendedores.begin(); it != vendedores.end(); it++)
     {
         Vendedor *vendedor = dynamic_cast<Vendedor *>(it->second);
-        if (vendedor != NULL && vendedor->estaSuscrito(nombreCliente) == false)
+        if (!vendedor->estaSuscrito(nombreCliente))
         {
             cout << "Vendedor: " << vendedor->getNickname() << " \n";
         }
@@ -726,81 +718,230 @@ void suscribirANotificaciones(IUsuario *controladorU, IVenta *controladorV)
     string nombreVend;
     cout << "Ingrese el nombre del vendedor al que desea suscribirse: " << " \n";
     cin >> nombreVend;
-    Usuario *cliente = vendedores.find(nombreCliente)->second;
-
+    Usuario * vendor = vendedores.find(nombreVend)->second;
+    Vendedor *vendour = dynamic_cast<Vendedor *>(vendor);
+    map<string, Usuario *> clientes = controladorU->listadoUsuarios("cliente");
+    Usuario * clientor = clientes.find(nombreCliente)->second;
+    IObserver * cliente = dynamic_cast<IObserver *>(clientor);
+    vendour->agregarSuscriptor(cliente);
     for (; nombreVend != "0";)
     {
         cout << "Si desea suscribirse a otro vendedor ingrese su nombre, de lo contrario ingrese 0: " << " \n";
         cin >> nombreVend;
+        if(nombreVend != "0")
+        {
+        Usuario * vendor = vendedores.find(nombreVend)->second;
+        Vendedor *vendour = dynamic_cast<Vendedor *>(vendor);
+        vendour->agregarSuscriptor(cliente);
+        }
     }
 }
+
+
+
+void consultaDeNotficacion()
+{
+    Fabrica *fabrica = Fabrica::getInstanceF();      // se crea instancia única de fábrica
+    IUsuario *controladorU = fabrica->getIUsuario(); // se crea la instancia del controlador CUsuario de tipo IUsuario
+    IVenta *controladorV = fabrica->getIVenta();  
+    INotificacion * controladorN = fabrica->getINotificacion(); 
+
+    string nicknameC;
+    cout << "Ingrese nickname del cliente que va a constular sus notificaciones: ";
+    cin >> nicknameC;
+
+
+    set<DTNotificacion> notificaciones = controladorN->mostrarNotificaciones(nicknameC, controladorU);
+    //falta ver la condicion del caso de uso
+    map<string,  Promocion *> promos = controladorV->listadoPromociones();
+    for(DTNotificacion notificacion : notificaciones)
+    {
+        if ()
+        cout << "Vendedor: " << notificacion.getNicknameUsuario() << "\n";
+        cout << "Nombre de promoción: " << notificacion.getNombreProm() << "\n";
+        Promocion * promo = promos.find(notificacion.getNombreProm())->second;
+        set<Producto_Promocion*> productosEnPromo = promo->getProdProms();
+        for(Producto_Promocion* prod : productosEnPromo)
+        {
+            Producto* p = prod->getProducto();
+            cout << "ID del producto: " << p->getId() << "\n";
+            cout << "Nombre del producto: " << p->getNombre() << "\n";
+            cout << "Descripción: " << p->getDesc() << "\n";
+            cout << "Precio del producto: " << p->getPrecio() << "\n";
+            cout << "Stock del producto: " << p->getCantStock() << "\n";
+        }
+    }
+    controladorN->eliminarNotificacion();
+}
+
+
+
+void enviarProducto(IUsuario *controladorUsuario){
+    //listo y selecciono el vendedor
+    string nombreVendedor;
+    cout << "Listado de vendedores:\n";
+    map<string, Usuario *> vendedores = controladorUsuario->listadoUsuarios("vendedores");
+    for (map<string, Usuario *>::iterator it = vendedores.begin(); it != vendedores.end(); it++)
+    {
+        Vendedor *vendedor = dynamic_cast<Vendedor *>(it->second);
+        cout <<  vendedor->getNickname() << " \n";
+    }
+    cout << "\n";
+    cout << "Ingrese el nombre del vendedor: " << " \n";
+    cin >> nombreVendedor;
+    //listo y selecciono la compra
+    map<string, Usuario*>::iterator it = vendedores.find(nombreVendedor);
+    while(it == vendedores.end())
+    {
+        cout << "El vendedor no fue encontrado, vuelva a ingresar un vendedor:\n";
+        cout << "Ingrese el nombre del vendedor: " << " \n";
+        cin >> nombreVendedor;
+    } 
+    Vendedor *vendedorSelect = dynamic_cast<Vendedor *>(it->second);
+    map<int, Producto*> prods = vendedorSelect->getProductos();
+    map<int, Producto *>::iterator itProd;
+    cout << "Productos por enviar: " 
+    for (itProd = prods.begin(); itProd != prods.end(); ++itProd)
+    {
+        if(!itProd->second->getEnvio())
+            cout << "Id del producto: " << itProd->second->getId() << " \n";
+            cout << "Nombre del producto: " << itProd->second->getNombre() << " \n";
+        //¿¿falta link entre vendedor y compra??
+    }
+      
+}
+
 
 void expedienteDeUsuario(IUsuario *controlador)
 {
     string nicknameU;
-
     cout << "Usuarios registrados:\n";
-    set<DTUsuario> dataUsuarios;
-    dataUsuarios = controlador->listadoUsuarios();
-    for (DTUsuario usuario : dataUsuarios)
+    map<string, Usuario*> usuarios = controlador->listadoUsuarios();
+    for (map<string, Usuario *>::iterator it = usuarios.begin(); it != usuarios.end(); ++it)
     {
-        cout << usuario.getNickname() << "\n";
+        cout << it->second->getNickname() << "\n";
     }
+    
+    cout << "Seleccione un usuario: ";
+    cin >> nicknameU;
+    cout << "\n";
 
-    // cout << "Seleccione un usuario: ";
-    // cin >> nicknameU;
-    // cout << "\n";
-    // Usuario *usuario;
-    // usuario = controlador->obtenerUsuarioPorNickname(nicknameU);
-    // DTUsuario dataUsuario;
-    // dataUsuario = usuario->getDatosUsuario();
-    // cout << "Datos del usuario seleccionado:\n"
-    //      << dataUsuario << endl;
+    Usuario *usuario = controlador->obtenerUsuarioPorNickname(nicknameU);
+    DTUsuario dataUsuario = usuario->getDatosUsuario();
+    cout << "Datos del usuario seleccionado:\n" << dataUsuario << endl;
+    cout << "Nombre del usuario: " << dataUsuario.getNickname();
+    cout << "Fecha de Nacimiento: " << dataUsuario.getFechaNac().getDia()<< "/"<< dataUsuario.getFechaNac().getMes() << "/" << dataUsuario.getFechaNac().getAnio() << "\n";
+    
+    Vendedor *vendedor = dynamic_cast<Vendedor *>(usuario);
+    if (vendedor != nullptr)
+    {
+        // Usuario es vendedor
+        // lista todos los productos del vendedor
+        map<int, Producto *> productos = vendedor->getProductos();
+        cout << "Productos del vendedor " << vendedor->getNickname() << ":\n";
+        for (map<int, Producto *>::iterator iter = productos.begin(); iter != productos.end(); ++iter)
+        {
+            cout << iter->second->getNombre() << endl;
+        }
+        cout << "\n";
 
-    // Vendedor *vendedor = dynamic_cast<Vendedor *>(usuario);
-    // if (vendedor != NULL)
-    // {
-    //     // Usuario es vendedor
-    //     // lista todos los productos del vendedor
-    //     map<int, Producto *> productos = vendedor->getProductos();
-    //     cout << "Productos del vendedor " << vendedor->getNickname() << ": \n"
-    //          << endl;
-    //     for (map<int, Producto *>::const_iterator it = productos.begin(); it != productos.end(); ++it)
-    //     {
-    //         Producto *producto = it->second;
-    //         cout << producto->getDataProducto() << endl;
-    //     }
+        // // Lista todos las promociones activas
+        map<string, Promocion *> promociones = vendedor->getPromociones();
+        cout << "\nPromociones del vendedor " << vendedor->getNickname() << ":\n";
+        for (map<string, Promocion *>::iterator iterador = promociones.begin(); iterador != promociones.end(); ++iterador)
+        {
+            cout << iterador->second->getNombre() << endl; // Muestro el nombre de la promo
+        }
+    }
+    else
+    {
+        // El usuario es cliente
+        Cliente *cliente = dynamic_cast<Cliente *>(usuario);
+        map<int, Compra*> comprasCliente = cliente->getCompras();
+        cout << "\nCompras del cliente " << cliente->getNickname() << ":\n";
 
-    //     // Lista todos las promociones activas
-    //     set<Promocion> promociones = vendedor->getPromociones();
-    //     cout << "\nPromociones del vendedor " << vendedor->getNickname() << ": \n"
-    //          << endl;
-    //     for (set<Promocion>::const_iterator it = promociones.begin(); it != promociones.end(); ++it)
-    //     {
-    //         Promocion promocion = *it;
-    //         cout << promocion.getNombre() << endl; // Muestro el nombre de la promo
-    //     }
-    // }
-    // else
-    // {
-    //     // El usuario es cliente
-    //     Cliente *cliente = dynamic_cast<Cliente *>(usuario);
-    //     set<Compra> compras = cliente->getCompras();
-    //     cout << "\nCompras del cliente " << cliente->getNickname() << ": \n"
-    //          << endl;
-    //     for (set<Compra>::const_iterator it = compras.begin(); it != compras.end(); ++it)
-    //     {
-    //         Compra pcompra = *it;
-    //         cout << "Id de la compra:" << endl;
-    //         cout << pcompra.getId() << endl; // Muestro el nombre de la promo
-    //         for (const Producto &producto : pcompra.getCompProd().())
-    //         {
-    //             cout << "Nombre del producto: " << producto.getNombre() << endl;
-    //         }
-    //     }
-    // }
+        for (map<int, Compra*>::iterator compra = comprasCliente.begin(); compra != comprasCliente.end(); ++compra)
+        {
+            cout << "Id de la compra:" << compra->second->getId() << endl; // Muestro el nombre de la promo
+            cout << "Productos de la compra:\n";
+
+            set<Compra_Producto*> prodCompra = compra->second->getCompProd();
+
+            for (set<Compra_Producto*>::iterator it2 = prodCompra.begin(); it2 != prodCompra.end(); ++it2)
+            {
+                cout << "Nombre del producto: " << (*it2)->getProductosEnCompra()->getNombre() << endl;
+                cout << "Descripción: " << (*it2)->getProductosEnCompra()->getDesc() << endl;
+                cout << "Precio del producto: " << (*it2)->getProductosEnCompra()->getPrecio() << endl;
+                cout << "Stock del producto: " << (*it2)->getProductosEnCompra()->getCantStock() << endl;
+            }
+        }
+    }
 }
 
+void eliminarSuscripciones(IUsuario *controladorU)
+{   
+// el Administrador indica el nickname de cliente
+    string cli, vend, opcion;
+    map<string, Vendedor*> colDesuscripciones;
+    cout << "Eliminar Suscripciones:\n";
+    cout << "Ingrese el nombre del usuario:";
+    cin >> cli;
+    cout << "\n";
+
+// Sistema lista todos los vendedores a los que esta suscrito.
+    cout << "Vendedores a los que está suscrito:\n";
+    Usuario * usuario = controladorU->obtenerUsuarioPorNickname(cli);
+    Cliente * cliente = dynamic_cast<Cliente *>(usuario);
+    if(cliente != nullptr)
+    {
+        map<string, Vendedor *> suscripciones =  cliente->getVendedoresSuscritos();
+        for (map<string, Vendedor*>::iterator itVendedores = suscripciones.begin(); itVendedores != suscripciones.end(); ++itVendedores) 
+        {
+            if (itVendedores->second->estaSuscrito(cli)) 
+            {
+                cout << itVendedores->second->getNickname() << endl;
+            }
+        }
+        cout << "Ingrese el nickname del vendedor al que desea desuscribirse: ";
+        cin >> vend;
+        
+    // Eliminar la suscripcion del vendedor
+        Usuario * usVend = controladorU->obtenerUsuarioPorNickname(vend);
+        Vendedor * vendedorElimin = dynamic_cast<Vendedor *>(usVend);
+        vendedorElimin->eliminarSuscriptor(cliente);
+        cout << "Desea desuscribirse de otro vendedor? y/n:\n";
+        cin >> opcion;
+        while (opcion == "y")
+        {
+            cout << "Ingrese el nickname del vendedor al que desea desuscribirse: ";
+            cin >> vend;
+            
+            Usuario * usVend = controladorU->obtenerUsuarioPorNickname(vend);
+            Vendedor * vendedorElimin = dynamic_cast<Vendedor *>(usVend);
+            vendedorElimin->eliminarSuscriptor(cliente);
+            
+            cout << "Desea desuscribirse de otro vendedor? y/n:\n";
+            cin >> opcion;
+        }
+    }
+}
+
+// Administrador selecciona uno o varios vendedores 
+
+
+// sistema elimina las correspondientes suscripciones. 
+// 
+    
+    
+
+// indica el nickname de cliente 
+// selecciona uno o varios vendedores 
+// el sistema elimina las correspondientes suscripciones.
+
+// listarVendedoresSuscritos(nickname : String) : Set <DataVendedor>
+  
+
+ 
 // void altaDeUsuarioCARGARDATOSPREESTABLECIDOS(IUsuario *controlador, string nickname, string constrasena, int dia, int mes, int anio, int opcion, string ciudad, string direccion, string codigoRUT)
 //{ //Pasar opcion = 1 si es cliente y 2 si es vendedor.
 //     DTFecha fecha(dia, mes, anio);
@@ -1052,6 +1193,5 @@ int main()
             cout << "Opcion no valida. Intente nuevamente.\n";
         }
     };
-
     return 0;
 }

@@ -1,10 +1,18 @@
 #ifndef OBSERVER_H
 #define OBSERVER_H
 
-//class IObserver
-//{
-//    public:
-//        virtual void notificar() = 0;
-//};
-//
+#include <string>
+#include <map>
+
+using namespace std; 
+
+class Notificacion;
+
+class IObserver
+{
+    public:
+        virtual void notificar() = 0;
+        virtual ~IObserver(){};
+};
+
 #endif

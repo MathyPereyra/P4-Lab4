@@ -6,13 +6,11 @@
 #include <map>
 
 #include "datatypes.h"
-#include "observer.h"
-#include "comentario.h"
 
 using namespace std;
 
-class Comentario;
 class Compra;
+class Comentario;
 
 class Usuario
 {

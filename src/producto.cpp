@@ -94,12 +94,10 @@ float Producto::getPrecio()
 }
 
 
-bool Producto::restaDeStock(int cantidad)
+void Producto::restaDeStock(int cantidad)
 {
    if(this->cantStock >= cantidad)
-   {
+   {  
       this->cantStock = this->cantStock - cantidad;
-      return true;
    }
-   return false;
 }

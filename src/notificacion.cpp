@@ -1,20 +1,21 @@
-//#include "../include/notificacion.h"
-//#include <string>
-//#include <set>
+#include "../include/notificacion.h"
+#include <string>
 
-//using namespace std;
+using namespace std;
 
-//Notificacion::Notificacion(string nicknameV, string nombreProm, set<Producto> productos)
-//  : Notificacion(nicknameV, nombreProm, productos){}
+Notificacion::Notificacion(){}
 
-//string Notificaion::getNicknameV(){
-//  return this->nicknameV;
-//};
+Notificacion::Notificacion(string nicknameV, string nombreProm, map<int, Producto*> productos)
+  : nicknameV(nicknameV),nombreProm(nombreProm), productos(productos) {}
 
-//string Notificaion::getNombreProm(){
-//  return this->nombreProm;
-//};
+string Notificacion::getNicknameV(){
+  return this->nicknameV;
+};
 
-//set<Producto> Notificaion::getProductos(){
-//  return this->productos;
-//};
+string Notificacion::getNombreProm(){
+  return this->nombreProm;
+};
+
+map<int, Producto *> Notificacion::getProductos(){
+  return this->productos;
+};

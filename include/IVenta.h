@@ -39,7 +39,7 @@ public:
     virtual void crearCompra(Usuario * cliente) = 0;
     virtual set<DTProducto> listadoProductos() = 0;
     virtual map<string, Promocion *> listadoPromociones() = 0;
-    virtual bool agregarACompra(Producto * prod, int cantidad) = 0;
+    virtual void agregarACompra(Producto * prod, int cantidad) = 0;
     // aca no pusimos datadetallecompra al final
     virtual DTCompra detallesCompra() = 0;
     //virtual void confirmarCompra() = 0;

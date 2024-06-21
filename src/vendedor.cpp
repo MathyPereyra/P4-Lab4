@@ -43,6 +43,16 @@ void Vendedor::agregarProm(Promocion * prom)
 }
 
 
+bool Vendedor::estaSuscrito(string nombre)
+{
+  bool esta = false;
+  if(this->suscriptores.find(nombre) != this->suscriptores.end())
+  {
+    esta = true;
+  }
+
+  return esta;
+};
 
 
 map<int, Comentario *> Vendedor::getComentarios()
@@ -55,29 +65,28 @@ void Vendedor::agregarComentario(int id, Comentario * comen)
   this->comentarios[id] = comen;
 }
 
-// set<DTIdNProducto> Vendedor::getProductosNoEnPromo()
-//{
-//   set<DTIdNProducto> setInfoProductos;
-//   for (Producto p : this->productos)
-//   {
-//     if (!(p.estaEnPromo()))
-//     {
-//       int id = p.getId();
-//       string nombre = p.getNombre(); // no existe en producto.h una operación llamada getNombre()
-//       DTIdNProducto dp = DTIdNProducto(id, nombre);
-//       setInfoProductos.insert(dp);
-//     }
-//   }
-//   return setInfoProductos;
-// }
-//
-// void Cliente::agregarSuscripcion()
-//{
-// }
 
-void Vendedor::eliminarSuscriptor()
+void Vendedor::agregarSuscriptor(IObserver * usuario)
 {
+  this->suscriptores.insert(usuario);
 }
+
+
+void Vendedor::notificarSuscriptores()
+{
+  set<IObserver*>::iterator it;
+  for(it = this->suscriptores.begin(); it != this->suscriptores.end(); ++it)
+  {
+    (*it)->notificar();
+  }
+}
+
+
+void Vendedor::eliminarSuscriptor(IObserver * usuario)
+{
+  this->suscriptores.erase(usuario);
+}
+
 
 void Vendedor::crearCompra(Compra * compra){}
 
@@ -86,6 +95,7 @@ DTUsuario Vendedor::getDatosUsuario()
   DTUsuario DV = DTVendedor(this->nickname, this->contrasena, this->fechaNac, this->codigoRUT);
   return DV;
 }
+
 
 void Vendedor::agregarProd(Producto *prod)
 {

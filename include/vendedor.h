@@ -13,6 +13,7 @@
 #include "promocion.h"
 #include "compra.h"
 
+
 using namespace std;
 
 class Vendedor : public Usuario
@@ -21,7 +22,9 @@ private:
   string codigoRUT;
   map<int, Producto *> productos;
   map<string, Promocion *> promociones;
-  map<string, Usuario *> suscriptores;
+  set<IObserver*> suscriptores;
+  void notificarSuscriptores();
+
   // set<IObserver> suscriptores;
 
 public:
@@ -32,9 +35,8 @@ public:
 
   void agregarProd(Producto *prod);
   // tal vez tendria q ser clietne no usuario
-  void agregarSuscriptor(Usuario *usuario);
-  void eliminarSuscriptor(Usuario *usuario);
-  void notificarSuscriptores();
+  void agregarSuscriptor(IObserver *o);
+  void eliminarSuscriptor(IObserver *usuario);
   bool estaSuscrito(string nombre);
 
   DTUsuario getDatosUsuario();

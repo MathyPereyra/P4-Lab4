@@ -103,7 +103,7 @@ map<string, Usuario*> ControladorUsuario::listadoUsuarios(string tipoDeUsuario)
         else if (tipoDeUsuario == "vendedor")
         {
             Vendedor *vendedor = dynamic_cast<Vendedor *>(it->second);
-            if ("cliente" != NULL)
+            if (vendedor != NULL)
             {
                 resultado[it->second->getNickname()] = vendedor;
             }

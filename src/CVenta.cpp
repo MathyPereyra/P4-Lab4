@@ -156,15 +156,14 @@ void ControladorVenta::crearCompra(Usuario * cliente)
 }
 
 
-bool ControladorVenta::agregarACompra(Producto * prod, int cantidad)
+void ControladorVenta::agregarACompra(Producto * prod, int cantidad)
 {
     Compra * compra = getMemCompra();
-    if(prod->restaDeStock(cantidad))
+    if(prod->getCantStock() >= cantidad)
     {
         compra->agregarACompra(prod, cantidad);
-        return true;
     }
-    return false;
+
 }
 
 
@@ -173,18 +172,13 @@ DTCompra ControladorVenta::detallesCompra()
     set<DTProducto> dataProductos;
     DTFecha fechaActual = DTFecha(4,5,6);
     float sumaPrecios = 0;
-    DTProducto  productos = DTProducto();
-        cout << "error -1";
+    DTProducto productos = DTProducto();
     Compra * compra = this->getMemCompra();
-        cout << "error 0";
     
     for(Compra_Producto * it : compra->getCompProd())
     {
-        cout << "error 1";
-        sumaPrecios = it->sumaPrecios() + sumaPrecios;
-        cout << "error 2";
+        sumaPrecios += it->sumaPrecios();
         productos = it->getProductosEnCompra()->getDataProducto();
-        cout << "error 3";
         dataProductos.insert(productos);
     }
     

@@ -35,12 +35,12 @@ string Cliente::getCiudad()
 {
   return this->ciudad;
 };
-//
-// set<DTNotificacion> Cliente::getNotificaciones()
-//{
-//  // return this->notificaciones; //esto estaba porque en el constructor pasabamos por parámetro el set DTNotificaciones, pero eso es incorrecto
-//};
-//
+
+ map<string, Notificacion*> Cliente::getNotificaciones()
+{
+   return this->notificaciones; 
+};
+
 map<int, Compra*> Cliente::getCompras()
 {
  return this->compras;
@@ -49,6 +49,11 @@ map<int, Compra*> Cliente::getCompras()
 map<int, Comentario*> Cliente::getComentarios()
 {
   return this->comentarios;
+}
+
+map<string, Vendedor *> Cliente::getVendedoresSuscritos()
+{
+  return this->vendedoresSuscritos;
 }
 
 void Cliente::agregarComentario(int id, Comentario * comen)
@@ -69,6 +74,16 @@ DTUsuario Cliente::getDatosUsuario()
   DTUsuario DC = DTCliente(this->nickname, this->contrasena, this->fechaNac, this->ciudad, this->direccion);
   return DC;
 }
+
+void Cliente::setUltimaConsulta(DTFecha fecha)
+{
+  this->ultimaConsulta = fecha;
+};
+
+DTFecha Cliente::getUltimaConsulta()
+{
+  return this->ultimaConsulta;
+};
 
 // set<DTComentario> Cliente::listadoComentarioCliente()
 //{

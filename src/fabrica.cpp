@@ -3,8 +3,8 @@
 //#include <cstddef>
 #include "../include/IVenta.h"
 #include "../include/CVenta.h"
-//#include "../include/INotificacion.h"
-//#include "../include/CNotificiacion.h"
+#include "../include/INotificacion.h"
+#include "../include/CNotificacion.h"
 
 Fabrica * Fabrica::instancia = nullptr;
 
@@ -28,8 +28,8 @@ IVenta* Fabrica::getIVenta()
     return controlador->getInstanciaVen();
 };
 
-//IUsuario* Fabrica::getINotificacion()
-//{
-//    ControladorNotificacion* controlador = ControladorNotificacion::getInstancia();
-//    return controlador->getInstance();
-//};
+INotificacion* Fabrica::getINotificacion()
+{
+    ControladorNotificacion* controlador = ControladorNotificacion::getInstanciaN();
+    return controlador->getInstanciaN();
+};

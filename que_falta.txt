@@ -1,0 +1,17 @@
+PRONTO Alta de usuario 
+PRONTO Listado de usuarios
+PRONTO Alta de producto
+PRONTO Consultar producto
+PRONTO Crear promocion
+PRONTO Consultar promocion
+Realizar compra
+PRONTO Dejar comentario
+PRONTO Eliminar comentario
+Enviar producto
+A PROBAR Expediente de Usuario
+A PROBAR Suscribirse a notificaciones
+A PROBAR Consulta de notificaciones
+
+A PROBAR Eliminar suscripciones
+Cargar datos preestablecidos
+Terminar programa

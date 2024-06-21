@@ -6,7 +6,6 @@
 #include <map>
 
 #include "datatypes.h"
-#include "observer.h"
 //#include "vendedor.h"
 //#include "comentario.h"
 
@@ -43,7 +42,7 @@ public:
   
   void agregarComentario(int id, Comentario *comentario);
   
-  bool restaDeStock(int cantidad);
+  void restaDeStock(int cantidad);
   DTProducto getDataProducto();
   int getId();
   string getNombre();

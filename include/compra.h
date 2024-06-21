@@ -7,7 +7,6 @@
 
 #include "usuario.h"
 #include "datatypes.h"
-#include "observer.h"
 #include "compra_producto.h"
 #include "producto.h"
 

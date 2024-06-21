@@ -1,5 +1,6 @@
 #include "../include/comentario.h"
-
+#include "../include/producto.h"
+ 
 #include <string>
 
 using namespace std;

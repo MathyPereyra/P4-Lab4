@@ -17,14 +17,15 @@ class Notificacion
 private:
   string nicknameV;
   string nombreProm;
-  set<Producto> *productos;
+  map<int, Producto*> productos;
 
 public:
-  Notificacion(string nicknameV, string nombreProm, set<Producto> productos);
+  Notificacion();
+  Notificacion(string nicknameV, string nombreProm, map<int, Producto*> productos);
   
   string getNicknameV();
   string getNombreProm();
-  set<Producto> getProductos();
+  map<int, Producto> getProductos();
 
   virtual ~Notificacion(){};
 };

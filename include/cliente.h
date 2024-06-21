@@ -5,6 +5,7 @@
 #include <set>
 #include <map>
 
+#include "notificacion.h"
 #include "usuario.h"
 #include "datatypes.h"
 #include "observer.h"
@@ -12,13 +13,15 @@
 
 using namespace std;
 
-class Cliente : public Usuario //, public IObserver
+class Cliente : public Usuario, public IObserver
 {
 private:
   string direccion;
   string ciudad;
-  set<DTNotificacion> *notificaciones;
   map<int, Compra*> compras;
+  map<string, Vendedor *> vendedoresSuscritos;
+  map<string, Notificacion*> notificaciones;
+  DTFecha ultimaConsulta;
 
 public:
   Cliente(string nickname, string contrasena, DTFecha fechaNac, string dir, string ciud);
@@ -28,6 +31,9 @@ public:
   void eliminarNotifiaciones();
   void notificar(string nVen, string nProm, set<DTProducto>);
 
+  void setUltimaConsulta(DTFecha fecha);
+  //DTFecha getUltimaConsul
+
   void crearCompra(Compra * compra);
   DTUsuario getDatosUsuario();
   string getNickname();
@@ -35,8 +41,9 @@ public:
   DTFecha getFechaNac();
   string getDireccion();
   string getCiudad();
-  set<DTNotificacion> getNotificaciones();
+  map<string, Notificacion*> getNotificaciones();
   map<int, Comentario*> getComentarios();
+  map<string, Vendedor *>  getVendedoresSuscritos();
   void agregarComentario(int id, Comentario * comentario);
   map<int, Compra*> getCompras();
   void notificar();
