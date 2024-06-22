@@ -1,14 +1,12 @@
 #ifndef COMPRA_PRODUCTO_H
 #define COMPRA_PRODUCTO_H
 
+#include "producto.h"
 #include <string>
 #include <set>
 #include <map>
 
-#include "usuario.h"
-#include "datatypes.h"
-#include "producto.h"
-#include "promocion.h"
+
 
 using namespace std;
 

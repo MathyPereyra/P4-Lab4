@@ -1,13 +1,12 @@
 #ifndef COMENTARIO_H
 #define COMENTARIO_H
 
+#include "datatypes.h"
+#include "producto.h"
 #include <string>
 #include <set>
 #include <map>
 
-#include "producto.h"
-#include "datatypes.h"
-#include "observer.h"
 
 using namespace std;
 

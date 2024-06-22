@@ -1,15 +1,13 @@
 #ifndef CUSUARIO_H
 #define CUSUARIO_H
 
+#include "IUsuario.h"
+#include "datatypes.h"
 #include <string>
 #include <set>
 #include <map>
 
-#include "datatypes.h"
-#include "usuario.h"
-#include "IUsuario.h"
-#include "cliente.h"  //no estoy seguro de si debe estar, pero para altaCliente creo qeu se utilizará
-#include "vendedor.h" //no estoy seguro de si debe estar, pero para altaVendedor creo qeu se utilizará
+
 
 using namespace std;
 
@@ -39,7 +37,7 @@ public:
   string getmemContrasena();
   DTFecha getmemFechaNac();
   Usuario *getmemUsuario();
-  void recordarUsuario(Usuario *usuario);
+  void recordarUsuario(string nickname );
   void ingresarUsuario(string nickname, string contrasena, DTFecha fechaNac);
   bool existeUsuarioIgualNickname(string nickname);
   void terminarAlta();
@@ -51,23 +49,27 @@ public:
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //  Retorna set de nicknames, si el tipo es cliente retorna los nickname de todos los clientes y si el tipo es vendedor el de todos los vendedores
-  map<string, Usuario*> listadoUsuarios(string tipoDeUsuario);
-  map<string, Usuario*> listadoUsuarios();
+  set<DTUsuario> listadoUsuarios(string tipoDeUsuario);
+  set<DTUsuario> listadoUsuarios();
+  set<DTCliente> listadoClientes();
+  map<string, Usuario *> getMapaUsuarios(string opcion);
   //  Retorna set con los nickname de todos los usuarios del sistema (Clientes y Vendedores)
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
   // set<string> listadoNicknameCliente();
   set<string> listadoUsuarioNickname();
-  // set<DTComentario> listadoComentario(string);
+  set<DTComentario> listadoComentario(int id);
+  set<DTComentario> listadoComentario(string nickname);  
   void eliminarComentario(int id);
   static ControladorUsuario *getInstance();
 
   // Operaciones internas
   // void limpiarMemoria();
 
-  void crearComentario(string texto, Producto *producto, Usuario * usuario);
-  void crearRespuesta(string texto, Comentario *comentarioOg);
+  void crearComentario(string texto, int producto, string usuario);
+  void crearRespuesta(string texto, int idC, int idP);
+  bool hayComentarios(int id);
 
   Usuario *obtenerUsuarioPorNickname(const string &nickname);
 

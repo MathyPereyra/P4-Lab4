@@ -22,23 +22,3 @@ DTFecha Usuario::getFechaNac()
   return this->fechaNac;
 };
 
-// set<DTComentario> Usuario::listadoComentarioUsuario()
-//{
-//   //  set<DTComentario> listadoComens;
-//   //  for (Comentario comen : this->comentarios)
-//   //  {
-//   //    DTComentario dataComentario = DTComentario(comen.getText(), comen.getId(), comen.getFecha());
-//   //    listadoComens.insert(dataComentario);
-//   //  }
-//   //  return listadoComens;
-// }
-//
-// DTUsuario Usuario::getDatosUsuario()
-//{
-//   //  DTUsuario DataUsuario
-// }
-//
-// map<Comentario> Usuario::getComentarios()
-//{
-//   //  DTComentario
-// }

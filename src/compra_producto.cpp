@@ -1,5 +1,5 @@
 #include "../include/compra_producto.h"
-
+#include "../include/promocion.h"
 
 Compra_Producto::Compra_Producto(){}
 
@@ -11,7 +11,7 @@ void Compra_Producto::agregarProducto(Producto * prod)
 {
     int id = prod->getId();
     this->productosEnCompra = prod;
-    prod->agregadoACompra();
+    prod->agregadoACompra(this);
 }
 
 
@@ -50,4 +50,10 @@ Producto * Compra_Producto::getProductosEnCompra()
 int Compra_Producto::getCantidad()
 {
     return this->cantidad;
+}
+
+
+bool Compra_Producto::getEnvio()
+{
+    return this->envio;
 }

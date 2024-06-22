@@ -1,17 +1,18 @@
 #ifndef CLIENTE_H
 #define CLIENTE_H
 
+#include "datatypes.h"
+#include "notificacion.h"
+#include "observer.h"
+#include "usuario.h"
 #include <string>
 #include <set>
 #include <map>
 
-#include "notificacion.h"
-#include "usuario.h"
-#include "datatypes.h"
-#include "observer.h"
-#include "compra.h"
 
 using namespace std;
+
+class Vendedor;
 
 class Cliente : public Usuario, public IObserver
 {
@@ -21,7 +22,7 @@ private:
   map<int, Compra*> compras;
   map<string, Vendedor *> vendedoresSuscritos;
   map<string, Notificacion*> notificaciones;
-  DTFecha ultimaConsulta;
+  //DTFecha ultimaConsulta;
 
 public:
   Cliente(string nickname, string contrasena, DTFecha fechaNac, string dir, string ciud);
@@ -31,10 +32,11 @@ public:
   void eliminarNotifiaciones();
   void notificar(string nVen, string nProm, set<DTProducto>);
 
-  void setUltimaConsulta(DTFecha fecha);
+  //void setUltimaConsulta(DTFecha fecha);
   //DTFecha getUltimaConsul
 
   void crearCompra(Compra * compra);
+  DTCliente getDatosCliente();
   DTUsuario getDatosUsuario();
   string getNickname();
   string getContrasena(); //debería ir? solo lo agregué porque estaría faltando para usar en cliente.cpp
@@ -46,7 +48,7 @@ public:
   map<string, Vendedor *>  getVendedoresSuscritos();
   void agregarComentario(int id, Comentario * comentario);
   map<int, Compra*> getCompras();
-  void notificar();
+  void notificar() {};
 
 
   ~Cliente(){};

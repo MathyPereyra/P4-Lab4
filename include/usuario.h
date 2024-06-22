@@ -1,16 +1,18 @@
 #ifndef USUARIO_H
 #define USUARIO_H
 
+#include "comentario.h"
+#include "compra.h"
+#include "datatypes.h"
+
 #include <string>
 #include <set>
 #include <map>
 
-#include "datatypes.h"
 
 using namespace std;
 
-class Compra;
-class Comentario;
+
 
 class Usuario
 {

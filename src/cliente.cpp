@@ -7,9 +7,6 @@ using namespace std;
 Cliente::Cliente(string nickname, string contrasena, DTFecha fechaNac, string direccion, string ciudad)
     : Usuario(nickname, contrasena, fechaNac), direccion(direccion), ciudad(ciudad){}
 
-// Cliente::~Cliente(){
-//     delete compras;
-// };
 
 string Cliente::getNickname()
 {
@@ -41,10 +38,12 @@ string Cliente::getCiudad()
    return this->notificaciones; 
 };
 
+
 map<int, Compra*> Cliente::getCompras()
 {
  return this->compras;
 }
+
 
 map<int, Comentario*> Cliente::getComentarios()
 {
@@ -69,21 +68,42 @@ void Cliente::agregarComentario(int id, Comentario * comen)
   this->compras[id] = compra;
 }
 
+
+DTCliente Cliente::getDatosCliente()
+{
+  return DTCliente (this->nickname, this->contrasena, this->fechaNac, this->ciudad, this->direccion);
+}
+
+
+
 DTUsuario Cliente::getDatosUsuario()
 {
+  
   DTUsuario DC = DTCliente(this->nickname, this->contrasena, this->fechaNac, this->ciudad, this->direccion);
   return DC;
 }
 
-void Cliente::setUltimaConsulta(DTFecha fecha)
-{
-  this->ultimaConsulta = fecha;
-};
 
-DTFecha Cliente::getUltimaConsulta()
+void Cliente::eliminarNotifiaciones()
 {
-  return this->ultimaConsulta;
-};
+  map<string, Notificacion*> notis = this->getNotificaciones();
+  for(map<string, Notificacion*>::iterator it = notis.begin(); it != notis.end(); it++)
+  {
+    notis.erase(it);
+    delete it->second;
+  }
+}
+
+//void Cliente::setUltimaConsulta(DTFecha fecha)
+//{
+//  this->ultimaConsulta = fecha;
+//};
+//
+//
+//DTFecha Cliente::getUltimaConsulta()
+//{
+//  return this->ultimaConsulta;
+//};
 
 // set<DTComentario> Cliente::listadoComentarioCliente()
 //{

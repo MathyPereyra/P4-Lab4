@@ -1,14 +1,11 @@
 #ifndef CNOTIFICACION_H
 #define CNOTIFICACION_H
 
+#include "INotificacion.h"
 #include <string>
 #include <set>
 
-#include "CUsuario.h"
-#include "IUsuario.h"
 
-#include "usuario.h"
-#include "INotificacion.h"
 
 using namespace std;
 
@@ -30,13 +27,13 @@ public:
     // Operaciones externas
 
 
-    set<DTVendedor> listarVendedoresNoSuscritos(string nickname);
-    void suscribirAVendedor(string nickname, set<DTVendedor> suscritos);
-    set<DTVendedor> mostrarSuscripciones(string nickname);
-    set<DTNotificacion> mostrarNotificaciones(string nickname, IUsuario * contUsuario);
+    set<DTUsuario> listarVendedoresNoSuscritos(string nickname);
+    void suscribirAVendedor(string nicknameC, string nicknameV);
+    //set<DTVendedor> mostrarSuscripciones(string nickname);
+    set<DTNotificacion> mostrarNotificaciones(string nickname);
     void eliminarNotificacion();
-    set<DTVendedor> listarVendedoresSuscritos(string nickname);
-    void eliminarSuscripciones(string nickname, set<DTVendedor> vendedores);
+    set<DTUsuario> listarVendedoresSuscritos(string nickname);
+    void eliminarSuscripcion(string nicknameC, string nicknameV);
 
 
     // Operaciones internas

@@ -1,7 +1,7 @@
 #include "../include/vendedor.h"
 
-// #include "../include/cliente.h"
-
+#include "../include/cliente.h"
+#include "../include/promocion.h"
 #include <string>
 
 using namespace std;
@@ -43,10 +43,10 @@ void Vendedor::agregarProm(Promocion * prom)
 }
 
 
-bool Vendedor::estaSuscrito(string nombre)
+bool Vendedor::estaSuscrito(string nicknameC)
 {
   bool esta = false;
-  if(this->suscriptores.find(nombre) != this->suscriptores.end())
+  if(this->suscriptores.find(nicknameC) != this->suscriptores.end())
   {
     esta = true;
   }
@@ -68,23 +68,25 @@ void Vendedor::agregarComentario(int id, Comentario * comen)
 
 void Vendedor::agregarSuscriptor(IObserver * usuario)
 {
-  this->suscriptores.insert(usuario);
+  this->suscriptores[usuario->getNickname()] = usuario;
 }
 
 
 void Vendedor::notificarSuscriptores()
 {
-  set<IObserver*>::iterator it;
+  map<string, IObserver*>::iterator it;
   for(it = this->suscriptores.begin(); it != this->suscriptores.end(); ++it)
   {
-    (*it)->notificar();
+    (*it).second->notificar();
   }
 }
 
 
 void Vendedor::eliminarSuscriptor(IObserver * usuario)
 {
-  this->suscriptores.erase(usuario);
+  Cliente *cliente = dynamic_cast<Cliente*>(usuario);
+  cliente->eliminarNotifiaciones();
+  this->suscriptores.erase(usuario->getNickname());
 }
 
 

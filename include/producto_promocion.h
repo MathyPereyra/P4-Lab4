@@ -1,16 +1,15 @@
 #ifndef PRODUCTO_PROMOCION_H
 #define PRODUCTO_PROMOCION_H
 
+// #include "producto.h"
+
 #include <string>
 #include <set>
 #include <map>
 
-#include "usuario.h"
-#include "datatypes.h"
-#include "observer.h"
-#include "producto.h"
-
 using namespace std;
+
+class Producto;
 
 class Producto_Promocion 
 {
@@ -24,7 +23,7 @@ public:
   Producto_Promocion(int cantMin);
 
   void agregarProd(Producto * prod);
-  set<DTProducto> getProdEnProm();
+  set<Producto> getProdEnProm();
 
   int getCantidadMinima();
   Producto* getProducto();

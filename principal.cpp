@@ -1,33 +1,24 @@
-#include <cinttypes>
 #include <ios>
 #include <limits>
 #include <string>
 #include <set>
-#include <map>
 #include <iostream>
 
-// #include "include/CUsuario.h"
 #include "include/INotificacion.h"
 #include "include/IVenta.h"
-#include "include/cliente.h"
-#include "include/comentario.h"
+
 #include "include/datatypes.h"
 #include "include/fabrica.h"
 #include "include/IUsuario.h"
-#include "include/producto.h"
-#include "include/producto_promocion.h"
-#include "include/promocion.h"
-#include "include/usuario.h"
-#include "include/vendedor.h"
-// #include "include/observer.h"
-// #include "include/promocion.h"
-// #include "include/compra_producto.h"
-// #include "include/compra.h"
+
 
 using namespace std;
 
-void altaDeUsuario(IUsuario *controlador)
+void altaDeUsuario()
 {
+    Fabrica *fabrica = Fabrica::getInstanceF();      // se crea instancia única de fábrica
+    IUsuario * controladorU = fabrica->getIUsuario();
+
     string nickname, contrasena;
     int dia, mes, anio;
     cout << "Ingrese nickname:";
@@ -48,12 +39,12 @@ void altaDeUsuario(IUsuario *controlador)
     cout << "\nIngrese anio: ";
     cin >> anio;
     DTFecha fecha(dia, mes, anio);
-    controlador->ingresarUsuario(nickname, contrasena, fecha);
-    if (controlador->existeUsuarioIgualNickname(nickname))
+    controladorU->ingresarUsuario(nickname, contrasena, fecha);
+    if (controladorU->existeUsuarioIgualNickname(nickname))
     {
         cout << "\nNickname ya existe, intente nuevamente. ";
-        controlador->terminarAlta();
-        altaDeUsuario(controlador);
+        controladorU->terminarAlta();
+        altaDeUsuario();
         return;
     }
     cout << "\nIngrese 1 si va a ingresar un cliente o 2 si va a ingresar un vendedor: ";
@@ -70,7 +61,7 @@ void altaDeUsuario(IUsuario *controlador)
         string direccion;
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
         getline(cin, direccion);
-        controlador->altaCliente(direccion, ciudad);
+        controladorU->altaCliente(direccion, ciudad);
     }
     break;
 
@@ -85,72 +76,64 @@ void altaDeUsuario(IUsuario *controlador)
             cout << "\nIngrese codigoRUT (debe tener exactamente 12 caracteres): ";
             cin >> codigoRUT;
         }
-        controlador->altaVendedor(codigoRUT);
+        controladorU->altaVendedor(codigoRUT);
     }
     break;
     }
-    controlador->confirmarAltaUsuario();
+    controladorU->confirmarAltaUsuario();
     return;
 }
 
-void listadoDeUsuarios(IUsuario *controlador)
+void listadoDeUsuarios()
 {
-    map<string, Vendedor *> vendedores;
-    map<string, Cliente *> clientes;
-    set<DTUsuario> dataUsuarios;
-    map<string, Usuario *> usuarios = controlador->listadoUsuarios();
-    for (map<string, Usuario *>::iterator it = usuarios.begin(); it != usuarios.end(); ++it)
-    {
-        Vendedor *vendedor = dynamic_cast<Vendedor *>(it->second);
-        if (vendedor != NULL)
-        {
-            vendedores[vendedor->getNickname()] = vendedor;
-        }
-        else
-        {
-            Cliente *cliente = dynamic_cast<Cliente *>(it->second);
-            clientes[cliente->getNickname()] = cliente;
-        }
-    }
+    Fabrica *fabrica = Fabrica::getInstanceF();      // se crea instancia única de fábrica
+    IUsuario * controladorU = fabrica->getIUsuario();
+
+    set<DTUsuario> clientes = controladorU->listadoUsuarios("cliente");
     cout << "Listado de Usuarios: " << "\n";
-    for (map<string, Vendedor *>::iterator it = vendedores.begin(); it != vendedores.end(); ++it)
+    for (DTUsuario usuario : clientes)
     {
-        cout << "Nickname: " << it->second->getNickname() << ", Fecha nacimiento: " << it->second->getFechaNac().getDia() << "/" << it->second->getFechaNac().getMes() << "/" << it->second->getFechaNac().getAnio() << ", Codigo RUT: " << it->second->getCodigoRUT() << "\n";
+        cout << "Nombre: " << usuario.getNickname() << "\n";
+        cout << "Fecha de nacimiento: " << usuario.getFechaNac().getDia() << "/" << usuario.getFechaNac().getMes() << "/" << usuario.getFechaNac().getAnio() << "\n";
+       
+        
+        cout << "Direccion: " << usuario.getDireccion() << "\n";
+        cout << "Ciudad: " << usuario.getCiudad() << "\n";
+
     }
 
-    for (map<string, Cliente *>::iterator iter = clientes.begin(); iter != clientes.end(); ++iter)
+    for(DTUsuario vend : controladorU->listadoUsuarios("vendedor"))
     {
-        cout << "Nickname: " << iter->second->getNickname() << ", Fecha nacimiento: " << iter->second->getFechaNac().getDia() << "/" << iter->second->getFechaNac().getMes() << "/" << iter->second->getFechaNac().getAnio() << ", Dirección: " << iter->second->getDireccion() << ", Ciudad: " << iter->second->getCiudad() << "\n";
+        cout << "Nombre: " << vend.getNickname() << "\n";
+        cout << "Fecha de nacimiento: " << vend.getFechaNac().getDia() << "/" << vend.getFechaNac().getMes() << "/" << vend.getFechaNac().getAnio() << "\n";      
+        cout << "Tipo del CodigoRUT: " << vend.getCodigoRUT() << "\n";;        
     }
-    cout << "\n";
 
-    cout << "Ingrese enter para continuar...\n";
+    cout << "Ingrese enter para continuar...";
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
     cin.get();
 }
+    
 
-void altaDeProducto(IUsuario *controladorU, IVenta *controladorV)
+void altaDeProducto()
 {
-    set<DTUsuario> dataVendedores;
-    map<string, Usuario *> usuarios = controladorU->listadoUsuarios();
-    for (map<string, Usuario *>::iterator it = usuarios.begin(); it != usuarios.end(); ++it)
-    {
-        Vendedor *vendedor = dynamic_cast<Vendedor *>(it->second);
-        if (vendedor)
-        {
-            dataVendedores.insert(vendedor->getDatosUsuario());
-        }
-    }
+    Fabrica *fabrica = Fabrica::getInstanceF();      // se crea instancia única de fábrica
+    IUsuario * controladorU = fabrica->getIUsuario();
+    IVenta * controladorV = fabrica->getIVenta();
+    
+    set<DTUsuario> dataVendedores = controladorU->listadoUsuarios("vendedor");
     cout << "Listado de Vendedores: " << "\n";
     for (DTUsuario vendedor : dataVendedores)
     {
         cout << vendedor.getNickname() << "\n";
     }
     cout << "\n";
+
     string nicknameV, nombreP, descripcionP;
     float precioP;
     int cantStockP, opcion;
     categoria cat;
+    
     cout << "Elija un vendedor: ";
     cin >> nicknameV;
     // Agregar precondición de que el vendedor sea correcto
@@ -158,10 +141,9 @@ void altaDeProducto(IUsuario *controladorU, IVenta *controladorV)
     bool encontrado = false;
     while (!encontrado)
     {
-        set<DTUsuario>::iterator iter;
-        for (iter = dataVendedores.begin(); iter != dataVendedores.end(); iter++)
+        for (DTUsuario usuario : dataVendedores)
         {
-            if (iter->getNickname() == nicknameV)
+            if (usuario.getNickname() == nicknameV)
             {
                 encontrado = true;
                 break;
@@ -222,20 +204,19 @@ void altaDeProducto(IUsuario *controladorU, IVenta *controladorV)
         cat = otro;
         break;
     }
-    Usuario *usuario = controladorU->obtenerUsuarioPorNickname(nicknameV);
-    Vendedor *vendedor = dynamic_cast<Vendedor *>(usuario);
-    if (vendedor != NULL)
-    {
-        controladorV->crearProducto(vendedor, nombreP, descripcionP, precioP, cantStockP, cat);
-    }
+ 
+    
+    controladorV->crearProducto(nicknameV, nombreP, descripcionP, precioP, cantStockP, cat);
 }
 
-void consultarProducto(IUsuario *controladorU, IVenta *controladorV) // agregar precondicion de no hay producto
+void consultarProducto() // agregar precondicion de no hay producto
 {
+    Fabrica *fabrica = Fabrica::getInstanceF();      // se crea instancia única de fábrica
+    IUsuario * controladorU = fabrica->getIUsuario();
+    IVenta * controladorV = fabrica->getIVenta();
 
     int idProducto;
-    set<DTProducto> dataProductos;
-    dataProductos = controladorV->listadoProductos();
+    set<DTProducto> dataProductos = controladorV->listadoProductos();
     cout << "Listado de Productos: " << "\n";
     for (DTProducto producto : dataProductos)
     {
@@ -246,18 +227,16 @@ void consultarProducto(IUsuario *controladorU, IVenta *controladorV) // agregar 
     cout << "\n";
     cout << "Seleccione un Producto con su id: ";
     cin >> idProducto;
-    Producto *productoConsultado = controladorV->seleccionarProductoPorId(idProducto);
-    while (cin.fail() || productoConsultado == NULL)
+    while (cin.fail() || !controladorV->existeProducto(idProducto))
     {
-        cin.clear();
-        cin.ignore(numeric_limits<streamsize>::max(), '\n');
-        cout << "Id incorrecto, seleccione un producto nuevamente con su id:\n";
-        cin >> idProducto;
-        productoConsultado = controladorV->seleccionarProductoPorId(idProducto);
+       cin.clear();
+       cin.ignore(numeric_limits<streamsize>::max(), '\n');
+       cout << "Id incorrecto, seleccione un producto nuevamente con su id:\n";
+       cin >> idProducto;
     }
     cout << "\n";
-
-    DTProducto dataP = productoConsultado->getDataProducto();
+    
+    DTProducto dataP = controladorV->dataDeProducto(controladorV->seleccionarProductoPorId(idProducto));
 
     cout << "Nombre : " << dataP.getNombre() << "\n";
     cout << "Id: " << dataP.getId() << "\n";
@@ -284,32 +263,19 @@ void consultarProducto(IUsuario *controladorU, IVenta *controladorV) // agregar 
     }
     }
     cout << "Categoria: " << cat << "\n";
-
-    map<string, Usuario *> vendedores;
-    vendedores = controladorU->listadoUsuarios("vendedor");
-    string nicknameV;
-    for (map<string, Usuario *>::iterator it = vendedores.begin(); it != vendedores.end(); ++it)
-    {
-        Vendedor *vendedor = dynamic_cast<Vendedor *>(it->second);
-        if (vendedor == nullptr)
-        {
-            cout << "error downcast";
-            continue;
-        }
-        if ( vendedor->getProductos().find(idProducto) != vendedor->getProductos().end() && vendedor->getProductos().find(idProducto)->second == productoConsultado)
-        {
-            nicknameV = vendedor->getNickname();
-            break;
-        }
-    }
-    cout << "Nickname del vendedor: " << nicknameV << endl;
+    cout << "Nickname del vendedor: " << controladorV->nombreVendedor(idProducto) << endl;
     cout << "Ingrese enter para continuar...";
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
     cin.get();
 }
 
-void crearPromocion(IUsuario *controladorU, IVenta *controladorV)
+
+void crearPromocion()
 {
+    Fabrica *fabrica = Fabrica::getInstanceF();      // se crea instancia única de fábrica
+    IUsuario * controladorU = fabrica->getIUsuario();
+    IVenta * controladorV = fabrica->getIVenta();
+
     string nombreProm, descripcionProm;
     float descuento;
     int dia, mes, anio;
@@ -333,33 +299,20 @@ void crearPromocion(IUsuario *controladorU, IVenta *controladorV)
 
     DTFecha fechaVen = DTFecha(dia, mes, anio);
     string nicknameV;
-    // cout << "Listado de vendedores: \n";
-    //  map<string, Usuario *> vendedores = controladorU->listadoUsuarios("vendedor");
-    //  map<string, Usuario *>::iterator it;
-    //  for (it = vendedores.begin(); it != vendedores.end(); it++)
-    //  {
-    //      cout << it->second->getNickname() << "\n";
-    //  }
-    set<DTUsuario> dataVendedores;
-    map<string, Usuario *> usuarios = controladorU->listadoUsuarios();
-    for (map<string, Usuario *>::iterator it = usuarios.begin(); it != usuarios.end(); ++it)
-    {
-        Vendedor *vendedor = dynamic_cast<Vendedor *>(it->second);
-        if (vendedor)
-        {
-            dataVendedores.insert(vendedor->getDatosUsuario());
-        }
-    }
+ 
+    set<DTUsuario> vendedores = controladorU->listadoUsuarios("vendedor");
+
     cout << "Listado de Vendedores: " << "\n";
-    for (DTUsuario vendedor : dataVendedores)
+    for (DTUsuario vendedor : vendedores)
     {
         cout << vendedor.getNickname() << "\n";
     }
+
     cout << "\n";
 
-    /////////
     cout << "Seleccione un vendedor: ";
     cin >> nicknameV;
+    
     while (!controladorU->existeUsuarioIgualNickname(nicknameV))
     {
         cout << "El vendedor no existe. seleccione nuevamente un vendedor.\n"
@@ -367,43 +320,36 @@ void crearPromocion(IUsuario *controladorU, IVenta *controladorV)
         cin >> nicknameV;
     }
 
-    Usuario *usuario = controladorU->obtenerUsuarioPorNickname(nicknameV);
-    Vendedor *vendedor = dynamic_cast<Vendedor *>(usuario);
-    controladorV->setMemUsuario(usuario);
-
+    controladorV->setMemUsuario(nicknameV);
     controladorV->crearPromocion(nombreProm, descripcionProm, descuento, fechaVen);
 
-    map<int, Producto *> productosNoEnPromo; // mapa de productos no en promoción
-    map<int, Producto *> dataProductos = vendedor->getProductos();
+    set<DTProducto> productosNoEnPromo = controladorV->listadoProductosNoEnPromo();
     cout << "Listado de productos disponibles para el vendedor " << nicknameV << " :\n";
-    for (map<int, Producto *>::iterator it = dataProductos.begin(); it != dataProductos.end(); it++)
+    for (set<DTProducto>::iterator it = productosNoEnPromo.begin(); it != productosNoEnPromo.end(); it++)
     {
-        if (!it->second->estaEnPromo())
-        {
-            cout << "Id: " << it->second->getId();
-            cout << ", Nombre: " << it->second->getNombre() << "\n";
-            productosNoEnPromo.insert({it->second->getId(), it->second});
-        }
+        
+            cout << "Id: " << it->getId();
+            cout << ", Nombre: " << it->getNombre() << "\n";
+
     }
     cout << "\n";
 
     int id, cantMinima;
+    DTProducto dataProd;
     bool flag = true;
+    bool flag2 = true;
     cout << "Ingrese los productos que van a componer la promo (ingrese -1 para dejar de agregar)\n";
     string SoN;
     while (flag)
     {
-        cout << "Producto a agregar\n";
+        cout << "Producto a agregar: \n";
         cout << "Id: ";
         cin >> id;
         cout << "Cantidad Mínima: ";
         cin >> cantMinima;
-        /////Precondición id no exista en otra promo
-        map<int, Producto *>::iterator it = productosNoEnPromo.find(id);
-        if (it != productosNoEnPromo.end())
+        if (!controladorV->productoEnPromo(id))
         {
             controladorV->seleccionarProductoAProm(id, cantMinima);
-            productosNoEnPromo.erase(id);
             cout << "Producto ingresado correctamente. \n";
         }
         else
@@ -420,40 +366,44 @@ void crearPromocion(IUsuario *controladorU, IVenta *controladorV)
     }
 }
 
-void consultarPromocion(IVenta *controladorV)
+
+void consultarPromocion()
 {
+    Fabrica *fabrica = Fabrica::getInstanceF();      // se crea instancia única de fábrica
+    IVenta * controladorV = fabrica->getIVenta();
     // Imprime todas las Promociones vigentes en el sistema  (HABRIA Q PREGUNTAR PRECOND PARA IMPRIMIR: FECHA VENC < FECHA SISTEMA)
     string opcion;
-    cout << "este";
-    map<string, Promocion *> dataPromos = controladorV->listadoPromociones();
-    cout << "este otro";
-    map<string, Promocion *>::iterator it;
-    for (it = dataPromos.begin(); it != dataPromos.end(); it++)
+    set<DTPromocion> dataPromos = controladorV->listadoPromociones();
+    for (DTPromocion promo : dataPromos)
     {
-        cout << "Nombre: " << it->second->getNombre() << "\n";
-        cout << "Descripcion: " << it->second->getDescripcion() << "\n";
-        cout << "Descuento: " << it->second->getDescuento() << "\n";
-        cout << "Valido hasta: " << it->second->getFechaVen().getDia() << "/" << it->second->getFechaVen().getMes() << "/" << it->second->getFechaVen().getAnio() << "\n";
+        cout << "Nombre: " << promo.getNombre() << "\n";
+        cout << "Descripcion: " << promo.getDescripcion() << "\n";
+        cout << "Descuento: " << promo.getDescuento() << "\n";
+        cout << "Valido hasta: " << promo.getFechaVen().getDia() << "/" << promo.getFechaVen().getMes() << "/" << promo.getFechaVen().getAnio() << "\n";
     }
     cout << "Si desea ver los productos dentro de una promoción ingrese el nombre de esta. De lo contrario, escriba Salir: ";
     cin >> opcion;
+
+    
     // aca faltaria ver precond q opcion sea un nombre valido
     if (opcion != "Salir")
-    {
+    { 
         // Imprime informacion del vendedor de la Promocion
-        Promocion *prom = dataPromos.find(opcion)->second;
-        Vendedor *vendedor = prom->getVendedor();
-        cout << "Vendedor: " << vendedor->getNickname() << "\n";
-        cout << "Codigo RUT: " << vendedor->getCodigoRUT() << "\n";
-        cout << "Fecha de nacimiento: " << vendedor->getFechaNac().getDia() << "/" << vendedor->getFechaNac().getMes() << "/" << vendedor->getFechaNac().getAnio() << "\n";
+        
+        DTUsuario dataVen = controladorV->infoPromocionVendedor(opcion);
+    
+        cout << "Vendedor: " << dataVen.getNickname() << "\n";
+        cout << "Codigo RUT: " << dataVen.getCodigoRUT() << "\n";
+        cout << "Fecha de nacimiento: " << dataVen.getFechaNac().getDia() << "/" << dataVen.getFechaNac().getMes() << "/" << dataVen.getFechaNac().getAnio() << "\n";
 
         // Imprime informacion de todos los productos de la Promocion
-        set<Producto_Promocion *> prodproms = prom->getProdProms();
-        set<Producto_Promocion *>::iterator it;
+        
+        set<DTProducto> dataProds = controladorV->infoPromocionProductos(opcion);
+
         string cat;
-        for (it = prodproms.begin(); it != prodproms.end(); it++)
+        set<DTProducto>::iterator prod ;
+        for (prod = dataProds.begin() ; prod != dataProds.end(); prod++)
         {
-            Producto *prod = (*it)->getProducto();
             cout << "Id: " << prod->getId() << "\n";
             cout << "Nombre: " << prod->getNombre() << "\n";
             cout << "Categoria: " << prod->getCat() << "\n";
@@ -475,10 +425,11 @@ void consultarPromocion(IVenta *controladorV)
                 break;
             }
             }
+            int cantMinima = controladorV->cantidadMinimaPromo(opcion, prod->getId());
             cout << "Categoria: " << cat << "\n";
             cout << "Descripcion: " << prod->getDesc() << "\n";
             cout << "Cantidad en stock: " << prod->getCantStock() << "\n";
-            cout << "Cantidad minima para aplicar promoción: " << (*it)->getCantidadMinima() << "\n";
+            cout << "Cantidad minima para aplicar promoción: " << cantMinima << "\n";
             cout << "Precio: " << prod->getPrecio() << "\n";
         }
     }
@@ -487,19 +438,22 @@ void consultarPromocion(IVenta *controladorV)
     cin.get();
 }
 
-void realizarCompra(IUsuario *controladorU, IVenta *controladorV)
+
+void realizarCompra()
 {
+    Fabrica *fabrica = Fabrica::getInstanceF();
+    IUsuario * controladorU = fabrica->getIUsuario();
+    IVenta * controladorV = fabrica->getIVenta();
     string nicknameC, cat, opcion;
-    map<string, Usuario *> clientes = controladorU->listadoUsuarios("cliente");
-    map<string, Usuario *>::iterator it;
+
+    set<DTUsuario> clientes = controladorU->listadoUsuarios("cliente");
+    set<DTUsuario>::iterator it;
     for (it = clientes.begin(); it != clientes.end(); it++)
     {
-        cout << it->second->getNickname() << "\n";
+        cout << it->getNickname() << "\n";
     }
     cout << "Seleccione un cliente: ";
     cin >> nicknameC;
-    Usuario *usuario = controladorU->obtenerUsuarioPorNickname(nicknameC);
-    Cliente *cliente = dynamic_cast<Cliente *>(usuario);
 
     set<DTProducto> dataProductos = controladorV->listadoProductos();
     for (DTProducto prod : dataProductos)
@@ -531,7 +485,7 @@ void realizarCompra(IUsuario *controladorU, IVenta *controladorV)
         cout << "Precio: " << prod.getPrecio() << "\n";
     }
 
-    controladorV->crearCompra(cliente);
+    controladorV->crearCompra(nicknameC);
 
     int id, cantidad;
     bool flag = true;
@@ -543,13 +497,24 @@ void realizarCompra(IUsuario *controladorU, IVenta *controladorV)
         cin >> id;
         cout << "Ingrese Cantidad: ";
         cin >> cantidad;
-        Producto *prod = controladorV->seleccionarProductoPorId(id);
-        if (prod == nullptr)
+        if (!controladorV->existeProducto(id))
         {
-            cout << "Producto no encontrado. Intente nuevamente." << endl;
+            cout << "Producto no encontrado. Ingrese otro ID:" ;
+            cin >> id;
+            cout << "Ingrese cantidad: ";
+            cin >> cantidad;
+            cout << "\n";
         }
-        controladorV->agregarACompra(prod, cantidad);
-        flagProd = prod->getCantStock() >= cantidad;
+        if (controladorV->productoEnCompra(id))
+        {
+            cout << "Producto ya agregado a la compra. Ingrese otro ID: ";
+            cin >> id;
+            cout << "Ingrese cantidad: ";
+            cin >> cantidad;
+            cout << "\n";     
+        }
+        controladorV->agregarACompra(id, cantidad);
+        flagProd = controladorV->cantidadValida(id, cantidad);
         if(!flagProd)
         {
             cout << "El producto seleccionado no dispone de tantas unidades como desea comprar. ";
@@ -596,20 +561,22 @@ void realizarCompra(IUsuario *controladorU, IVenta *controladorV)
     cin.get();
 }
 
-void dejarComentario(IUsuario *controladorU, IVenta *controladorV)
+void dejarComentario()
 {
+
+    Fabrica *fabrica = Fabrica::getInstanceF();      // se crea instancia única de fábrica
+    IVenta * controladorV = fabrica->getIVenta();    
+    IUsuario * controladorU = fabrica->getIUsuario();
     // lista usuarios y selecciona uno
     string nicknameU, textoC;
     int idP;
-    map<string, Usuario *> dataUsuarios = controladorU->listadoUsuarios();
-    map<string, Usuario *>::iterator it;
-    for (it = dataUsuarios.begin(); it != dataUsuarios.end(); it++)
+    set<DTUsuario> dataUsuarios = controladorU->listadoUsuarios();
+    for (DTUsuario usuario : dataUsuarios)
     {
-        cout << it->second->getNickname() << "\n";
+        cout << usuario.getNickname() << "\n";
     }
     cout << "Seleccione un Usuario: ";
     cin >> nicknameU;
-    Usuario *usuario = controladorU->obtenerUsuarioPorNickname(nicknameU);
     // lista productos y selecciona uno
     set<DTProducto> dataProductos;
     dataProductos = controladorV->listadoProductos();
@@ -636,60 +603,65 @@ void dejarComentario(IUsuario *controladorU, IVenta *controladorV)
         cout << "Ingrese el texto del comentario: ";
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
         getline(cin, textoC);
-        Producto *seleccionado = controladorV->seleccionarProductoPorId(idP);
-        controladorU->crearComentario(textoC, seleccionado, usuario);
+        controladorU->crearComentario(textoC, idP, nicknameU);
     }
     break;
-
     case 2:
-    {
-        int idComen;
-        Producto *seleccionado = controladorV->seleccionarProductoPorId(idP);
-        map<int, Comentario *>::iterator it;
-        map<int, Comentario *> mapa = seleccionado->listadoComentarios();
-        // lista todos los comentarios asociados al producto seleccionado
-        for (it = mapa.begin(); it != mapa.end(); ++it)
+    {   
+        if (!controladorU->hayComentarios(idP))
         {
-            cout << "Id comentario: " << it->second->getId() << "\n";
-            cout << "Comentario: " << it->second->getText() << "\n";
+            cout << "No hay comentarios que responder. ";
+            break;
         }
-        cout << "Seleccione un Comentario con su id: ";
-        cin >> idComen;
-        cout << "\n";
-        cout << "Ingrese el texto de la respuesta al comentario: ";
-        cin.ignore(numeric_limits<streamsize>::max(), '\n');
-        getline(cin, textoC);
-        Comentario *comentarioOriginal = mapa.find(idComen)->second;
-        controladorU->crearRespuesta(textoC, comentarioOriginal);
+        else 
+        {
+            int idComen;
+            set<DTComentario>::iterator it;
+            set<DTComentario> dtComentarios = controladorU->listadoComentario(idP);
+            // lista todos los comentarios asociados al producto seleccionado
+            for (it = dtComentarios.begin(); it != dtComentarios.end(); ++it)
+            {
+                cout << "Id comentario: " << it->getId() << "\n";
+                cout << "Comentario: " << it->getText() << "\n";
+            }
+            cout << "Seleccione un Comentario con su id: ";
+            cin >> idComen;
+            cout << "\n";
+            cout << "Ingrese el texto de la respuesta al comentario: ";
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            getline(cin, textoC);
+            controladorU->crearRespuesta(textoC, idComen, idP);
+        }
     }
     break;
     }
 }
 
-void eliminarComentario(IUsuario *controladorU)
+void eliminarComentario()
 {
-    map<string, Usuario *> dataUsuarios = controladorU->listadoUsuarios();
-    map<string, Usuario *>::iterator it;
-    for (it = dataUsuarios.begin(); it != dataUsuarios.end(); it++)
+    Fabrica *fabrica = Fabrica::getInstanceF();      // se crea instancia única de fábrica
+    IVenta * controladorV = fabrica->getIVenta();
+    IUsuario * controladorU = fabrica->getIUsuario();
+
+    set<DTUsuario> dataUsuarios = controladorU->listadoUsuarios();
+    for (DTUsuario usuario : dataUsuarios)
     {
-        cout << it->second->getNickname() << "\n";
+        cout << usuario.getNickname() << "\n";
     }
     string usuarioSeleccionado;
     cout << "Ingrese el nickname del usuario que desee borrar un comentario: \n";
     cin >> usuarioSeleccionado;
 
-    Usuario *usuario = controladorU->obtenerUsuarioPorNickname(usuarioSeleccionado);
-    controladorU->recordarUsuario(usuario);
-    map<int, Comentario *> comentarios;
-    comentarios = usuario->getComentarios();
+    controladorU->recordarUsuario(usuarioSeleccionado);
+    set<DTComentario> comentarios = controladorU->listadoComentario(usuarioSeleccionado);
     cout << "Listado de Comentarios de " << usuarioSeleccionado << "\n";
     if (comentarios.empty())
         cout << "tavacio";
-    for (map<int, Comentario *>::const_iterator it = comentarios.begin(); it != comentarios.end(); ++it)
+    for (set<DTComentario>::const_iterator it = comentarios.begin(); it != comentarios.end(); ++it)
     {
-        cout << "ID: " << it->second->getId() << ", ";
-        cout << "Contenido: " << it->second->getText() << " \n";
-        cout << "Fecha: " << it->second->getFecha().getDia() << "/" << it->second->getFecha().getMes() << "/" << it->second->getFecha().getAnio() << "\n";
+        cout << "ID: " << it->getId() << ", ";
+        cout << "Contenido: " << it->getText() << " \n";
+        cout << "Fecha: " << it->getFechaCom().getDia() << "/" << it->getFechaCom().getMes() << "/" << it->getFechaCom().getAnio() << "\n";
     }
     cout << "Ingrese ID del comentario a eliminar: ";
     int id;
@@ -699,40 +671,38 @@ void eliminarComentario(IUsuario *controladorU)
     cout << "Comentario " << id << "eliminado. ";
 }
 
-void suscribirANotificaciones(IUsuario *controladorU, IVenta *controladorV)
+
+void suscribirANotificaciones()
 {
     //Lista los vendedores a los que no esta suscrito el cliente
+    Fabrica *fabrica = Fabrica::getInstanceF();      // se crea instancia única de fábrica
+    INotificacion * controladorN = fabrica->getINotificacion(); 
+
     string nombreCliente;
     cout << "Ingrese el nombre del cliente que desea suscribir: " << " \n";
     cin >> nombreCliente;
-    map<string, Usuario *>::iterator it;
-    map<string, Usuario *> vendedores = controladorU->listadoUsuarios("vendedor");
-    for (it = vendedores.begin(); it != vendedores.end(); it++)
+
+    set<DTUsuario> vendNoSuscritos;
+    vendNoSuscritos = controladorN->listarVendedoresNoSuscritos(nombreCliente);
+
+    cout << "Listado de vendedores donde " << nombreCliente << " no esta suscrito: \n";
+    for (set<DTUsuario>::iterator it = vendNoSuscritos.begin(); it != vendNoSuscritos.end(); ++it)
     {
-        Vendedor *vendedor = dynamic_cast<Vendedor *>(it->second);
-        if (!vendedor->estaSuscrito(nombreCliente))
-        {
-            cout << "Vendedor: " << vendedor->getNickname() << " \n";
-        }
+        cout << *it ;
     }
+
     string nombreVend;
-    cout << "Ingrese el nombre del vendedor al que desea suscribirse: " << " \n";
+    cout << "Ingrese el nickname del vendedor al que desea suscribirse: " << " \n";
     cin >> nombreVend;
-    Usuario * vendor = vendedores.find(nombreVend)->second;
-    Vendedor *vendour = dynamic_cast<Vendedor *>(vendor);
-    map<string, Usuario *> clientes = controladorU->listadoUsuarios("cliente");
-    Usuario * clientor = clientes.find(nombreCliente)->second;
-    IObserver * cliente = dynamic_cast<IObserver *>(clientor);
-    vendour->agregarSuscriptor(cliente);
+
+    controladorN->suscribirAVendedor(nombreCliente, nombreVend);
     for (; nombreVend != "0";)
     {
         cout << "Si desea suscribirse a otro vendedor ingrese su nombre, de lo contrario ingrese 0: " << " \n";
         cin >> nombreVend;
         if(nombreVend != "0")
         {
-        Usuario * vendor = vendedores.find(nombreVend)->second;
-        Vendedor *vendour = dynamic_cast<Vendedor *>(vendor);
-        vendour->agregarSuscriptor(cliente);
+        controladorN->suscribirAVendedor(nombreCliente, nombreVend);
         }
     }
 }
@@ -742,191 +712,244 @@ void suscribirANotificaciones(IUsuario *controladorU, IVenta *controladorV)
 void consultaDeNotficacion()
 {
     Fabrica *fabrica = Fabrica::getInstanceF();      // se crea instancia única de fábrica
-    IUsuario *controladorU = fabrica->getIUsuario(); // se crea la instancia del controlador CUsuario de tipo IUsuario
-    IVenta *controladorV = fabrica->getIVenta();  
     INotificacion * controladorN = fabrica->getINotificacion(); 
-
+    IUsuario * controladorU = fabrica->getIUsuario();
     string nicknameC;
     cout << "Ingrese nickname del cliente que va a constular sus notificaciones: ";
     cin >> nicknameC;
 
-
-    set<DTNotificacion> notificaciones = controladorN->mostrarNotificaciones(nicknameC, controladorU);
+    set<DTNotificacion> notificaciones = controladorN->mostrarNotificaciones(nicknameC);
     //falta ver la condicion del caso de uso
-    map<string,  Promocion *> promos = controladorV->listadoPromociones();
+    cout << "Listado de notificaciones de " << nicknameC << ": ";
+    
     for(DTNotificacion notificacion : notificaciones)
     {
-        if ()
         cout << "Vendedor: " << notificacion.getNicknameUsuario() << "\n";
         cout << "Nombre de promoción: " << notificacion.getNombreProm() << "\n";
-        Promocion * promo = promos.find(notificacion.getNombreProm())->second;
-        set<Producto_Promocion*> productosEnPromo = promo->getProdProms();
-        for(Producto_Promocion* prod : productosEnPromo)
+        set<DTProducto> dataProds = notificacion.getProductos();
+        for(DTProducto prod : dataProds)
         {
-            Producto* p = prod->getProducto();
-            cout << "ID del producto: " << p->getId() << "\n";
-            cout << "Nombre del producto: " << p->getNombre() << "\n";
-            cout << "Descripción: " << p->getDesc() << "\n";
-            cout << "Precio del producto: " << p->getPrecio() << "\n";
-            cout << "Stock del producto: " << p->getCantStock() << "\n";
+            cout << "ID del producto: " << prod.getId() << "\n";
+            cout << "Nombre del producto: " << prod.getNombre() << "\n";
+            cout << "Descripción: " << prod.getDesc() << "\n";
+            cout << "Precio del producto: " << prod.getPrecio() << "\n";
+            cout << "Stock del producto: " << prod.getCantStock() << "\n";
         }
     }
+
+    //Creo que no es necesario
+    
+    /*Modifica la ultima fecha en la que el cliente realizo consulta
+    Usuario * usuario = controladorU->obtenerUsuarioPorNickname(nicknameC);
+    Cliente * cliente = dynamic_cast<Cliente *>(usuario);
+    cliente->setUltimaConsulta(fechaSistema);*/
+
+
     controladorN->eliminarNotificacion();
 }
 
 
-
-void enviarProducto(IUsuario *controladorUsuario){
-    //listo y selecciono el vendedor
-    string nombreVendedor;
-    cout << "Listado de vendedores:\n";
-    map<string, Usuario *> vendedores = controladorUsuario->listadoUsuarios("vendedores");
-    for (map<string, Usuario *>::iterator it = vendedores.begin(); it != vendedores.end(); it++)
-    {
-        Vendedor *vendedor = dynamic_cast<Vendedor *>(it->second);
-        cout <<  vendedor->getNickname() << " \n";
-    }
-    cout << "\n";
-    cout << "Ingrese el nombre del vendedor: " << " \n";
-    cin >> nombreVendedor;
-    //listo y selecciono la compra
-    map<string, Usuario*>::iterator it = vendedores.find(nombreVendedor);
-    while(it == vendedores.end())
-    {
-        cout << "El vendedor no fue encontrado, vuelva a ingresar un vendedor:\n";
-        cout << "Ingrese el nombre del vendedor: " << " \n";
-        cin >> nombreVendedor;
-    } 
-    Vendedor *vendedorSelect = dynamic_cast<Vendedor *>(it->second);
-    map<int, Producto*> prods = vendedorSelect->getProductos();
-    map<int, Producto *>::iterator itProd;
-    cout << "Productos por enviar: " 
-    for (itProd = prods.begin(); itProd != prods.end(); ++itProd)
-    {
-        if(!itProd->second->getEnvio())
-            cout << "Id del producto: " << itProd->second->getId() << " \n";
-            cout << "Nombre del producto: " << itProd->second->getNombre() << " \n";
-        //¿¿falta link entre vendedor y compra??
-    }
-      
-}
-
-
-void expedienteDeUsuario(IUsuario *controlador)
+void eliminarSuscripciones()
 {
-    string nicknameU;
-    cout << "Usuarios registrados:\n";
-    map<string, Usuario*> usuarios = controlador->listadoUsuarios();
-    for (map<string, Usuario *>::iterator it = usuarios.begin(); it != usuarios.end(); ++it)
+    Fabrica *fabrica = Fabrica::getInstanceF();      // se crea instancia única de fábrica
+    INotificacion * controladorN = fabrica->getINotificacion(); 
+
+    string nombreCliente;
+    cout << "Ingrese el nickname del cliente que desea eliminar sus suscripciones: " << " \n";
+    cin >> nombreCliente;
+
+    set<DTUsuario> vendSuscritos;
+    vendSuscritos = controladorN->listarVendedoresSuscritos(nombreCliente);    
+
+    string nombreVend;
+    cout << "Ingrese el nickname del vendedor al que desea eliminar su suscripcion: " << " \n";
+    cin >> nombreVend;
+
+    controladorN->eliminarSuscripcion(nombreCliente, nombreVend);
+    for (; nombreVend != "0";)
     {
-        cout << it->second->getNickname() << "\n";
-    }
-    
-    cout << "Seleccione un usuario: ";
-    cin >> nicknameU;
-    cout << "\n";
-
-    Usuario *usuario = controlador->obtenerUsuarioPorNickname(nicknameU);
-    DTUsuario dataUsuario = usuario->getDatosUsuario();
-    cout << "Datos del usuario seleccionado:\n" << dataUsuario << endl;
-    cout << "Nombre del usuario: " << dataUsuario.getNickname();
-    cout << "Fecha de Nacimiento: " << dataUsuario.getFechaNac().getDia()<< "/"<< dataUsuario.getFechaNac().getMes() << "/" << dataUsuario.getFechaNac().getAnio() << "\n";
-    
-    Vendedor *vendedor = dynamic_cast<Vendedor *>(usuario);
-    if (vendedor != nullptr)
-    {
-        // Usuario es vendedor
-        // lista todos los productos del vendedor
-        map<int, Producto *> productos = vendedor->getProductos();
-        cout << "Productos del vendedor " << vendedor->getNickname() << ":\n";
-        for (map<int, Producto *>::iterator iter = productos.begin(); iter != productos.end(); ++iter)
+        cout << "Si desea eliminar otra suscripcion ingrese nombre del vendedor, de lo contrario ingrese 0: " << " \n";
+        cin >> nombreVend;
+        if(nombreVend != "0")
         {
-            cout << iter->second->getNombre() << endl;
+            controladorN->eliminarSuscripcion(nombreCliente, nombreVend);
         }
-        cout << "\n";
+    }    
 
-        // // Lista todos las promociones activas
-        map<string, Promocion *> promociones = vendedor->getPromociones();
-        cout << "\nPromociones del vendedor " << vendedor->getNickname() << ":\n";
-        for (map<string, Promocion *>::iterator iterador = promociones.begin(); iterador != promociones.end(); ++iterador)
-        {
-            cout << iterador->second->getNombre() << endl; // Muestro el nombre de la promo
-        }
-    }
-    else
-    {
-        // El usuario es cliente
-        Cliente *cliente = dynamic_cast<Cliente *>(usuario);
-        map<int, Compra*> comprasCliente = cliente->getCompras();
-        cout << "\nCompras del cliente " << cliente->getNickname() << ":\n";
-
-        for (map<int, Compra*>::iterator compra = comprasCliente.begin(); compra != comprasCliente.end(); ++compra)
-        {
-            cout << "Id de la compra:" << compra->second->getId() << endl; // Muestro el nombre de la promo
-            cout << "Productos de la compra:\n";
-
-            set<Compra_Producto*> prodCompra = compra->second->getCompProd();
-
-            for (set<Compra_Producto*>::iterator it2 = prodCompra.begin(); it2 != prodCompra.end(); ++it2)
-            {
-                cout << "Nombre del producto: " << (*it2)->getProductosEnCompra()->getNombre() << endl;
-                cout << "Descripción: " << (*it2)->getProductosEnCompra()->getDesc() << endl;
-                cout << "Precio del producto: " << (*it2)->getProductosEnCompra()->getPrecio() << endl;
-                cout << "Stock del producto: " << (*it2)->getProductosEnCompra()->getCantStock() << endl;
-            }
-        }
-    }
 }
 
-void eliminarSuscripciones(IUsuario *controladorU)
-{   
-// el Administrador indica el nickname de cliente
-    string cli, vend, opcion;
-    map<string, Vendedor*> colDesuscripciones;
-    cout << "Eliminar Suscripciones:\n";
-    cout << "Ingrese el nombre del usuario:";
-    cin >> cli;
-    cout << "\n";
 
-// Sistema lista todos los vendedores a los que esta suscrito.
-    cout << "Vendedores a los que está suscrito:\n";
-    Usuario * usuario = controladorU->obtenerUsuarioPorNickname(cli);
-    Cliente * cliente = dynamic_cast<Cliente *>(usuario);
-    if(cliente != nullptr)
-    {
-        map<string, Vendedor *> suscripciones =  cliente->getVendedoresSuscritos();
-        for (map<string, Vendedor*>::iterator itVendedores = suscripciones.begin(); itVendedores != suscripciones.end(); ++itVendedores) 
-        {
-            if (itVendedores->second->estaSuscrito(cli)) 
-            {
-                cout << itVendedores->second->getNickname() << endl;
-            }
-        }
-        cout << "Ingrese el nickname del vendedor al que desea desuscribirse: ";
-        cin >> vend;
-        
-    // Eliminar la suscripcion del vendedor
-        Usuario * usVend = controladorU->obtenerUsuarioPorNickname(vend);
-        Vendedor * vendedorElimin = dynamic_cast<Vendedor *>(usVend);
-        vendedorElimin->eliminarSuscriptor(cliente);
-        cout << "Desea desuscribirse de otro vendedor? y/n:\n";
-        cin >> opcion;
-        while (opcion == "y")
-        {
-            cout << "Ingrese el nickname del vendedor al que desea desuscribirse: ";
-            cin >> vend;
-            
-            Usuario * usVend = controladorU->obtenerUsuarioPorNickname(vend);
-            Vendedor * vendedorElimin = dynamic_cast<Vendedor *>(usVend);
-            vendedorElimin->eliminarSuscriptor(cliente);
-            
-            cout << "Desea desuscribirse de otro vendedor? y/n:\n";
-            cin >> opcion;
-        }
-    }
-}
+//vvoid enviarProducto()
+//{
+//    Fabrica *fabrica = Fabrica::getInstanceF();      // se crea instancia única de fábrica
+//    IVenta *controladorV = fabrica->getIVenta(); 
+//    IUsuario * controladorU = fabrica->getIUsuario();    
+//    //listo y selecciono el vendedor
+//    string nombreVendedor, nombreProducto;
+//    cout << "Listado de vendedores:\n";
+//    set<DTUsuario> vendedores = ControladorUsuario::getInstance()->listadoUsuarios("vendedores");
+//    for (set<DTUsuario>::iterator it = vendedores.begin(); it != vendedores.end(); it++)
+//    {
+//        cout <<  it->getNickname() << " \n";
+//    }
+//    cout << "\n";
+//
+//    cout << "Ingrese el nombre del vendedor: " << " \n";
+//    cin >> nombreVendedor;
+//    
+//
+//    bool existeVendedor = controladorU->existeUsuarioIgualNickname(nombreVendedor);
+//    while(!existeVendedor)
+//    {
+//        cout << "El vendedor no fue encontrado, vuelva a ingresar un vendedor:\n";
+//        cout << "Ingrese el nombre del vendedor: " << " \n";
+//        cin >> nombreVendedor;
+//        existeVendedor = controladorU->existeUsuarioIgualNickname(nombreVendedor);
+//    } 
+//    set<string> productosPorEnviar = controladorV->obtenerProdsPendEnvio(nombreVendedor);
+//    
+//    ///////////////////////////
+//    cout << "Productos en compras pendientes de envío: " << "\n";
+//    for(set<string>::iterator itProd = productosPorEnviar.begin(); itProd != productosPorEnviar.end(); ++itProd)
+//    {
+//        cout << "Producto: " << *itProd << "\n";
+//    }
+//    cout << "\n";
+//   
+//    cout << "Ingrese el nombre del producto: " << " \n";
+//    cin >> nombreProducto;
+//    while (productosPorEnviar.find(nombreProducto) == productosPorEnviar.end() )
+//    {
+//        cout << "Producto incorrecto, ingrese un producto pendiente de envío:" << "\n";
+//        cout << "Ingrese el nombre del producto: " << " \n";
+//        cin >> nombreProducto;
+//    }
+//    map<string, DTFecha> pareja = controladorV->clientesConEnvioPend(nombreProducto);
+//     //   for(map<string, DTFecha>::iterator itPareja = pareja.begin(); itPareja != pareja.end(); ++itPareja)
+//    {
+//        cout << "Nombre del cliente: " << itPareja->first << "\n"; 
+//        cout << "Fecha de compra: " << itPareja->second.getDia()<< "/"<< itPareja->second.getMes() << "/" << itPareja->second.getAnio() << "\n";
+//     }
+//    
+//
 
-// Administrador selecciona uno o varios vendedores 
+//
+//
+//void expedienteDeUsuario()
+//{
+//    string nicknameU;
+//    cout << "Usuarios registrados:\n";
+//    map<string, Usuario*> usuarios = controlador->listadoUsuarios();
+//    for (map<string, Usuario *>::iterator it = usuarios.begin(); it != usuarios.end(); ++it)
+//    {
+//        cout << it->second->getNickname() << "\n";
+//    }
+//    
+//    cout << "Seleccione un usuario: ";
+//    cin >> nicknameU;
+//    cout << "\n";
+//
+//    Usuario *usuario = controlador->obtenerUsuarioPorNickname(nicknameU);
+//    DTUsuario dataUsuario = usuario->getDatosUsuario();
+//    cout << "Datos del usuario seleccionado:\n" << dataUsuario << endl;
+//    cout << "Nombre del usuario: " << dataUsuario.getNickname();
+//    cout << "Fecha de Nacimiento: " << dataUsuario.getFechaNac().getDia()<< "/"<< dataUsuario.getFechaNac().getMes() << "/" << dataUsuario.getFechaNac().getAnio() << "\n";
+//    
+//    Vendedor *vendedor = dynamic_cast<Vendedor *>(usuario);
+//    if (vendedor != nullptr)
+//    {
+//        // Usuario es vendedor
+//        // lista todos los productos del vendedor
+//        map<int, Producto *> productos = vendedor->getProductos();
+//        cout << "Productos del vendedor " << vendedor->getNickname() << ":\n";
+//        for (map<int, Producto *>::iterator iter = productos.begin(); iter != productos.end(); ++iter)
+//        {
+//            cout << iter->second->getNombre() << endl;
+//        }
+//        cout << "\n";
+//
+//        // // Lista todos las promociones activas
+//        map<string, Promocion *> promociones = vendedor->getPromociones();
+//        cout << "\nPromociones del vendedor " << vendedor->getNickname() << ":\n";
+//        for (map<string, Promocion *>::iterator iterador = promociones.begin(); iterador != promociones.end(); ++iterador)
+//        {
+//            cout << iterador->second->getNombre() << endl; // Muestro el nombre de la promo
+//        }
+//    }
+//    else
+//    {
+//        // El usuario es cliente
+//        Cliente *cliente = dynamic_cast<Cliente *>(usuario);
+//        map<int, Compra*> comprasCliente = cliente->getCompras();
+//        cout << "\nCompras del cliente " << cliente->getNickname() << ":\n";
+//
+//        for (map<int, Compra*>::iterator compra = comprasCliente.begin(); compra != comprasCliente.end(); ++compra)
+//        {
+//            cout << "Id de la compra:" << compra->second->getId() << endl; // Muestro el nombre de la promo
+//            cout << "Productos de la compra:\n";
+//
+//            set<Compra_Producto*> prodCompra = compra->second->getCompProd();
+//
+//            for (set<Compra_Producto*>::iterator it2 = prodCompra.begin(); it2 != prodCompra.end(); ++it2)
+//            {
+//                cout << "Nombre del producto: " << (*it2)->getProductosEnCompra()->getNombre() << endl;
+//                cout << "Descripción: " << (*it2)->getProductosEnCompra()->getDesc() << endl;
+//                cout << "Precio del producto: " << (*it2)->getProductosEnCompra()->getPrecio() << endl;
+//                cout << "Stock del producto: " << (*it2)->getProductosEnCompra()->getCantStock() << endl;
+//            }
+//        }
+//    }
+//}
+//
+//void eliminarSuscripciones(IUsuario *controladorU)
+//{   
+//// el Administrador indica el nickname de cliente
+//    string cli, vend, opcion;
+//    map<string, Vendedor*> colDesuscripciones;
+//    cout << "Eliminar Suscripciones:\n";
+//    cout << "Ingrese el nombre del usuario:";
+//    cin >> cli;
+//    cout << "\n";
+//
+//// Sistema lista todos los vendedores a los que esta suscrito.
+//    cout << "Vendedores a los que está suscrito:\n";
+//    Usuario * usuario = controladorU->obtenerUsuarioPorNickname(cli);
+//    Cliente * cliente = dynamic_cast<Cliente *>(usuario);
+//    if(cliente != nullptr)
+//    {
+//        map<string, Vendedor *> suscripciones =  cliente->getVendedoresSuscritos();
+//        for (map<string, Vendedor*>::iterator itVendedores = suscripciones.begin(); itVendedores != suscripciones.end(); ++itVendedores) 
+//        {
+//            if (itVendedores->second->estaSuscrito(cli)) 
+//            {
+//                cout << itVendedores->second->getNickname() << endl;
+//            }
+//        }
+//        cout << "Ingrese el nickname del vendedor al que desea desuscribirse: ";
+//        cin >> vend;
+//        
+//    // Eliminar la suscripcion del vendedor
+//        Usuario * usVend = controladorU->obtenerUsuarioPorNickname(vend);
+//        Vendedor * vendedorElimin = dynamic_cast<Vendedor *>(usVend);
+//        vendedorElimin->eliminarSuscriptor(cliente);
+//        cout << "Desea desuscribirse de otro vendedor? y/n:\n";
+//        cin >> opcion;
+//        while (opcion == "y")
+//        {
+//            cout << "Ingrese el nickname del vendedor al que desea desuscribirse: ";
+//            cin >> vend;
+//            
+//            Usuario * usVend = controladorU->obtenerUsuarioPorNickname(vend);
+//            Vendedor * vendedorElimin = dynamic_cast<Vendedor *>(usVend);
+//            vendedorElimin->eliminarSuscriptor(cliente);
+//            
+//            cout << "Desea desuscribirse de otro vendedor? y/n:\n";
+//            cin >> opcion;
+//        }
+//    }
+//}
+//
+//// Administrador selecciona uno o varios vendedores 
 
 
 // sistema elimina las correspondientes suscripciones. 
@@ -1081,10 +1104,132 @@ void eliminarSuscripciones(IUsuario *controladorU)
 //    void realizarCompraCARGARDATOSPREESTABLECIDOS(controladorU,controladorV,juan87,idComp1,cantComp1);
 //}
 
+// int main()
+// {
+//     Fabrica *fabrica = Fabrica::getInstanceF();      // se crea instancia única de fábrica
+//     IUsuario *controladorU = fabrica->getIUsuario(); // se crea la instancia del controlador CUsuario de tipo IUsuario
+//     IVenta *controladorV = fabrica->getIVenta();
+//     controladorV->setContador();
+//     controladorU->setContadorComentario();
+
+//     int opcion;
+//     bool continuar = true;
+//     while (continuar)
+//     {
+//         cout << "---Presione un numero para elegir un caso de uso: " << endl;
+//         cout << "1: Alta de usuario" << endl
+//              << "2: Listado de usuarios" << endl
+//              << "3: Alta de producto" << endl
+//              << "4: Consultar producto" << endl
+//              << "5: Crear promocion" << endl
+//              << "6: Consultar promocion" << endl
+//              << "7: Realizar compra" << endl
+//              << "8: Dejar comentario" << endl
+//              << "9: Eliminar comentario" << endl
+//              << "10: Enviar producto" << endl
+//              << "11: Expediente de Usuario" << endl
+//              << "12: Suscribirse a notificaciones" << endl
+//              << "13: Consulta de notificaciones" << endl
+//              << "14: Eliminar suscripciones" << endl
+//              << "15: Cargar datos preestablecidos" << endl
+//              << "16: Terminar programa" << endl;
+//         cout << "Ingrese el numero correspondiente al caso de uso a ejecutar: ";
+//         cin >> opcion;
+//         switch (opcion)
+//         {
+//         case 1:
+//             cout << "Ejecutando caso de uso: Alta de usuario" << endl;
+//             altaDeUsuario();
+//             break;
+
+//         case 2:
+//             cout << "Ejecutando caso de uso: Listado de usuarios" << endl;
+//             listadoDeUsuarios();
+//             break;
+
+//         case 3:
+//             cout << "Ejecutando caso de uso: Alta de producto" << endl;
+//             altaDeProducto();
+//             break;
+
+//         case 4:
+//             cout << "Ejecutando caso de uso: Consultar producto" << endl;
+//             consultarProducto();
+//             break;
+
+//         case 5:
+//             cout << "Ejecutando caso de uso: Crear promocion" << endl;
+//             crearPromocion();
+//             break;
+
+//         case 6:
+//             cout << "Ejecutando caso de uso: Consultar promocion" << endl;
+//             consultarPromocion();
+//             break;
+
+//         case 7:
+//             cout << "Ejecutando caso de uso: Realizar compra" << endl;
+//             realizarCompra();
+//             break;
+
+//         case 8:
+//             cout << "Ejecutando caso de uso: Dejar comentario" << endl;
+//             dejarComentario();
+//             break;
+
+//         case 9:
+//             cout << "Ejecutando caso de uso: Eliminar Comentario" << endl;
+//             eliminarComentario();
+//             break;
+
+//         case 10:
+//             cout << "Ejecutando caso de uso: Enviar Producto" << endl;
+//             //enviarProducto();
+//             break;
+
+//         case 11:
+//             cout << "Ejecutando caso de uso: Expediente de Usuario" << endl;
+//             //expedienteDeUsuario();
+//             break;
+
+//         case 12:
+//             cout << "Ejecutando caso de uso: Suscribirse a notificaciones" << endl;
+//             suscribirANotificaciones();
+//             break;
+
+//         case 13:
+//             cout << "Ejecutando caso de uso: Consulta de notificaciones" << endl;
+//             consultaDeNotficacion();
+//             break;
+
+//         case 14:
+//             cout << "Ejecutando caso de uso: Eliminar suscripciones" << endl;
+//             eliminarSuscripciones();
+//             break;
+
+//         case 15:
+//             cout << "hay q hacerlo xd...\n";
+//             break;
+
+//         case 16:
+//             cout << "Terminando programa...\n";
+//             continuar = false;
+//             break;
+
+//         default:
+//             cout << "Opcion no valida. Intente nuevamente.\n";
+//         }
+//     };
+//     return 0;
+// }
+
+#include <iostream>
+using namespace std;
+
 int main()
 {
-    Fabrica *fabrica = Fabrica::getInstanceF();      // se crea instancia única de fábrica
-    IUsuario *controladorU = fabrica->getIUsuario(); // se crea la instancia del controlador CUsuario de tipo IUsuario
+    Fabrica *fabrica = Fabrica::getInstanceF();      // Se crea instancia única de fábrica
+    IUsuario *controladorU = fabrica->getIUsuario(); // Se crea la instancia del controlador CUsuario de tipo IUsuario
     IVenta *controladorV = fabrica->getIVenta();
     controladorV->setContador();
     controladorU->setContadorComentario();
@@ -1093,105 +1238,118 @@ int main()
     bool continuar = true;
     while (continuar)
     {
-        cout << "---Presione un numero para elegir un caso de uso: " << endl;
-        cout << "1: Alta de usuario" << endl
-             << "2: Listado de usuarios" << endl
-             << "3: Alta de producto" << endl
-             << "4: Consultar producto" << endl
-             << "5: Crear promocion" << endl
-             << "6: Consultar promocion" << endl
-             << "7: Realizar compra" << endl
-             << "8: Dejar comentario" << endl
-             << "9: Eliminar comentario" << endl
-             << "10: Enviar producto" << endl
-             << "11: Expediente de Usuario" << endl
-             << "12: Suscribirse a notificaciones" << endl
-             << "13: Consulta de notificaciones" << endl
-             << "14: Eliminar suscripciones" << endl
-             << "15: Cargar datos preestablecidos" << endl
-             << "16: Terminar programa" << endl;
-        cout << "Ingrese el numero correspondiente al caso de uso a ejecutar: ";
+        cout << "╔══════════════════════════════════════════════════╗" << endl;
+        cout << "║         🚀 Seleccione un caso de uso 🚀          ║" << endl;
+        cout << "╠══════════════════════════════════════════════════╣" << endl;
+        cout << "║  1. 👤 Alta de usuario                           ║" << endl;
+        cout << "║  2. 👥 Listado de usuarios                       ║" << endl;
+        cout << "║  3. 📦 Alta de producto                          ║" << endl;
+        cout << "║  4. 🔍 Consultar producto                        ║" << endl;
+        cout << "║  5. 🏷️ Crear promoción                            ║" << endl;
+        cout << "║  6. 🔎 Consultar promoción                       ║" << endl;
+        cout << "║  7. 🛒 Realizar compra                           ║" << endl;
+        cout << "║  8. 💬 Dejar comentario                          ║" << endl;
+        cout << "║  9. ❌ Eliminar comentario                       ║" << endl;
+        cout << "║ 10. 📤 Enviar producto                           ║" << endl;
+        cout << "║ 11. 🗂️ Expediente de Usuario                      ║" << endl;
+        cout << "║ 12. 🔔 Suscribirse a notificaciones              ║" << endl;
+        cout << "║ 13. 📩 Consulta de notificaciones                ║" << endl;
+        cout << "║ 14. 🗑️ Eliminar suscripciones                     ║" << endl;
+        cout << "║ 15. 📋 Cargar datos preestablecidos              ║" << endl;
+        cout << "║ 16. 🛑 Terminar programa                         ║" << endl;
+        cout << "╚══════════════════════════════════════════════════╝" << endl;
+        cout << "Ingrese el número correspondiente al caso de uso a ejecutar: ";
         cin >> opcion;
+
+        cout << "╔══════════════════════════════════════════════════╗" << endl;
         switch (opcion)
         {
         case 1:
-            cout << "Ejecutando caso de uso: Alta de usuario" << endl;
-            altaDeUsuario(controladorU);
+            cout << "║ 👤 Ejecutando caso de uso: Alta de usuario       ║" << endl;
+            cout << "╚══════════════════════════════════════════════════╝" << endl;
+            altaDeUsuario();
             break;
-
         case 2:
-            cout << "Ejecutando caso de uso: Listado de usuarios" << endl;
-            listadoDeUsuarios(controladorU);
+            cout << "║ 👥 Ejecutando caso de uso: Listado de usuarios   ║" << endl;
+            cout << "╚══════════════════════════════════════════════════╝" << endl;
+            listadoDeUsuarios();
             break;
-
         case 3:
-            cout << "Ejecutando caso de uso: Alta de producto" << endl;
-            altaDeProducto(controladorU, controladorV);
+            cout << "║ 📦 Ejecutando caso de uso: Alta de producto      ║" << endl;
+            cout << "╚══════════════════════════════════════════════════╝" << endl;
+            altaDeProducto();
             break;
-
         case 4:
-            cout << "Ejecutando caso de uso: Consultar producto" << endl;
-            consultarProducto(controladorU, controladorV);
+            cout << "║ 🔍 Ejecutando caso de uso: Consultar producto    ║" << endl;
+            cout << "╚══════════════════════════════════════════════════╝" << endl;
+            consultarProducto();
             break;
-
         case 5:
-            cout << "Ejecutando caso de uso: Crear promocion" << endl;
-            crearPromocion(controladorU, controladorV);
+            cout << "║ 🏷️ Ejecutando caso de uso: Crear promoción       ║" << endl;
+            cout << "╚══════════════════════════════════════════════════╝" << endl;
+            crearPromocion();
             break;
-
         case 6:
-            cout << "Ejecutando caso de uso: Consultar promocion" << endl;
-            consultarPromocion(controladorV);
+            cout << "║ 🔎 Ejecutando caso de uso: Consultar promoción   ║" << endl;
+            cout << "╚══════════════════════════════════════════════════╝" << endl;
+            consultarPromocion();
             break;
-
         case 7:
-            cout << "Ejecutando caso de uso: Realizar compra" << endl;
-            realizarCompra(controladorU, controladorV);
+            cout << "║ 🛒 Ejecutando caso de uso: Realizar compra       ║" << endl;
+            cout << "╚══════════════════════════════════════════════════╝" << endl;
+            realizarCompra();
             break;
-
         case 8:
-            cout << "Ejecutando caso de uso: Dejar comentario" << endl;
-            dejarComentario(controladorU, controladorV);
+            cout << "║ 💬 Ejecutando caso de uso: Dejar comentario      ║" << endl;
+            cout << "╚══════════════════════════════════════════════════╝" << endl;
+            dejarComentario();
             break;
-
         case 9:
-            cout << "Ejecutando caso de uso: Eliminar Comentario" << endl;
-            eliminarComentario(controladorU);
+            cout << "║ ❌ Ejecutando caso de uso: Eliminar comentario   ║" << endl;
+            cout << "╚══════════════════════════════════════════════════╝" << endl;
+            eliminarComentario();
             break;
-
         case 10:
-            cout << "Ejecutando caso de uso: Enviar Producto" << endl;
+            cout << "║ 📤 Ejecutando caso de uso: Enviar producto       ║" << endl;
+            cout << "╚══════════════════════════════════════════════════╝" << endl;
+            //enviarProducto();
             break;
-
         case 11:
-            cout << "Ejecutando caso de uso: Expediente de Usuario" << endl;
-            // expedienteDeUsuario(controladorU);
+            cout << "║ 🗂️ Ejecutando caso de uso: Expediente de Usuario ║" << endl;
+            cout << "╚══════════════════════════════════════════════════╝" << endl;
+            //expedienteDeUsuario();
             break;
-
         case 12:
-            cout << "Ejecutando caso de uso: Suscribirse a notificaciones" << endl;
+            cout << "║ 🔔 Ejecutando caso de uso: Suscribirse a notificaciones ║" << endl;
+            cout << "╚═════════════════════════════════════════════════════════╝" << endl;
+            suscribirANotificaciones();
             break;
-
         case 13:
-            cout << "Ejecutando caso de uso: Consulta de notificaciones" << endl;
+            cout << "║ 📩 Ejecutando caso de uso: Consulta de notificaciones ║" << endl;
+            cout << "╚═══════════════════════════════════════════════════════╝" << endl;
+            consultaDeNotficacion();
             break;
-
         case 14:
-            cout << "Ejecutando caso de uso: Eliminar suscripciones" << endl;
+            cout << "║ 🗑️ Ejecutando caso de uso: Eliminar suscripciones ║" << endl;
+            cout << "╚═══════════════════════════════════════════════════╝" << endl;
+            eliminarSuscripciones();
             break;
-
         case 15:
-            cout << "hay q hacerlo xd...\n";
+            cout << "║ 📋 Ejecutando caso de uso: Cargar datos preestablecidos ║" << endl;
+            cout << "╚═════════════════════════════════════════════════════════╝" << endl;
+            //cargarDatosPreestablecidos();
             break;
-
         case 16:
-            cout << "Terminando programa...\n";
+            cout << "║ 🛑 Terminando programa...                        ║" << endl;
+            cout << "╚══════════════════════════════════════════════════╝" << endl;
+            
             continuar = false;
             break;
-
         default:
-            cout << "Opcion no valida. Intente nuevamente.\n";
+            cout << "║ ⚠️ Opción no válida. Intente nuevamente.        ║" << endl;
+            cout << "╚════════════════════════════════════════════════╝" << endl;
+
         }
-    };
+    }
     return 0;
 }

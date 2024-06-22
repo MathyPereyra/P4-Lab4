@@ -1,19 +1,15 @@
 #ifndef PROMOCION_H
 #define PROMOCION_H
 
+#include "datatypes.h"
+#include "producto_promocion.h"
+#include "vendedor.h"
+
 #include <string>
 #include <set>
 #include <map>
 
-#include "datatypes.h"
-#include "producto.h"
-#include "producto_promocion.h"
-#include "observer.h"
-
 using namespace std;
-
-
-class Vendedor;
 
 class Promocion 
 {
@@ -38,6 +34,7 @@ public:
   Vendedor * getVendedor();
   DTFecha getFechaVen();
   set<Producto_Promocion*> getProdProms();
+  DTPromocion getDatosPromocion();
 
   bool habilPromo(Producto * producto, DTFecha fechaActual, int cantidadCompra);
   void agregarProdProm(Producto_Promocion * prodProm);

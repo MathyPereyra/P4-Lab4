@@ -1,16 +1,18 @@
 #ifndef COMPRA_H
 #define COMPRA_H
 
+#include "producto.h"
 #include <string>
 #include <set>
 #include <map>
 
-#include "usuario.h"
-#include "datatypes.h"
-#include "compra_producto.h"
-#include "producto.h"
+
 
 using namespace std;
+
+
+class Compra_Producto;
+
 
 class Compra
 {

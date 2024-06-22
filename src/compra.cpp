@@ -1,6 +1,5 @@
-//#include "../include/producto.h"
 #include "../include/compra.h"
-
+#include "../include/compra_producto.h"
 using namespace std;
 
 Compra::Compra(){}
@@ -20,12 +19,6 @@ void Compra::agregarACompra(Producto * prod, int cantidad)
     nuevoCP->agregarProducto(prod);
     this->com_Prods.insert(nuevoCP);
 };
-
-
-
-
-
-
 
 
 //bool Compra::productoEnCompra(int id_prod)
@@ -51,8 +44,6 @@ int Compra::getId()
     return this->id;
 };
 
-
-
 DTFecha Compra::getFecha()
 {
     return this->fecha;
@@ -63,12 +54,10 @@ float Compra::getMontoTotal()
     return this->montoTotal;
 };
 
-
 set<Compra_Producto*> Compra::getCompProd()
 {
     return this->com_Prods;
 }
-
 
 void Compra::setId(int id)
 {

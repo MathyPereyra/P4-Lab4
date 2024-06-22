@@ -54,30 +54,31 @@ DTComentario::DTComentario(string text, int id, DTFecha fechaCom)
   this->fechaCom = fechaCom;
 }
 
-string DTComentario::getText()
+string DTComentario::getText() const
 {
   return this->text;
 };
 
-int DTComentario::getId()
+int DTComentario::getId() const
 {
   return this->id;
 };
 
- DTFecha DTComentario::getFechaCom()
+ DTFecha DTComentario::getFechaCom() const
  {
   return this->fechaCom;
  };
 
+ bool DTComentario::operator<(const DTComentario este) const
+ {
+    return this->getId() < este.getId();
+ }
+
 
 // DTUsuario
 DTUsuario::DTUsuario(){}
-DTUsuario::DTUsuario(string nickname, string contrasena, DTFecha fechaNac)
-{
-  this->nickname = nickname;
-  this->contrasena = contrasena;
-  this->fechaNac = fechaNac;
-};
+DTUsuario::DTUsuario(string nickname, string contrasena, DTFecha fechaNac) : nickname(nickname) , contrasena(contrasena), fechaNac(fechaNac) {}
+
 
 string DTUsuario::getNickname() const
 {
@@ -85,10 +86,10 @@ string DTUsuario::getNickname() const
 };
 
 
-//DTFecha DTUsuario::getFechaNac() const
-//{
-//  return this->fechaNac;
-//};
+DTFecha DTUsuario::getFechaNac() const
+{
+  return this->fechaNac;
+};
 
 
 bool DTUsuario::operator<(const DTUsuario& otro) const{
@@ -106,7 +107,7 @@ DTCliente::DTCliente(string nickname, string contrasena, DTFecha fechaNac, strin
   this->direccion = direccion;
 };
 
-string DTCliente::getNickname() const{
+string DTCliente::getNickname()  const {
   return this->nickname;
 };
 
@@ -114,13 +115,7 @@ DTFecha DTCliente::getFechaNac() const{
 return this->fechaNac;
 };
   
-string DTCliente::getCiudad(){
-  return this->ciudad;
-};
 
-string DTCliente::getDireccion(){
-  return this->direccion;
-};
 
 //DTVendedor
 DTVendedor::DTVendedor(){};
@@ -136,25 +131,18 @@ string DTVendedor::getNickname() const{
   return this->nickname;
 };
 
-DTFecha DTVendedor::getFechaNac() const{
-  return this->fechaNac;
-};
-  
-string DTVendedor::getCodigoRUT(){
-  return this->codigoRUT;
-};
-
-
 
 
 //DTNotificacion
+DTNotificacion::DTNotificacion(){}
+
 DTNotificacion::DTNotificacion(string nicknameUsuario, string nombreProm,set<DTProducto> productos){
   this->nicknameUsuario = nicknameUsuario;
   this->nombreProm = nombreProm;
   this->productos = productos;
 };
 
-string DTNotificacion::getNicknameUsuario()
+string DTNotificacion::getNicknameUsuario()  const
 {
   return this->nicknameUsuario;
 };
@@ -169,6 +157,14 @@ set<DTProducto> DTNotificacion::getProductos()
   return this->productos;
 };
    
+
+bool DTNotificacion::operator<(const DTNotificacion este) const
+{
+   return this->getNicknameUsuario() < este.getNicknameUsuario();
+}
+
+
+
 //DTCompra
 
 DTCompra::DTCompra(float precioTotal, DTFecha fechaCompra, set<DTProducto> productos)
@@ -193,7 +189,6 @@ set<DTProducto> DTCompra::getProductos()
   return this->productos;
 };
 
-
 //DTProducto
 DTProducto::DTProducto(){};
 
@@ -207,37 +202,37 @@ DTProducto::DTProducto(int id, categoria cat, string nombre, string desc, int ca
   this->precio = precio;
 };
 
-string DTProducto::getNombre()
+string DTProducto::getNombre() const
 {
   return this->nombre;
 };
 
-int DTProducto::getId()
+int DTProducto::getId() const
 {
   return this->id;
 };
 
-categoria DTProducto::getCat()
+categoria DTProducto::getCat()  const
 {
   return this->cat;
 };
 
-string DTProducto::getDesc()
+string DTProducto::getDesc()  const
 {
   return this-> descripcion;
 };
 
-int DTProducto::getCantStock()
+int DTProducto::getCantStock()  const
 {
   return this->cantStock;
 };
 
-float DTProducto::getPrecio()
+float DTProducto::getPrecio() const
 {
   return this->precio;
 };
 
-bool DTProducto::getEstaEnProm()
+bool DTProducto::getEstaEnProm()  const
 {
   return this->estaEnProm;
 };
@@ -245,3 +240,40 @@ bool DTProducto::getEstaEnProm()
 bool DTProducto::operator<(const DTProducto& otro) const{
     return (this->id < otro.id); 
 };
+
+//DTPROMOCION
+DTPromocion::DTPromocion(){};
+
+DTPromocion::DTPromocion(string nombre, string descripcion, float descuento, DTFecha fechaVencimiento, string nicknameVendedor) :
+nombre(nombre), descripcion(descripcion), descuento(descuento), fechaVencimiento(fechaVencimiento), nicknameVendedor(nicknameVendedor){};
+
+string DTPromocion::getNombre() const
+{
+  return this->nombre;
+}
+
+string DTPromocion::getDescripcion()  const
+{
+  return this->descripcion;
+}
+
+float DTPromocion::getDescuento() const
+{
+  return this->descuento;
+}
+
+DTFecha DTPromocion::getFechaVen()  const
+{
+  return this->fechaVencimiento;
+}
+
+string DTPromocion::getNicknameVendedor() const
+{
+  return this->nicknameVendedor;
+}
+
+bool DTPromocion::operator<(const DTPromocion& otro) const
+{ 
+  return this->getNicknameVendedor() > otro.getNicknameVendedor();
+}                                                              
+// Comparacion entre DTProducto

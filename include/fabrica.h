@@ -1,9 +1,8 @@
 #ifndef FABRICA_H
 #define FABRICA_H
 
-#include "IUsuario.h"
-#include "CUsuario.h" // no se si va esto
 #include "INotificacion.h"
+#include "IUsuario.h"
 #include "IVenta.h"
 
 class Fabrica

@@ -1,17 +1,17 @@
 #ifndef PRODUCTO_H
 #define PRODUCTO_H
 
+#include "datatypes.h"
+//#include "promocion.h"
+
 #include <string>
 #include <set>
 #include <map>
 
-#include "datatypes.h"
-//#include "vendedor.h"
-//#include "comentario.h"
-
 using namespace std;
 
 class Comentario;
+class Compra_Producto;
 class Promocion;
 
 class Producto
@@ -24,17 +24,18 @@ private:
   int cantStock;
   float precio;
   Promocion * promo; 
-  bool enCompra;  // Al crearlo esta = false, si el producto es agregado a alguna promocion esta = true
+  Compra_Producto * compProd;
   map<int, Comentario *> comentarios;
 
   // Habria que agregar bidireccionalidad en la asociacion Producto --- Producto_Promocion para acceder al valor del descuento
 
 public:
-  Producto(int id, categoria cat, string nombre, string descripcion, int cantStock, float precio, Promocion * promo, bool enCompra);
+  Producto(int id, categoria cat, string nombre, string descripcion, int cantStock, float precio, Promocion * promo, Compra_Producto * compProd);
   
   
   bool estaEnPromo();
   bool estaEnCompra();
+  Compra_Producto * getCompProd();
   
   float calcularDescuento();
 
@@ -53,7 +54,7 @@ public:
   float getPrecio();
   
   void agregadoAPromo(Promocion * promo);
-  void agregadoACompra();
+  void agregadoACompra(Compra_Producto * compProd);
 
   virtual ~Producto(){};
 };

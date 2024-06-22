@@ -65,3 +65,9 @@ void Promocion::agregarProdProm(Producto_Promocion * prodProm)
 {
     this->prodProms.insert(prodProm);
 }
+
+
+DTPromocion Promocion::getDatosPromocion()
+{
+    return DTPromocion(this->getNombre(), this->getDescripcion(), this->getDescuento(), this->getFechaVen(), this->vendedor->getNickname());
+}

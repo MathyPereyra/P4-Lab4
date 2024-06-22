@@ -1,17 +1,12 @@
 #ifndef CVENTA_H
 #define CVENTA_H
 
+#include "IVenta.h"
 #include <string>
 #include <set>
 #include <map>
 
-#include "datatypes.h"
-#include "usuario.h"
-#include "compra.h"
-#include "IVenta.h"
-#include "promocion.h"
-#include "vendedor.h"
-#include "producto.h"
+#include "CUsuario.h"
 
 using namespace std;
 
@@ -21,7 +16,6 @@ private:
     static ControladorVenta *instancia;
     ControladorVenta();
     map<int, Compra *> compras;
-    // aca es set o map porque no se identifican las notificaciones.
     set<Promocion> conjunto2;
     map<int, Producto *> productos;
     map<string, Promocion *> promociones;
@@ -41,28 +35,45 @@ public:
    void avanzarContadorCompra();
 
    Usuario * getMemUsuario();
-   void setMemUsuario(Usuario * usuario);
+   void setMemUsuario(string nickname);
    Promocion* getMemPromocion();
    void setMemPromocion(Promocion * prom);
    Compra * getMemCompra();
    void setMemCompra(Compra * compra);
+   map<int, Compra *> getCompra();
 
-
-   map<string, Promocion *> listadoPromociones();
+   set<DTPromocion> listadoPromociones();
    // Operaciones externas
-   void crearProducto(Vendedor *nicknameV, string nombreP, string descripcionP, float precioP, int cantStockP, categoria cat);
+   void crearProducto(string nicknameV, string nombreP, string descripcionP, float precioP, int cantStockP, categoria cat);
+   bool existeProducto(int id);
+
    void crearPromocion(string nombre, string descripcion, float descuento, DTFecha fechaVencimiento);
    void seleccionarProductoAProm(int prodId, int cantMinima);
+
    Producto *seleccionarProductoPorId(int productosid);
+   set<DTProducto> listadoProductosNoEnPromo();
+   bool productoEnPromo(int id);
+   DTUsuario infoPromocionVendedor(string nombre);
+   set<DTProducto> infoPromocionProductos(string nombre);
+   int cantidadMinimaPromo(string nombre, int id);
+   DTProducto dataDeProducto(Producto * prod);
+   string nombreVendedor(int idProducto);
    void confirmarCrearPromocion();
-   void crearCompra(Usuario * cliente);
+
+   void crearCompra(string nickname);
    set<DTProducto> listadoProductos();
-   void agregarACompra(Producto * prod, int cantidad);
-   // aca no pusimos datadetallecompra al final
+   void agregarACompra(int id, int cantidad);
+   bool cantidadValida(int id, int cantidad);
+   bool productoEnCompra(int id);
    DTCompra detallesCompra();
+
+   //set<string> obtenerProdsPendEnvio(string nombreVendedor);
+   //map<string, DTFecha> clientesConEnvioPend(string nombreProducto);
+
+
  //  void confirmarCompra();
    // Operaciones internas (no se si el {} va o no)
-    virtual ~ControladorVenta(){};
+    virtual ~ControladorVenta() {};
 };
 
 #endif

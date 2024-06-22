@@ -1,39 +1,108 @@
 #include "../include/CNotificacion.h"
+#include "../include/vendedor.h"
+
+set<DTUsuario> ControladorNotificacion::listarVendedoresNoSuscritos(string nicknameC){
+    set<DTUsuario> vendNoSuscritos;
+    map<string, Usuario *> vendedores = ControladorUsuario::getInstance()->getMapaUsuarios("vendedor");
+    map<string, Usuario *>::iterator it;
+    for (it = vendedores.begin(); it != vendedores.end(); it++)
+    {
+        Vendedor *vendedor = dynamic_cast<Vendedor *>(it->second);
+        if (!vendedor->estaSuscrito(nicknameC))
+        {
+            DTUsuario dataVendedor = vendedor->getDatosUsuario();
+            vendNoSuscritos.insert(dataVendedor);
+        }
+    }
+    return vendNoSuscritos;
+}
+
+ 
 
 
-
-
-set<DTNotificacion> ControladorNotificacion::mostrarNotificaciones(string nickname, IUsuario * contUsuario)
+void ControladorNotificacion::suscribirAVendedor(string nicknameC, string nicknameV)
 {
-    map<string, Usuario *> clientes = contUsuario->listadoUsuarios("cliente");
+    map<string, Usuario *> listUsuarios = ControladorUsuario::getInstance()->getMapaUsuarios("");
+    Usuario * obs = listUsuarios.find(nicknameC)->second;
+    Usuario * ven = listUsuarios.find(nicknameV)->second;
+    Vendedor * vendedor = dynamic_cast<Vendedor *>(ven);
+    IObserver * observer = dynamic_cast<IObserver *>(obs);
+    if (vendedor != NULL && observer != NULL)
+    {
+        vendedor->agregarSuscriptor(observer);
+    }
+}
+
+
+
+
+
+set<DTNotificacion> ControladorNotificacion::mostrarNotificaciones(string nickname)
+{
+    map<string, Usuario *> clientes = ControladorUsuario::getInstance()->getMapaUsuarios("cliente");
     Usuario* user = clientes.find(nickname)->second;
+    this->setMemUsuario(user);
     Cliente * cliente = dynamic_cast<Cliente *>(user);
+
     map<string, Notificacion*> mapNotis = cliente->getNotificaciones();
     set<DTNotificacion> retornoNotis;
-
+    set<DTProducto> dataProds;
     for (map<string, Notificacion*>::iterator it = mapNotis.begin(); it != mapNotis.end(); ++it)
-    {
-        DTNotificacion nuevo = DTNotificacion(it->second->getNicknameV(), it->second->getNombreProm(), it->second->getProductos());
+    {   
+        map<int, Producto*> mapProds = it->second->getProductos();
+        for (map<int, Producto*>::iterator iter = mapProds.begin(); iter != mapProds.end(); ++iter)
+        {
+            DTProducto dataProd = iter->second->getDataProducto();
+            dataProds.insert(dataProd);
+        }
+        DTNotificacion nuevo = DTNotificacion(it->second->getNicknameV(), it->second->getNombreProm(), dataProds);
         retornoNotis.insert(nuevo);
     }
 
     return retornoNotis;
 }
 
-set<DTVendedor> ControladorNotificacion::listarVendedoresSuscritos(string nickname){
-    set<DTVendedor> vendedoresSuscritos;
-    map<string, Usuario *> clientes = contUsuario->listadoUsuarios("cliente");
-    Usuario* user = clientes.find(nickname)->second;
-    Cliente * cliente = dynamic_cast<Cliente *>(user);
-    map<string, Vendedor *> mapVendedoresSuscritos = cliente->getVendedoresSuscritos();
-    DTVendedor aux;
-    for (map<string, Vendedor*>::iterator it = mapVendedoresSuscritos.begin(); it != mapVendedoresSuscritos.end(); ++it)
-    {
-        aux = DTVendedor(it->second->getNickname(),it->second->getContrasena(),it->second->getFechaNac(),it->second->getCodigoRUT());
-        vendedoresSuscritos.insert(aux);
-    }
-    return vendedoresSuscritos;
+
+void ControladorNotificacion::eliminarNotificacion()
+{
+    Cliente * cliente = dynamic_cast<Cliente*>(this->getMemUsuario());
+    cliente->eliminarNotifiaciones();
 }
+
+
+set<DTUsuario> ControladorNotificacion::listarVendedoresSuscritos(string nicknameC){
+    set<DTUsuario> vendSuscritos;
+    map<string, Usuario *> vendedores = ControladorUsuario::getInstance()->getMapaUsuarios("vendedor");
+    map<string, Usuario *>::iterator it;
+    for (it = vendedores.begin(); it != vendedores.end(); it++)
+    {
+        Vendedor *vendedor = dynamic_cast<Vendedor *>(it->second);
+        if (vendedor->estaSuscrito(nicknameC))
+        {
+            DTUsuario dataVendedor = vendedor->getDatosUsuario();
+            vendSuscritos.insert(dataVendedor);
+        }
+    }
+    return vendSuscritos;
+}
+
+
+void ControladorNotificacion::eliminarSuscripcion(string nicknameC, string nicknameV)
+{
+    map<string, Usuario *> listUsuarios = ControladorUsuario::getInstance()->getMapaUsuarios("");
+    Usuario * obs = listUsuarios.find(nicknameC)->second;
+    Usuario * ven = listUsuarios.find(nicknameV)->second;
+    Vendedor * vendedor = dynamic_cast<Vendedor *>(ven);
+    IObserver * observer = dynamic_cast<IObserver *>(obs);
+    if (vendedor != NULL && observer != NULL)
+    {
+        vendedor->eliminarSuscriptor(observer);
+    }    
+}
+
+
+
+
 
 IUsuario * ControladorNotificacion::getControladorUsuario()
 {
