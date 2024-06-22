@@ -87,9 +87,9 @@ void ControladorUsuario::confirmarAltaUsuario()
 
 
 
-set<DTUsuario> ControladorUsuario::listadoUsuarios(string tipoDeUsuario)
+set<DTUsuario*> ControladorUsuario::listadoUsuarios(string tipoDeUsuario)
 {   
-    set<DTUsuario> resultado;
+    set<DTUsuario*> resultado;
     map<string, Usuario *>::iterator it;
     for (it = this->usuarios.begin(); it != this->usuarios.end(); ++it)
     {
@@ -158,9 +158,9 @@ Usuario *ControladorUsuario::obtenerUsuarioPorNickname(const string &nickname)
     throw std::runtime_error("Usuario no encontrado");
 };
 
-set<DTUsuario> ControladorUsuario::listadoUsuarios()
+set<DTUsuario*> ControladorUsuario::listadoUsuarios()
 {
-    set<DTUsuario> resultado;
+    set<DTUsuario*> resultado;
     map<string, Usuario *>::iterator it;
     for (it = this->usuarios.begin(); it != this->usuarios.end(); ++it)
     {

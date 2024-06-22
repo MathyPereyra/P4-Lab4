@@ -22,7 +22,7 @@ public:
   Compra_Producto(int cantidad, bool envio);
 
   void agregarProducto(Producto * prod);
-  float sumaPrecios();
+  float sumaPrecios(DTFecha fechaActual);
   DTProducto getDatosProductos();
 
   bool getEnvio();

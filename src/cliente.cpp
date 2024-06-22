@@ -69,29 +69,36 @@ void Cliente::agregarComentario(int id, Comentario * comen)
 }
 
 
-DTCliente Cliente::getDatosCliente()
+DTCliente * Cliente::getDatosCliente()
 {
-  return DTCliente (this->nickname, this->contrasena, this->fechaNac, this->ciudad, this->direccion);
+  return new DTCliente (this->nickname, this->contrasena, this->fechaNac, this->ciudad, this->direccion);
 }
 
 
 
-DTUsuario Cliente::getDatosUsuario()
+DTUsuario * Cliente::getDatosUsuario()
 {
   
-  DTUsuario DC = DTCliente(this->nickname, this->contrasena, this->fechaNac, this->ciudad, this->direccion);
+  DTUsuario *  DC = new DTCliente(this->nickname, this->contrasena, this->fechaNac, this->ciudad, this->direccion);
   return DC;
 }
 
 
-void Cliente::eliminarNotifiaciones()
+void Cliente::eliminarNotificaciones()
 {
   map<string, Notificacion*> notis = this->getNotificaciones();
-  for(map<string, Notificacion*>::iterator it = notis.begin(); it != notis.end(); it++)
+  map<string, Notificacion*>::iterator it;
+  for(it = notis.begin(); it != notis.end(); it++)
   {
-    notis.erase(it);
     delete it->second;
+    it = notis.erase(it);
   }
+}
+
+
+void Cliente::notificar(Notificacion * noti)
+{
+  this->notificaciones[noti->getNombreProm()] = noti;
 }
 
 //void Cliente::setUltimaConsulta(DTFecha fecha)

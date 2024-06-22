@@ -53,12 +53,12 @@ public:
    Producto *seleccionarProductoPorId(int productosid);
    set<DTProducto> listadoProductosNoEnPromo();
    bool productoEnPromo(int id);
-   DTUsuario infoPromocionVendedor(string nombre);
+   DTUsuario* infoPromocionVendedor(string nombre);
    set<DTProducto> infoPromocionProductos(string nombre);
    int cantidadMinimaPromo(string nombre, int id);
    DTProducto dataDeProducto(Producto * prod);
    string nombreVendedor(int idProducto);
-   void confirmarCrearPromocion();
+   void confirmarCrearPromocion(string nicknameV);
 
    void crearCompra(string nickname);
    set<DTProducto> listadoProductos();
@@ -67,8 +67,8 @@ public:
    bool productoEnCompra(int id);
    DTCompra detallesCompra();
 
-   //set<string> obtenerProdsPendEnvio(string nombreVendedor);
-   //map<string, DTFecha> clientesConEnvioPend(string nombreProducto);
+   set<string> obtenerProdsPendEnvio(string nombreVendedor);
+   map<string, DTFecha> clientesConEnvioPend(string nombreProducto);
 
 
  //  void confirmarCompra();

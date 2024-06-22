@@ -1,8 +1,8 @@
 #include "../include/CNotificacion.h"
 #include "../include/vendedor.h"
 
-set<DTUsuario> ControladorNotificacion::listarVendedoresNoSuscritos(string nicknameC){
-    set<DTUsuario> vendNoSuscritos;
+set<DTUsuario*> ControladorNotificacion::listarVendedoresNoSuscritos(string nicknameC){
+    set<DTUsuario*> vendNoSuscritos;
     map<string, Usuario *> vendedores = ControladorUsuario::getInstance()->getMapaUsuarios("vendedor");
     map<string, Usuario *>::iterator it;
     for (it = vendedores.begin(); it != vendedores.end(); it++)
@@ -10,7 +10,7 @@ set<DTUsuario> ControladorNotificacion::listarVendedoresNoSuscritos(string nickn
         Vendedor *vendedor = dynamic_cast<Vendedor *>(it->second);
         if (!vendedor->estaSuscrito(nicknameC))
         {
-            DTUsuario dataVendedor = vendedor->getDatosUsuario();
+            DTUsuario* dataVendedor = vendedor->getDatosUsuario();
             vendNoSuscritos.insert(dataVendedor);
         }
     }
@@ -39,16 +39,15 @@ void ControladorNotificacion::suscribirAVendedor(string nicknameC, string nickna
 
 set<DTNotificacion> ControladorNotificacion::mostrarNotificaciones(string nickname)
 {
-    map<string, Usuario *> clientes = ControladorUsuario::getInstance()->getMapaUsuarios("cliente");
-    Usuario* user = clientes.find(nickname)->second;
+    Usuario * user = ControladorUsuario::getInstance()->obtenerUsuarioPorNickname(nickname);
     this->setMemUsuario(user);
     Cliente * cliente = dynamic_cast<Cliente *>(user);
 
     map<string, Notificacion*> mapNotis = cliente->getNotificaciones();
     set<DTNotificacion> retornoNotis;
-    set<DTProducto> dataProds;
     for (map<string, Notificacion*>::iterator it = mapNotis.begin(); it != mapNotis.end(); ++it)
     {   
+        set<DTProducto> dataProds;
         map<int, Producto*> mapProds = it->second->getProductos();
         for (map<int, Producto*>::iterator iter = mapProds.begin(); iter != mapProds.end(); ++iter)
         {
@@ -66,12 +65,13 @@ set<DTNotificacion> ControladorNotificacion::mostrarNotificaciones(string nickna
 void ControladorNotificacion::eliminarNotificacion()
 {
     Cliente * cliente = dynamic_cast<Cliente*>(this->getMemUsuario());
-    cliente->eliminarNotifiaciones();
+    if (cliente == NULL) {return;}
+    cliente->eliminarNotificaciones();
 }
 
 
-set<DTUsuario> ControladorNotificacion::listarVendedoresSuscritos(string nicknameC){
-    set<DTUsuario> vendSuscritos;
+set<DTUsuario*> ControladorNotificacion::listarVendedoresSuscritos(string nicknameC){
+    set<DTUsuario*> vendSuscritos;
     map<string, Usuario *> vendedores = ControladorUsuario::getInstance()->getMapaUsuarios("vendedor");
     map<string, Usuario *>::iterator it;
     for (it = vendedores.begin(); it != vendedores.end(); it++)
@@ -79,7 +79,7 @@ set<DTUsuario> ControladorNotificacion::listarVendedoresSuscritos(string nicknam
         Vendedor *vendedor = dynamic_cast<Vendedor *>(it->second);
         if (vendedor->estaSuscrito(nicknameC))
         {
-            DTUsuario dataVendedor = vendedor->getDatosUsuario();
+            DTUsuario *dataVendedor = vendedor->getDatosUsuario();
             vendSuscritos.insert(dataVendedor);
         }
     }

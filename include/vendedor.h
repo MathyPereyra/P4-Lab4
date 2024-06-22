@@ -3,6 +3,8 @@
 
 
 
+#include "datatypes.h"
+#include "notificacion.h"
 #include "observer.h"
 //#include "producto.h"
 #include "usuario.h"
@@ -14,7 +16,7 @@
 using namespace std;
 
 class Producto;
-
+class Notificacion;
 
 class Vendedor : public Usuario
 {
@@ -23,7 +25,7 @@ private:
   map<int, Producto *> productos;
   map<string, Promocion *> promociones;
   map<string, IObserver*> suscriptores;
-  void notificarSuscriptores();
+  void notificarSuscriptores(Notificacion * noti);
 
   // set<IObserver> suscriptores;
 
@@ -38,8 +40,10 @@ public:
   void agregarSuscriptor(IObserver *o);
   void eliminarSuscriptor(IObserver *usuario);
   bool estaSuscrito(string nickname);
+  void promoCreada(Notificacion * noti);
 
-  DTUsuario getDatosUsuario();
+  DTVendedor * getDatosVendedor();
+  DTUsuario * getDatosUsuario();
   set<DTComentario> listadoComentarioUsuario();
   string getNickname();
   string getContrasena();

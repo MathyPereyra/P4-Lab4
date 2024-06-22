@@ -4,6 +4,7 @@
 #include "INotificacion.h"
 #include "IUsuario.h"
 #include "IVenta.h"
+#include "IFecha.h"
 
 class Fabrica
 {
@@ -16,6 +17,7 @@ public:
     IUsuario* getIUsuario();
     IVenta* getIVenta();
     INotificacion* getINotificacion();
+    IFecha* getIFecha();
 };
 
 #endif

@@ -72,31 +72,52 @@ void Vendedor::agregarSuscriptor(IObserver * usuario)
 }
 
 
-void Vendedor::notificarSuscriptores()
-{
-  map<string, IObserver*>::iterator it;
-  for(it = this->suscriptores.begin(); it != this->suscriptores.end(); ++it)
-  {
-    (*it).second->notificar();
-  }
-}
-
 
 void Vendedor::eliminarSuscriptor(IObserver * usuario)
 {
   Cliente *cliente = dynamic_cast<Cliente*>(usuario);
-  cliente->eliminarNotifiaciones();
+  cliente->eliminarNotificaciones();
   this->suscriptores.erase(usuario->getNickname());
 }
 
 
 void Vendedor::crearCompra(Compra * compra){}
 
-DTUsuario Vendedor::getDatosUsuario()
+
+
+
+DTUsuario * Vendedor::getDatosUsuario()
 {
-  DTUsuario DV = DTVendedor(this->nickname, this->contrasena, this->fechaNac, this->codigoRUT);
+  DTUsuario * DV = new DTVendedor(this->nickname, this->contrasena, this->fechaNac, this->codigoRUT);
   return DV;
 }
+
+
+DTVendedor * Vendedor::getDatosVendedor()
+{
+  DTVendedor * DV = new DTVendedor(this->nickname, this->contrasena, this->fechaNac, this->codigoRUT);
+  return DV;
+}
+
+
+
+
+
+void Vendedor::promoCreada(Notificacion * noti)
+{
+  this->notificarSuscriptores(noti);
+}
+
+
+void Vendedor::notificarSuscriptores(Notificacion * noti)
+{
+  map<string ,IObserver*>::iterator it;
+  for (it = this->suscriptores.begin(); it != this->suscriptores.end(); it ++)
+  {
+    it->second->notificar(noti);
+  }
+}
+
 
 
 void Vendedor::agregarProd(Producto *prod)

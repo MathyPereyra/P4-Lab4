@@ -15,22 +15,23 @@ void Compra_Producto::agregarProducto(Producto * prod)
 }
 
 
-float Compra_Producto::sumaPrecios()
+float Compra_Producto::sumaPrecios(DTFecha fechaActual)
 {
-    DTFecha fechaActual = DTFecha(9,9,9);
     float suma = 0;
     Producto * productos = this->getProductosEnCompra();
     bool cuestion =  productos->getCantStock() >= this->getCantidad();
     productos->restaDeStock(this->getCantidad());
-    cout << "el bool de la resta da" << cuestion ;
+    bool habilPromo = false;
     if(cuestion)
     {       
+        if (productos->getPromo() != NULL)
+        {
         Promocion * promo = productos->getPromo();
         bool habilPromo = promo->habilPromo(productos, fechaActual, this->getCantidad());
-
         if(habilPromo)
         {
-            return suma = (productos->getPrecio() * this->getCantidad()) * promo->getDescuento();
+            return suma = (productos->getPrecio() * this->getCantidad()) * (1 - promo->getDescuento() / 100);
+        } 
         }
         return suma = productos->getPrecio() * this->getCantidad(); // a priori falta la prom
     }
@@ -56,4 +57,10 @@ int Compra_Producto::getCantidad()
 bool Compra_Producto::getEnvio()
 {
     return this->envio;
+}
+
+
+DTProducto Compra_Producto::getDatosProductos()
+{
+    return this->productosEnCompra->getDataProducto();
 }

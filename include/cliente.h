@@ -29,15 +29,15 @@ public:
 
   void crearCompra(int); // le agregue el parámetro int porque en cliente.cpp le pasamos el id
   void agregarSuscripcion();
-  void eliminarNotifiaciones();
+  void eliminarNotificaciones();
   void notificar(string nVen, string nProm, set<DTProducto>);
 
   //void setUltimaConsulta(DTFecha fecha);
   //DTFecha getUltimaConsul
 
   void crearCompra(Compra * compra);
-  DTCliente getDatosCliente();
-  DTUsuario getDatosUsuario();
+  DTCliente * getDatosCliente();
+  DTUsuario * getDatosUsuario();
   string getNickname();
   string getContrasena(); //debería ir? solo lo agregué porque estaría faltando para usar en cliente.cpp
   DTFecha getFechaNac();
@@ -48,7 +48,7 @@ public:
   map<string, Vendedor *>  getVendedoresSuscritos();
   void agregarComentario(int id, Comentario * comentario);
   map<int, Compra*> getCompras();
-  void notificar() {};
+  void notificar(Notificacion * noti);
 
 
   ~Cliente(){};

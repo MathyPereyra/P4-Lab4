@@ -50,10 +50,10 @@ public:
   string getNickname() const;
   DTFecha getFechaNac() const;
 
-  virtual string getCodigoRUT()  { return "Usuario"; }
-  virtual int getTipo()  { return 2; } // devuelve 1 si es cliente o 2 si es vendedor
-  virtual string getCiudad()  { return "Usuario"; }
-  virtual string getDireccion()  { return "Usuario"; }
+  virtual string getCodigoRUT()=0;
+  virtual int getTipo()=0;   // devuelve 1 si es cliente o 2 si es vendedor
+  virtual string getCiudad()=0 ;
+  virtual string getDireccion()=0;
 
   
 
@@ -85,6 +85,7 @@ public:
   string getCiudad()    override{
     return this->ciudad;
   };
+  string getCodigoRUT() override {};
 
   string getDireccion()   override{
     return this->direccion;
@@ -117,7 +118,8 @@ public:
   
   string getNickname() const;
   DTFecha getFechaNac() const;
-
+  string getCiudad() override{};
+  string getDireccion() override{};
   
   string getCodigoRUT()  override {
     return this->codigoRUT;
@@ -214,7 +216,7 @@ public:
   DTNotificacion(string nicknameUsuario, string nombreProm, set<DTProducto> productos);
 
   string getNicknameUsuario() const;
-  string getNombreProm();
+  string getNombreProm()  const ;
   set<DTProducto> getProductos();
 
   bool operator<(const DTNotificacion este) const;
@@ -247,9 +249,11 @@ private:
   float precioTotal;
   DTFecha fechaCompra;
   set<DTProducto> productos;
+  int id;
 
 public:
-  DTCompra(float precioTotal, DTFecha fechaCompra, set<DTProducto> comProd);
+  DTCompra(float precioTotal, DTFecha fechaCompra, set<DTProducto> comProd, int id);
+  DTCompra(float precioTotal, DTFecha fechaCompra, int id);
   float getPrecioTotal();
   DTFecha getFecha();
   set<DTProducto> getProductos();

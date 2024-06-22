@@ -27,12 +27,12 @@ public:
     // Operaciones externas
 
 
-    set<DTUsuario> listarVendedoresNoSuscritos(string nickname);
+    set<DTUsuario*> listarVendedoresNoSuscritos(string nickname);
     void suscribirAVendedor(string nicknameC, string nicknameV);
     //set<DTVendedor> mostrarSuscripciones(string nickname);
     set<DTNotificacion> mostrarNotificaciones(string nickname);
     void eliminarNotificacion();
-    set<DTUsuario> listarVendedoresSuscritos(string nickname);
+    set<DTUsuario*> listarVendedoresSuscritos(string nickname);
     void eliminarSuscripcion(string nicknameC, string nicknameV);
 
 

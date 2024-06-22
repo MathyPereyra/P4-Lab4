@@ -44,16 +44,17 @@ set<Producto_Promocion*> Promocion::getProdProms()
 bool Promocion::habilPromo(Producto * producto, DTFecha fechaActual, int cantidadCompra)
 {
     bool cantidadValida = false;
-    bool expirado = fechaActual >= this->getFechaVen();
+    cout << "emmm what the segmentation fault";
+    bool valido = this->getFechaVen()  >= fechaActual;
     for (Producto_Promocion * prodProm : this->getProdProms())
     {
         if(prodProm->getProducto() == producto)
         {
-            cantidadValida = prodProm->getCantidadMinima() < cantidadCompra;
+            cantidadValida = prodProm->getCantidadMinima() <= cantidadCompra;
             break;
         }
     }
-    if (!expirado && cantidadValida)
+    if (valido && cantidadValida)
     {
         return true;
     }

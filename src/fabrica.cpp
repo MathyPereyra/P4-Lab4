@@ -5,6 +5,8 @@
 #include "../include/CVenta.h"
 #include "../include/INotificacion.h"
 #include "../include/CNotificacion.h"
+#include "../include/IFecha.h"
+#include "../include/CFecha.h"
 
 Fabrica * Fabrica::instancia = nullptr;
 
@@ -32,4 +34,10 @@ INotificacion* Fabrica::getINotificacion()
 {
     ControladorNotificacion* controlador = ControladorNotificacion::getInstanciaN();
     return controlador->getInstanciaN();
+};
+
+IFecha* Fabrica::getIFecha()
+{
+    ControladorFecha* controlador = ControladorFecha::getInstanciaFecha();
+    return controlador->getInstanciaFecha();
 };

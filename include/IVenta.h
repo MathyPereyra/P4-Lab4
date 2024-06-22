@@ -37,16 +37,18 @@ public:
     virtual Producto *seleccionarProductoPorId(int productosid) = 0;
     virtual set<DTProducto> listadoProductosNoEnPromo() = 0;
     virtual bool productoEnPromo(int id) = 0;
-    virtual DTUsuario infoPromocionVendedor (string nombre) = 0;
+    virtual DTUsuario* infoPromocionVendedor (string nombre) = 0;
     virtual set<DTProducto> infoPromocionProductos(string nombre) = 0;
     virtual int cantidadMinimaPromo(string nombre, int id) = 0;
     virtual DTProducto dataDeProducto(Producto * prod) = 0;
     virtual string nombreVendedor(int id) = 0;
+    virtual enviarProducto()
 
     
-    virtual void confirmarCrearPromocion() = 0;
-    //virtual set<string> obtenerProdsPendEnvio(string nombreVendedor) = 0;
-    //virtual map<string, DTFecha> clientesConEnvioPend(string nombreProducto) = 0;
+    virtual void confirmarCrearPromocion(string nicknameV) = 0;
+
+    virtual set<string> obtenerProdsPendEnvio(string nombreVendedor) = 0;
+    virtual map<string, DTFecha> clientesConEnvioPend(string nombreProducto) = 0;
 
     virtual void crearCompra(string nickname) = 0;
     virtual set<DTProducto> listadoProductos() = 0;

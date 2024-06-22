@@ -147,7 +147,7 @@ string DTNotificacion::getNicknameUsuario()  const
   return this->nicknameUsuario;
 };
 
-string DTNotificacion::getNombreProm()
+string DTNotificacion::getNombreProm() const
 {
   return this->nombreProm;
 };
@@ -160,18 +160,26 @@ set<DTProducto> DTNotificacion::getProductos()
 
 bool DTNotificacion::operator<(const DTNotificacion este) const
 {
-   return this->getNicknameUsuario() < este.getNicknameUsuario();
+   return this->getNombreProm() < este.getNombreProm();
 }
 
 
 
 //DTCompra
 
-DTCompra::DTCompra(float precioTotal, DTFecha fechaCompra, set<DTProducto> productos)
+DTCompra::DTCompra(float precioTotal, DTFecha fechaCompra, set<DTProducto> productos, int id)
 {
   this->precioTotal = precioTotal;
   this->fechaCompra = fechaCompra;
   this->productos = productos;
+  this->id = id;
+};
+
+DTCompra::DTCompra(float precioTotal, DTFecha fechaCompra, int id)
+{
+  this->precioTotal = precioTotal;
+  this->fechaCompra = fechaCompra;
+  this->id = id;
 };
 
 float DTCompra::getPrecioTotal()
