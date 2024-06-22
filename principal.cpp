@@ -844,7 +844,7 @@ void eliminarSuscripciones()
 //         cin >> nombreVendedor;
 //         existeVendedor = controladorU->existeUsuarioIgualNickname(nombreVendedor);
 //     }
-//     set<string> productosPorEnviar = controladorV->obtenerProdsPendEnvio(nombreVendedor);
+//     set<string> productosPorEnviar = controladorV->ProdsPendEnvio(nombreVendedor);
 //
 //     ///////////////////////////
 //     cout << "Productos en compras pendientes de envío: " << "\n";
