@@ -11,22 +11,21 @@ using namespace std;
 
 class Producto;
 
-class Producto_Promocion 
+class Producto_Promocion
 {
 private:
   int cantidadMinima;
-  Producto* producto;
+  Producto *producto;
 
 public:
-
   Producto_Promocion();
   Producto_Promocion(int cantMin);
 
-  void agregarProd(Producto * prod);
+  void agregarProd(Producto *prod);
   set<Producto> getProdEnProm();
 
   int getCantidadMinima();
-  Producto* getProducto();
+  Producto *getProducto();
 
   virtual ~Producto_Promocion(){};
 };

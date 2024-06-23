@@ -1,6 +1,6 @@
 #include "../include/fabrica.h"
 
-//#include <cstddef>
+// #include <cstddef>
 #include "../include/IVenta.h"
 #include "../include/CVenta.h"
 #include "../include/INotificacion.h"
@@ -8,36 +8,36 @@
 #include "../include/IFecha.h"
 #include "../include/CFecha.h"
 
-Fabrica * Fabrica::instancia = nullptr;
+Fabrica *Fabrica::instancia = nullptr;
 
 Fabrica::Fabrica(){};
 
-Fabrica* Fabrica::getInstanceF()
+Fabrica *Fabrica::getInstanceF()
 {
     if (instancia == nullptr)
         instancia = new Fabrica();
     return instancia;
 };
 
-IUsuario* Fabrica::getIUsuario()
+IUsuario *Fabrica::getIUsuario()
 {
     return ControladorUsuario::getInstance();
 };
 
-IVenta* Fabrica::getIVenta()
+IVenta *Fabrica::getIVenta()
 {
-    ControladorVenta* controlador = ControladorVenta::getInstanciaVen();
+    ControladorVenta *controlador = ControladorVenta::getInstanciaVen();
     return controlador->getInstanciaVen();
 };
 
-INotificacion* Fabrica::getINotificacion()
+INotificacion *Fabrica::getINotificacion()
 {
-    ControladorNotificacion* controlador = ControladorNotificacion::getInstanciaN();
+    ControladorNotificacion *controlador = ControladorNotificacion::getInstanciaN();
     return controlador->getInstanciaN();
 };
 
-IFecha* Fabrica::getIFecha()
+IFecha *Fabrica::getIFecha()
 {
-    ControladorFecha* controlador = ControladorFecha::getInstanciaFecha();
+    ControladorFecha *controlador = ControladorFecha::getInstanciaFecha();
     return controlador->getInstanciaFecha();
 };

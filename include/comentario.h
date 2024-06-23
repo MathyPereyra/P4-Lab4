@@ -7,7 +7,6 @@
 #include <set>
 #include <map>
 
-
 using namespace std;
 
 class Comentario
@@ -30,7 +29,7 @@ public:
   DTFecha getFecha();
   int getId();
   set<Comentario> getRespuestas();
-  void agregarRespuesta(Comentario * Comentario);
+  void agregarRespuesta(Comentario *Comentario);
 
   void eliminarComentario();
 

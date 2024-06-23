@@ -7,8 +7,6 @@
 #include <set>
 #include <map>
 
-
-
 using namespace std;
 
 class ControladorUsuario : public IUsuario
@@ -37,7 +35,7 @@ public:
   string getmemContrasena();
   DTFecha getmemFechaNac();
   Usuario *getmemUsuario();
-  void recordarUsuario(string nickname );
+  void recordarUsuario(string nickname);
   void ingresarUsuario(string nickname, string contrasena, DTFecha fechaNac);
   bool existeUsuarioIgualNickname(string nickname);
   void terminarAlta();
@@ -49,8 +47,8 @@ public:
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //  Retorna set de nicknames, si el tipo es cliente retorna los nickname de todos los clientes y si el tipo es vendedor el de todos los vendedores
-  set<DTUsuario*> listadoUsuarios(string tipoDeUsuario);
-  set<DTUsuario*> listadoUsuarios();
+  set<DTUsuario *> listadoUsuarios(string tipoDeUsuario);
+  set<DTUsuario *> listadoUsuarios();
   set<DTCliente> listadoClientes();
   map<string, Usuario *> getMapaUsuarios(string opcion);
   //  Retorna set con los nickname de todos los usuarios del sistema (Clientes y Vendedores)
@@ -60,7 +58,7 @@ public:
   // set<string> listadoNicknameCliente();
   set<string> listadoUsuarioNickname();
   set<DTComentario> listadoComentario(int id);
-  set<DTComentario> listadoComentario(string nickname);  
+  set<DTComentario> listadoComentario(string nickname);
   void eliminarComentario(int id);
   static ControladorUsuario *getInstance();
 

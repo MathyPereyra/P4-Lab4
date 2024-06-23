@@ -6,10 +6,9 @@
 #include <set>
 #include <map>
 
-
 using namespace std;
 
-//DTFecha
+// DTFecha
 class DTFecha
 {
 private:
@@ -50,26 +49,23 @@ public:
   string getNickname() const;
   DTFecha getFechaNac() const;
 
-  virtual string getCodigoRUT()=0;
-  virtual int getTipo()=0;   // devuelve 1 si es cliente o 2 si es vendedor
-  virtual string getCiudad()=0 ;
-  virtual string getDireccion()=0;
+  virtual string getCodigoRUT() = 0;
+  virtual int getTipo() = 0; // devuelve 1 si es cliente o 2 si es vendedor
+  virtual string getCiudad() = 0;
+  virtual string getDireccion() = 0;
 
-  
-
-  friend ostream &operator<<(ostream &os, const DTUsuario &dtU) 
-  {  
-    os << "Nickname: "<< dtU.getNickname() << ", Fecha: " << dtU.getFechaNac().getDia() << "/" << dtU.getFechaNac().getMes() << "/" << dtU.getFechaNac().getAnio() << "\n" ;
+  friend ostream &operator<<(ostream &os, const DTUsuario &dtU)
+  {
+    os << "Nickname: " << dtU.getNickname() << ", Fecha: " << dtU.getFechaNac().getDia() << "/" << dtU.getFechaNac().getMes() << "/" << dtU.getFechaNac().getAnio() << "\n";
     return os;
   }
-  
-  bool operator<(const DTUsuario& otro) const;   // Comparacion entre DTUsuario
+
+  bool operator<(const DTUsuario &otro) const; // Comparacion entre DTUsuario
 
   virtual ~DTUsuario(){};
 };
 
-
-//DTCliente
+// DTCliente
 class DTCliente : public DTUsuario
 {
 private:
@@ -80,33 +76,34 @@ public:
   DTCliente();
   DTCliente(string nickname, string constrasena, DTFecha fechaNac, string ciudad, string direccion);
 
-  string getNickname() const ;
-  DTFecha getFechaNac() const ;
-  string getCiudad()    override{
+  string getNickname() const;
+  DTFecha getFechaNac() const;
+  string getCiudad() override
+  {
     return this->ciudad;
   };
   string getCodigoRUT() override {};
 
-  string getDireccion()   override{
+  string getDireccion() override
+  {
     return this->direccion;
   };
 
-  int getTipo()    override
+  int getTipo() override
   {
     return 1;
   };
 
   friend ostream &operator<<(ostream &os, const DTCliente &dtC)
-  {  
-    os << "Nickname: "<<dtC.getNickname() << ", Fecha: " << dtC.getFechaNac().getDia() << "/" << dtC.getFechaNac().getMes() << "/" << dtC.getFechaNac().getAnio() << "\n Ciudad:" << dtC.ciudad << ", Direccion: " << dtC.direccion << "\n" ;
+  {
+    os << "Nickname: " << dtC.getNickname() << ", Fecha: " << dtC.getFechaNac().getDia() << "/" << dtC.getFechaNac().getMes() << "/" << dtC.getFechaNac().getAnio() << "\n Ciudad:" << dtC.ciudad << ", Direccion: " << dtC.direccion << "\n";
     return os;
   }
 
   virtual ~DTCliente(){};
 };
 
-
-//DTVendedor
+// DTVendedor
 class DTVendedor : public DTUsuario
 {
 private:
@@ -115,33 +112,32 @@ private:
 public:
   DTVendedor();
   DTVendedor(string nickname, string contrasena, DTFecha fechaNac, string codigoRUT);
-  
+
   string getNickname() const;
   DTFecha getFechaNac() const;
-  string getCiudad() override{};
-  string getDireccion() override{};
-  
-  string getCodigoRUT()  override {
+  string getCiudad() override {};
+  string getDireccion() override {};
+
+  string getCodigoRUT() override
+  {
     return this->codigoRUT;
   };
 
-  int getTipo()  override
+  int getTipo() override
   {
     return 2;
   };
 
   friend ostream &operator<<(ostream &os, const DTVendedor &dtV)
-  {  
-    os << "Nickname: " << dtV.getNickname() << ", Fecha: " << dtV.getFechaNac().getDia() << "/" << dtV.getFechaNac().getMes() << "/" << dtV.getFechaNac().getAnio() << "\n Codigo RUT:" << dtV.codigoRUT << "\n" ;
+  {
+    os << "Nickname: " << dtV.getNickname() << ", Fecha: " << dtV.getFechaNac().getDia() << "/" << dtV.getFechaNac().getMes() << "/" << dtV.getFechaNac().getAnio() << "\n Codigo RUT:" << dtV.codigoRUT << "\n";
     return os;
   }
-
 
   virtual ~DTVendedor(){};
 };
 
-
-//DTComentario
+// DTComentario
 class DTComentario
 {
 private:
@@ -151,7 +147,7 @@ private:
 
 public:
   DTComentario(string text, int id, DTFecha fechaCom);
-  string getText()  const;
+  string getText() const;
   int getId() const;
   DTFecha getFechaCom() const;
   bool operator<(const DTComentario este) const;
@@ -159,8 +155,7 @@ public:
   virtual ~DTComentario(){};
 };
 
-
-//Enumerados categoria 
+// Enumerados categoria
 enum categoria
 {
   ropa,
@@ -168,9 +163,7 @@ enum categoria
   otro
 };
 
-
-
-//DTProducto
+// DTProducto
 class DTProducto
 {
 private:
@@ -188,22 +181,21 @@ public:
 
   string getNombre() const;
   int getId() const;
-  categoria getCat()  const;
-  string getDesc()  const;
-  int getCantStock()  const;
+  categoria getCat() const;
+  string getDesc() const;
+  int getCantStock() const;
   float getPrecio() const;
-  bool getEstaEnProm()  const;
-  bool operator<(const DTProducto& otro) const;   // Comparacion entre DTProducto
+  bool getEstaEnProm() const;
+  bool operator<(const DTProducto &otro) const; // Comparacion entre DTProducto
   friend ostream &operator<<(ostream &os, const DTProducto &dtP)
-  {  
-    os << "ID: "<< dtP.id << ", Nombre: " << dtP.nombre<< ", Cantidad en stock: " << dtP.cantStock << ", Precio: " << dtP.precio << ", Categoria: " << dtP.cat<<"\n" ;
+  {
+    os << "ID: " << dtP.id << ", Nombre: " << dtP.nombre << ", Cantidad en stock: " << dtP.cantStock << ", Precio: " << dtP.precio << ", Categoria: " << dtP.cat << "\n";
     return os;
   }
   virtual ~DTProducto(){};
 };
 
-
-//DTNotificacion
+// DTNotificacion
 class DTNotificacion
 {
 private:
@@ -216,7 +208,7 @@ public:
   DTNotificacion(string nicknameUsuario, string nombreProm, set<DTProducto> productos);
 
   string getNicknameUsuario() const;
-  string getNombreProm()  const ;
+  string getNombreProm() const;
   set<DTProducto> getProductos();
 
   bool operator<(const DTNotificacion este) const;
@@ -224,13 +216,13 @@ public:
   virtual ~DTNotificacion(){};
 };
 
-
 class DTCompra_Producto
 {
 private:
   int cantidad;
   bool envio;
   set<DTProducto> productos;
+
 public:
   DTCompra_Producto(int cantidad, bool envio);
 
@@ -241,8 +233,7 @@ public:
   virtual ~DTCompra_Producto(){};
 };
 
-
-//DTCompra
+// DTCompra
 class DTCompra
 {
 private:
@@ -261,11 +252,9 @@ public:
   virtual ~DTCompra(){};
 };
 
-
-
 // DTPROMOCION
 
-class DTPromocion 
+class DTPromocion
 {
 private:
   string nombre;
@@ -278,18 +267,15 @@ public:
   DTPromocion();
   DTPromocion(string nombre, string descripcion, float descuento, DTFecha fechaVencimiento, string nicknameV);
 
-  string getNombre()  const;
+  string getNombre() const;
   string getDescripcion() const;
-  float getDescuento()  const;
+  float getDescuento() const;
   DTFecha getFechaVen() const;
   string getNicknameVendedor() const;
 
-  bool operator<(const DTPromocion& otro) const;   // Comparacion entre DTProducto
-
+  bool operator<(const DTPromocion &otro) const; // Comparacion entre DTProducto
 
   virtual ~DTPromocion(){};
 };
 
-
 #endif
-

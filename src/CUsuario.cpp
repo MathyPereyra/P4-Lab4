@@ -5,8 +5,6 @@
 
 #include <cstddef>
 
-
-
 string ControladorUsuario::getmemNickname()
 {
     return this->memNickname;
@@ -57,15 +55,11 @@ void ControladorUsuario::terminarAlta()
     this->memFechaNac.~DTFecha();
 };
 
-
-
 void ControladorUsuario::altaCliente(string direccion, string ciudad)
 {
     Cliente *nuevo = new Cliente(this->memNickname, this->memContrasena, this->memFechaNac, direccion, ciudad);
     this->usuarios[this->memNickname] = nuevo;
 };
-
-
 
 void ControladorUsuario::altaVendedor(string codigoRUT)
 {
@@ -73,23 +67,16 @@ void ControladorUsuario::altaVendedor(string codigoRUT)
     this->usuarios[this->memNickname] = nuevo;
 };
 
-
-
-void ControladorUsuario::confirmarAltaUsuario()
-{
+void ControladorUsuario::confirmarAltaUsuario() {
 };
-
-
 
 // void ControladorUsuario::setDataUsuario(string nickname, string contrasena, DTFecha fechaNac) {
 
 // };
 
-
-
-set<DTUsuario*> ControladorUsuario::listadoUsuarios(string tipoDeUsuario)
-{   
-    set<DTUsuario*> resultado;
+set<DTUsuario *> ControladorUsuario::listadoUsuarios(string tipoDeUsuario)
+{
+    set<DTUsuario *> resultado;
     map<string, Usuario *>::iterator it;
     for (it = this->usuarios.begin(); it != this->usuarios.end(); ++it)
     {
@@ -113,14 +100,13 @@ set<DTUsuario*> ControladorUsuario::listadoUsuarios(string tipoDeUsuario)
     return resultado;
 };
 
- set<DTCliente> listadoClientes()
- {
-    
- }
+set<DTCliente> listadoClientes()
+{
+}
 
 map<string, Usuario *> ControladorUsuario::getMapaUsuarios(string tipoDeUsuario)
 {
-    map<string, Usuario*> resultado;
+    map<string, Usuario *> resultado;
     map<string, Usuario *>::iterator it;
     for (it = this->usuarios.begin(); it != this->usuarios.end(); ++it)
     {
@@ -140,13 +126,13 @@ map<string, Usuario *> ControladorUsuario::getMapaUsuarios(string tipoDeUsuario)
                 resultado[vendedor->getNickname()] = vendedor;
             }
         }
-        else 
+        else
         {
             resultado[it->second->getNickname()] = it->second;
         }
     }
-    return resultado;};
-
+    return resultado;
+};
 
 Usuario *ControladorUsuario::obtenerUsuarioPorNickname(const string &nickname)
 {
@@ -158,81 +144,70 @@ Usuario *ControladorUsuario::obtenerUsuarioPorNickname(const string &nickname)
     throw std::runtime_error("Usuario no encontrado");
 };
 
-set<DTUsuario*> ControladorUsuario::listadoUsuarios()
+set<DTUsuario *> ControladorUsuario::listadoUsuarios()
 {
-    set<DTUsuario*> resultado;
+    set<DTUsuario *> resultado;
     map<string, Usuario *>::iterator it;
     for (it = this->usuarios.begin(); it != this->usuarios.end(); ++it)
     {
-        
+
         resultado.insert(it->second->getDatosUsuario());
-    }    
+    }
     return resultado;
 };
-
 
 void ControladorUsuario::setContadorComentario()
 {
     this->contadorComentario = 0;
 };
 
-
-
 int ControladorUsuario::getContadorComentario()
 {
     return this->contadorComentario;
 };
-
-
 
 void ControladorUsuario::avanzarContadorComentario()
 {
     this->contadorComentario = this->contadorComentario + 1;
 };
 
-
-
 set<DTComentario> ControladorUsuario::listadoComentario(int id)
 {
-    Producto * prod = ControladorVenta::getInstanciaVen()->seleccionarProductoPorId(id);
-    map<int, Comentario*>::iterator it;
-    map<int, Comentario*> comens = prod->listadoComentarios();
+    Producto *prod = ControladorVenta::getInstanciaVen()->seleccionarProductoPorId(id);
+    map<int, Comentario *>::iterator it;
+    map<int, Comentario *> comens = prod->listadoComentarios();
     set<DTComentario> dataComens;
-    for(it = comens.begin(); it != comens.end(); it++)
+    for (it = comens.begin(); it != comens.end(); it++)
     {
-        DTComentario dataC = DTComentario(it->second->getText(), it->second->getId(),it->second->getFecha());
+        DTComentario dataC = DTComentario(it->second->getText(), it->second->getId(), it->second->getFecha());
         dataComens.insert(dataC);
     }
     return dataComens;
 };
-
 
 set<DTComentario> ControladorUsuario::listadoComentario(string nickname)
 {
-    Usuario * user = obtenerUsuarioPorNickname(nickname);
-    map<int, Comentario*>::iterator it;
-    map<int, Comentario*> comens = user->getComentarios();
+    Usuario *user = obtenerUsuarioPorNickname(nickname);
+    map<int, Comentario *>::iterator it;
+    map<int, Comentario *> comens = user->getComentarios();
     set<DTComentario> dataComens;
-    for(it = comens.begin(); it != comens.end(); it++)
+    for (it = comens.begin(); it != comens.end(); it++)
     {
-        DTComentario dataC = DTComentario(it->second->getText(), it->second->getId(),it->second->getFecha());
+        DTComentario dataC = DTComentario(it->second->getText(), it->second->getId(), it->second->getFecha());
         dataComens.insert(dataC);
     }
     return dataComens;
 };
 
-
 bool ControladorUsuario::hayComentarios(int id)
 {
-    Producto * prod = ControladorVenta::getInstanciaVen()->seleccionarProductoPorId(id);
+    Producto *prod = ControladorVenta::getInstanciaVen()->seleccionarProductoPorId(id);
     return (!prod->listadoComentarios().empty());
 }
 
-
-
 void ControladorUsuario::recordarUsuario(string nickname)
 {
-    Usuario * usuario = obtenerUsuarioPorNickname(nickname);
+    Usuario *usuario = obtenerUsuarioPorNickname(nickname);
     this->memUsuario = usuario;
 }
 
@@ -251,8 +226,8 @@ void ControladorUsuario::liberarMemoriaUsuario()
 
 void ControladorUsuario::crearComentario(string texto, int idP, string nicknameU)
 {
-    Usuario * usuario = obtenerUsuarioPorNickname(nicknameU);
-    Producto * producto = ControladorVenta::getInstanciaVen()->seleccionarProductoPorId(idP);
+    Usuario *usuario = obtenerUsuarioPorNickname(nicknameU);
+    Producto *producto = ControladorVenta::getInstanciaVen()->seleccionarProductoPorId(idP);
     int id = this->getContadorComentario();
     this->avanzarContadorComentario();
     DTFecha fecha = DTFecha();
@@ -261,13 +236,11 @@ void ControladorUsuario::crearComentario(string texto, int idP, string nicknameU
     usuario->agregarComentario(id, nuevo);
 };
 
-
-
 void ControladorUsuario::crearRespuesta(string texto, int idC, int idP)
 {
-    Producto * prod = ControladorVenta::getInstanciaVen()->seleccionarProductoPorId(idP);
-    map<int, Comentario*> comens = prod->listadoComentarios();
-    Comentario * comentarioOg = comens.find(idC)->second;
+    Producto *prod = ControladorVenta::getInstanciaVen()->seleccionarProductoPorId(idP);
+    map<int, Comentario *> comens = prod->listadoComentarios();
+    Comentario *comentarioOg = comens.find(idC)->second;
     int id = this->getContadorComentario();
     this->avanzarContadorComentario();
     DTFecha fecha = DTFecha();

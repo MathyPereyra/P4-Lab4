@@ -11,18 +11,16 @@
 #include "datatypes.h"
 #include "observer.h"
 
-
 using namespace std;
 
-class INotificacion 
+class INotificacion
 {
 public:
-
-    virtual set<DTUsuario*> listarVendedoresNoSuscritos(string nickname) = 0;
+    virtual set<DTUsuario *> listarVendedoresNoSuscritos(string nickname) = 0;
     virtual void suscribirAVendedor(string nicknameC, string nicknameV) = 0;
     virtual set<DTNotificacion> mostrarNotificaciones(string nickname) = 0;
     virtual void eliminarNotificacion() = 0;
-    virtual set<DTUsuario*> listarVendedoresSuscritos(string nickname) = 0;
+    virtual set<DTUsuario *> listarVendedoresSuscritos(string nickname) = 0;
     virtual void eliminarSuscripcion(string nicknameC, string nicknameV) = 0;
 
     virtual ~INotificacion(){};

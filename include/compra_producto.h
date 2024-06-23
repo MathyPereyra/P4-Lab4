@@ -6,8 +6,6 @@
 #include <set>
 #include <map>
 
-
-
 using namespace std;
 
 class Compra_Producto
@@ -15,19 +13,19 @@ class Compra_Producto
 private:
   bool envio;
   int cantidad;
-  Producto * productosEnCompra;
+  Producto *productosEnCompra;
 
 public:
   Compra_Producto();
   Compra_Producto(int cantidad, bool envio);
 
-  void agregarProducto(Producto * prod);
+  void agregarProducto(Producto *prod);
   float sumaPrecios(DTFecha fechaActual);
   DTProducto getDatosProductos();
 
   bool getEnvio();
   int getCantidad();
-  Producto * getProductosEnCompra();
+  Producto *getProductosEnCompra();
 
   virtual ~Compra_Producto(){};
 };

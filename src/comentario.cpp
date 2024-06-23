@@ -1,6 +1,6 @@
 #include "../include/comentario.h"
 #include "../include/producto.h"
- 
+
 #include <string>
 
 using namespace std;
@@ -18,7 +18,7 @@ string Comentario::getText()
   return this->texto;
 };
 
- void Comentario::agregarRespuesta(Comentario * Comentario)
+void Comentario::agregarRespuesta(Comentario *Comentario)
 {
   this->respuestas[Comentario->getId()] = Comentario;
 };

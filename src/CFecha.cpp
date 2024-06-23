@@ -1,7 +1,5 @@
 #include "../include/CFecha.h"
 
-
-
 void ControladorFecha::setFecha(int dia, int mes, int anio)
 {
     this->dia = dia;
@@ -13,8 +11,6 @@ DTFecha ControladorFecha::getFecha()
 {
     return DTFecha(this->dia, this->mes, this->anio);
 }
-
-
 
 ControladorFecha::ControladorFecha(){};
 

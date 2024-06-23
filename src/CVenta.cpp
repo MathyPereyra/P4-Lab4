@@ -2,11 +2,10 @@
 #include "../include/compra_producto.h"
 #include "../include/CFecha.h"
 
-
 void ControladorVenta::crearProducto(string nicknameV, string nombreP, string descripcionP, float precioP, int cantStockP, categoria cat)
 {
-    Usuario * vend = ControladorUsuario::getInstance()->obtenerUsuarioPorNickname(nicknameV);
-    Vendedor* vendedor = dynamic_cast<Vendedor*>(vend);
+    Usuario *vend = ControladorUsuario::getInstance()->obtenerUsuarioPorNickname(nicknameV);
+    Vendedor *vendedor = dynamic_cast<Vendedor *>(vend);
     if (vendedor != NULL)
     {
         int id = this->getContador();
@@ -17,13 +16,11 @@ void ControladorVenta::crearProducto(string nicknameV, string nombreP, string de
     }
 }
 
-
 bool ControladorVenta::existeProducto(int id)
-{  
-    Producto * prod = seleccionarProductoPorId(id);
+{
+    Producto *prod = seleccionarProductoPorId(id);
     return prod != NULL;
 }
-
 
 void ControladorVenta::setContador()
 {
@@ -40,7 +37,6 @@ void ControladorVenta::avanzarContador()
     this->contador = this->contador + 1;
 }
 
-
 void ControladorVenta::setContadorCompra()
 {
     this->contadorCompra = 1;
@@ -56,38 +52,33 @@ void ControladorVenta::avanzarContadorCompra()
     this->contadorCompra = this->contadorCompra + 1;
 }
 
-Usuario * ControladorVenta::getMemUsuario()
+Usuario *ControladorVenta::getMemUsuario()
 {
     return this->memUsuario;
 }
 
-
 void ControladorVenta::setMemUsuario(string nickname)
-{   
-    Usuario * usuario = ControladorUsuario::getInstance()->obtenerUsuarioPorNickname(nickname);
+{
+    Usuario *usuario = ControladorUsuario::getInstance()->obtenerUsuarioPorNickname(nickname);
     this->memUsuario = usuario;
 }
 
-
-Promocion * ControladorVenta::getMemPromocion()
+Promocion *ControladorVenta::getMemPromocion()
 {
     return this->memPromocion;
 }
 
-
-void ControladorVenta::setMemPromocion(Promocion * prom)
+void ControladorVenta::setMemPromocion(Promocion *prom)
 {
     this->memPromocion = prom;
 }
 
-
-Compra * ControladorVenta::getMemCompra()
+Compra *ControladorVenta::getMemCompra()
 {
     return this->memCompra;
 }
 
-
-void ControladorVenta::setMemCompra(Compra * compra)
+void ControladorVenta::setMemCompra(Compra *compra)
 {
     this->memCompra = compra;
 }
@@ -102,7 +93,7 @@ set<DTPromocion> ControladorVenta::listadoPromociones()
     DTPromocion dataPromo;
     set<DTPromocion> dataPromos;
     map<string, Promocion *> promociones = this->promociones;
-    for (map<string, Promocion*>::iterator it = promociones.begin(); it != promociones.end(); it++)
+    for (map<string, Promocion *>::iterator it = promociones.begin(); it != promociones.end(); it++)
     {
         dataPromo = it->second->getDatosPromocion();
         dataPromos.insert(dataPromo);
@@ -110,11 +101,10 @@ set<DTPromocion> ControladorVenta::listadoPromociones()
     return dataPromos;
 }
 
-
 set<DTProducto> ControladorVenta::listadoProductosNoEnPromo()
 {
-    Usuario * elfran = getMemUsuario();
-    Vendedor * vendedor = dynamic_cast<Vendedor*>(elfran);
+    Usuario *elfran = getMemUsuario();
+    Vendedor *vendedor = dynamic_cast<Vendedor *>(elfran);
 
     set<DTProducto> productosNoEnPromo;
     map<int, Producto *> dataProductos = vendedor->getProductos();
@@ -124,15 +114,14 @@ set<DTProducto> ControladorVenta::listadoProductosNoEnPromo()
         {
             productosNoEnPromo.insert(it->second->getDataProducto());
         }
-    }      
+    }
     return productosNoEnPromo;
 }
 
-
 int ControladorVenta::cantidadMinimaPromo(string nombre, int id)
 {
-    set<Producto_Promocion*> prodProms = this->promociones.find(nombre)->second->getProdProms();
-    for(set<Producto_Promocion*>::iterator it = prodProms.begin(); it != prodProms.end(); ++it)
+    set<Producto_Promocion *> prodProms = this->promociones.find(nombre)->second->getProdProms();
+    for (set<Producto_Promocion *>::iterator it = prodProms.begin(); it != prodProms.end(); ++it)
     {
         if ((*it)->getProducto()->getId() == id)
         {
@@ -143,22 +132,19 @@ int ControladorVenta::cantidadMinimaPromo(string nombre, int id)
     return 001;
 }
 
-
 bool ControladorVenta::productoEnPromo(int id)
 {
     set<DTProducto> productosNoEnPromo = this->listadoProductosNoEnPromo();
-    for(set<DTProducto>::iterator iter = productosNoEnPromo.begin(); iter != productosNoEnPromo.end(); iter++)
+    for (set<DTProducto>::iterator iter = productosNoEnPromo.begin(); iter != productosNoEnPromo.end(); iter++)
     {
-        if(iter->getId() == id) 
+        if (iter->getId() == id)
         {
             return false;
             break;
         }
-    }    
+    }
     return true;
 }
-
-
 
 set<DTProducto> ControladorVenta::listadoProductos()
 {
@@ -174,22 +160,21 @@ set<DTProducto> ControladorVenta::listadoProductos()
 
 Producto *ControladorVenta::seleccionarProductoPorId(int productoId)
 {
-    map<int, Producto*>::iterator it = this->productos.find(productoId);
-    if (it != this->productos.end()) {
+    map<int, Producto *>::iterator it = this->productos.find(productoId);
+    if (it != this->productos.end())
+    {
         return it->second;
     }
     return nullptr;
 }
 
-
 void ControladorVenta::crearPromocion(string nombre, string descripcion, float descuento, DTFecha fechaVen)
 {
-    
-    Usuario * usuario = getMemUsuario();
-    Vendedor *vendedor = dynamic_cast<Vendedor *>(usuario);    
-    
-    Promocion * prom = new Promocion(nombre, descripcion, descuento, fechaVen, vendedor);
 
+    Usuario *usuario = getMemUsuario();
+    Vendedor *vendedor = dynamic_cast<Vendedor *>(usuario);
+
+    Promocion *prom = new Promocion(nombre, descripcion, descuento, fechaVen, vendedor);
 
     vendedor->agregarProm(prom);
     this->promociones[nombre] = prom;
@@ -197,53 +182,49 @@ void ControladorVenta::crearPromocion(string nombre, string descripcion, float d
     this->setMemPromocion(prom);
 }
 
-
 void ControladorVenta::seleccionarProductoAProm(int id, int cantMinima)
 {
-    Producto * prod = this->seleccionarProductoPorId(id);
+    Producto *prod = this->seleccionarProductoPorId(id);
 
-    Promocion * prom = getMemPromocion();
+    Promocion *prom = getMemPromocion();
 
-    Producto_Promocion * prodProm = new Producto_Promocion(cantMinima);
-
+    Producto_Promocion *prodProm = new Producto_Promocion(cantMinima);
 
     prom->agregarProdProm(prodProm);
     prodProm->agregarProd(prod);
     prod->agregadoAPromo(prom);
 
-    //aca siguen las notis en un futuro
+    // aca siguen las notis en un futuro
 }
-
 
 void ControladorVenta::confirmarCrearPromocion(string nicknameV)
 {
-    Promocion * prom = this->getMemPromocion();
+    Promocion *prom = this->getMemPromocion();
     string nombreProm = prom->getNombre();
 
-    map<int, Producto * > prods;
-    set<Producto_Promocion*>::iterator it;
-    set<Producto_Promocion*> prodProms = prom->getProdProms();
+    map<int, Producto *> prods;
+    set<Producto_Promocion *>::iterator it;
+    set<Producto_Promocion *> prodProms = prom->getProdProms();
     for (it = prodProms.begin(); it != prodProms.end(); ++it)
     {
         if (*it == NULL)
         {
-          cout << "it null";
-          continue;  
+            cout << "it null";
+            continue;
         }
-        if ((*it)->getProducto() == NULL) cout << "producto null";
+        if ((*it)->getProducto() == NULL)
+            cout << "producto null";
         prods[(*it)->getProducto()->getId()] = (*it)->getProducto();
-    } 
+    }
 
-    Notificacion * noti = new Notificacion(nicknameV, nombreProm, prods);
+    Notificacion *noti = new Notificacion(nicknameV, nombreProm, prods);
 
-    Usuario * vededor = ControladorUsuario::getInstance()->obtenerUsuarioPorNickname(nicknameV);
-    Vendedor * vendedor = dynamic_cast<Vendedor*>(vededor);
+    Usuario *vededor = ControladorUsuario::getInstance()->obtenerUsuarioPorNickname(nicknameV);
+    Vendedor *vendedor = dynamic_cast<Vendedor *>(vededor);
     vendedor->promoCreada(noti);
-
 }
 
-
-DTProducto ControladorVenta::dataDeProducto(Producto * prod)
+DTProducto ControladorVenta::dataDeProducto(Producto *prod)
 {
     DTProducto pe = DTProducto(prod->getId(), prod->getCat(), prod->getNombre(), prod->getDesc(), prod->getCantStock(), prod->getPrecio());
     return pe;
@@ -252,7 +233,7 @@ DTProducto ControladorVenta::dataDeProducto(Producto * prod)
 string ControladorVenta::nombreVendedor(int idProducto)
 {
     string nicknameV;
-    Producto * productoConsultado = this->seleccionarProductoPorId(idProducto);
+    Producto *productoConsultado = this->seleccionarProductoPorId(idProducto);
     map<string, Usuario *> usuarios = ControladorUsuario::getInstance()->getMapaUsuarios("");
     map<string, Usuario *>::iterator it;
     for (it = usuarios.begin(); it != usuarios.end(); it++)
@@ -269,24 +250,20 @@ string ControladorVenta::nombreVendedor(int idProducto)
         }
     }
     return nicknameV;
+}
 
-}   
-
-
-
-DTUsuario* ControladorVenta::infoPromocionVendedor(string opcion)
+DTUsuario *ControladorVenta::infoPromocionVendedor(string opcion)
 {
-    Promocion * promo = this->promociones.find(opcion)->second;
+    Promocion *promo = this->promociones.find(opcion)->second;
     return promo->getVendedor()->getDatosUsuario();
 }
 
-
 set<DTProducto> ControladorVenta::infoPromocionProductos(string opcion)
 {
-    Promocion * promo = this->promociones.find(opcion)->second;
-    set<Producto_Promocion*> prodProms = promo->getProdProms();
+    Promocion *promo = this->promociones.find(opcion)->second;
+    set<Producto_Promocion *> prodProms = promo->getProdProms();
     set<DTProducto> retorno;
-    for (set<Producto_Promocion*>::iterator iter = prodProms.begin();  iter != prodProms.end(); iter++)
+    for (set<Producto_Promocion *>::iterator iter = prodProms.begin(); iter != prodProms.end(); iter++)
     {
         DTProducto dataProd = (*iter)->getProducto()->getDataProducto();
         retorno.insert(dataProd);
@@ -294,52 +271,45 @@ set<DTProducto> ControladorVenta::infoPromocionProductos(string opcion)
     return retorno;
 }
 
-
-
-
 void ControladorVenta::crearCompra(string nickname)
 {
-    Usuario * client = ControladorUsuario::getInstance()->obtenerUsuarioPorNickname(nickname);
-    Cliente * cliente = dynamic_cast<Cliente*>(client);
+    Usuario *client = ControladorUsuario::getInstance()->obtenerUsuarioPorNickname(nickname);
+    Cliente *cliente = dynamic_cast<Cliente *>(client);
     int id = this->getContadorCompra();
     this->avanzarContadorCompra();
-    DTFecha fechaActual = DTFecha(0,0,0);
+    DTFecha fechaActual = DTFecha(0, 0, 0);
 
-    Compra * compra = new Compra(fechaActual, 0, id);
+    Compra *compra = new Compra(fechaActual, 0, id);
     this->setMemCompra(compra);
 
     cliente->crearCompra(compra);
     this->compras[id] = compra;
 }
 
-
 bool ControladorVenta::productoEnCompra(int id)
 {
-    Producto * prod = this->seleccionarProductoPorId(id);
+    Producto *prod = this->seleccionarProductoPorId(id);
     if (prod->getCompProd() == NULL || prod->getCompProd()->getProductosEnCompra() == prod)
         return false;
-    else return true;
+    else
+        return true;
 }
-
 
 void ControladorVenta::agregarACompra(int id, int cantidad)
 {
-    Producto * prod = seleccionarProductoPorId(id);
-    Compra * compra = getMemCompra();
-    if(prod->getCantStock() >= cantidad)
+    Producto *prod = seleccionarProductoPorId(id);
+    Compra *compra = getMemCompra();
+    if (prod->getCantStock() >= cantidad)
     {
         compra->agregarACompra(prod, cantidad);
     }
-
 }
-
 
 bool ControladorVenta::cantidadValida(int id, int cantidad)
 {
-    Producto * prod = seleccionarProductoPorId(id);
+    Producto *prod = seleccionarProductoPorId(id);
     return prod->getCantStock() >= cantidad;
 }
-
 
 DTCompra ControladorVenta::detallesCompra()
 {
@@ -347,33 +317,32 @@ DTCompra ControladorVenta::detallesCompra()
     DTFecha fechaActual = ControladorFecha::getInstanciaFecha()->getFecha();
     float sumaPrecios = 0;
     DTProducto productos = DTProducto();
-    Compra * compra = this->getMemCompra();
-    
-    for(Compra_Producto * it : compra->getCompProd())
+    Compra *compra = this->getMemCompra();
+
+    for (Compra_Producto *it : compra->getCompProd())
     {
         sumaPrecios += it->sumaPrecios(fechaActual);
         productos = it->getProductosEnCompra()->getDataProducto();
         dataProductos.insert(productos);
     }
-    
+
     DTCompra dataCompra = DTCompra(sumaPrecios, fechaActual, dataProductos);
     return dataCompra;
 }
 
-
 set<string> ControladorVenta::obtenerProdsPendEnvio(string nombreVendedor)
-{   
+{
     Usuario *vendSelect = ControladorUsuario::getInstance()->obtenerUsuarioPorNickname(nombreVendedor);
     Vendedor *vendedorSelect = dynamic_cast<Vendedor *>(vendSelect);
-    map<int, Producto*> prods = vendedorSelect->getProductos();    
-    set<string> productosPorEnviar;  
+    map<int, Producto *> prods = vendedorSelect->getProductos();
+    set<string> productosPorEnviar;
     map<int, Compra *> compras = getCompra();
-    for(map<int, Compra*>::iterator itCompra = compras.begin(); itCompra != compras.end(); ++itCompra)
+    for (map<int, Compra *>::iterator itCompra = compras.begin(); itCompra != compras.end(); ++itCompra)
     {
-        set<Compra_Producto*> products = itCompra->second->getCompProd();
-        for(set<Compra_Producto*>::iterator itProd = products.begin(); itProd != products.end(); ++itProd)
+        set<Compra_Producto *> products = itCompra->second->getCompProd();
+        for (set<Compra_Producto *>::iterator itProd = products.begin(); itProd != products.end(); ++itProd)
         {
-            if(!(*itProd)->getEnvio() && (prods.find((*itProd)->getDatosProductos().getId()) != prods.end() ))
+            if (!(*itProd)->getEnvio() && (prods.find((*itProd)->getDatosProductos().getId()) != prods.end()))
             {
                 productosPorEnviar.insert((*itProd)->getDatosProductos().getNombre());
             }
@@ -382,48 +351,41 @@ set<string> ControladorVenta::obtenerProdsPendEnvio(string nombreVendedor)
     return productosPorEnviar;
 }
 
-
 map<string, DTFecha> ControladorVenta::clientesConEnvioPend(string nombreProducto)
 {
     set<DTCompra> dataCompras;
     map<string, DTFecha> clientes;
     map<string, Usuario *> usuarios = ControladorUsuario::getInstance()->getMapaUsuarios("");
-    for(map<string, Usuario *>::iterator it = usuarios.begin(); it != usuarios.end(); ++it)
+    for (map<string, Usuario *>::iterator it = usuarios.begin(); it != usuarios.end(); ++it)
     {
         Cliente *cliente = dynamic_cast<Cliente *>(it->second);
-        if((cliente!=nullptr))
+        if ((cliente != nullptr))
         {
-            map<int, Compra*> comprasCli = cliente->getCompras();
-            for(map<int, Compra *>::iterator iter = comprasCli.begin(); iter != comprasCli.end(); ++iter)
+            map<int, Compra *> comprasCli = cliente->getCompras();
+            for (map<int, Compra *>::iterator iter = comprasCli.begin(); iter != comprasCli.end(); ++iter)
             {
-                set<Compra_Producto*> compras = iter->second->getCompProd();
-                    for(set<Compra_Producto *>::iterator iter3 = compras.begin(); iter3 != compras.end(); ++iter3){
-                        if(!(*iter3)->getEnvio())
-                        {
-                            DTCompra dtCompra = DTCompra(iter->second->getMontoTotal(), iter->second->getFecha(), iter->second->getId());
-                            clientes[cliente->getNickname()] = iter->second->getFecha();
-                        }   
+                set<Compra_Producto *> compras = iter->second->getCompProd();
+                for (set<Compra_Producto *>::iterator iter3 = compras.begin(); iter3 != compras.end(); ++iter3)
+                {
+                    if (!(*iter3)->getEnvio())
+                    {
+                        DTCompra dtCompra = DTCompra(iter->second->getMontoTotal(), iter->second->getFecha(), iter->second->getId());
+                        clientes[cliente->getNickname()] = iter->second->getFecha();
                     }
+                }
             }
         }
     }
     return clientes;
 }
 
-
 ControladorVenta::enviarProducto()
 {
-
 }
-
-
-
 
 ControladorVenta *ControladorVenta::instancia = nullptr;
 
-
 ControladorVenta::ControladorVenta(){};
-
 
 ControladorVenta *ControladorVenta::getInstanciaVen()
 {

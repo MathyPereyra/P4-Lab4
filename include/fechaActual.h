@@ -4,18 +4,19 @@
 #include <ctime>
 #include <string>
 
-class fechaActual {
+class fechaActual
+{
 private:
-    static fechaActual* instance;
+    static fechaActual *instance;
     std::tm currentDate;
 
     fechaActual();
 
 public:
-    static fechaActual* getInstance();
+    static fechaActual *getInstance();
     std::tm getFechaActual();
     void setFechaActual(std::tm newDate);
     std::string getFechaActualString();
 };
 
-#endif 
+#endif

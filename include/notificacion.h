@@ -9,20 +9,20 @@
 
 using namespace std;
 
-class Notificacion 
+class Notificacion
 {
 private:
   string nicknameV;
   string nombreProm;
-  map<int, Producto*> productos;
+  map<int, Producto *> productos;
 
 public:
   Notificacion();
-  Notificacion(string nicknameV, string nombreProm, map<int, Producto*> productos);
-  
+  Notificacion(string nicknameV, string nombreProm, map<int, Producto *> productos);
+
   string getNicknameV();
   string getNombreProm();
-  map<int, Producto*> getProductos();
+  map<int, Producto *> getProductos();
 
   virtual ~Notificacion(){};
 };

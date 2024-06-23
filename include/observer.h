@@ -5,14 +5,14 @@
 #include <string>
 #include <map>
 
-using namespace std; 
+using namespace std;
 
 class IObserver
 {
-    public:
-        virtual void notificar(Notificacion * noti) = 0;
-        virtual string getNickname() = 0;
-        virtual ~IObserver(){};
+public:
+    virtual void notificar(Notificacion *noti) = 0;
+    virtual string getNickname() = 0;
+    virtual ~IObserver(){};
 };
 
 #endif

@@ -11,34 +11,33 @@
 
 using namespace std;
 
-class Promocion 
+class Promocion
 {
 private:
   string nombre;
   string descripcion;
   float descuento;
   DTFecha fechaVencimiento;
-  set<Producto_Promocion*> prodProms;
-  Vendedor * vendedor;
+  set<Producto_Promocion *> prodProms;
+  Vendedor *vendedor;
 
 public:
   Promocion();
-  Promocion(string nombre, string descripcion, float descuento, DTFecha fechaVencimiento, Vendedor * vendedor);
-  
+  Promocion(string nombre, string descripcion, float descuento, DTFecha fechaVencimiento, Vendedor *vendedor);
+
   void agregarAPromocion(int id);
   set<DTProducto> getProdEnProm();
-  
+
   string getNombre();
   string getDescripcion();
   float getDescuento();
-  Vendedor * getVendedor();
+  Vendedor *getVendedor();
   DTFecha getFechaVen();
-  set<Producto_Promocion*> getProdProms();
+  set<Producto_Promocion *> getProdProms();
   DTPromocion getDatosPromocion();
 
-  bool habilPromo(Producto * producto, DTFecha fechaActual, int cantidadCompra);
-  void agregarProdProm(Producto_Promocion * prodProm);
-
+  bool habilPromo(Producto *producto, DTFecha fechaActual, int cantidadCompra);
+  void agregarProdProm(Producto_Promocion *prodProm);
 
   virtual ~Promocion(){};
 };

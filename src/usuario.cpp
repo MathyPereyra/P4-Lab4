@@ -21,4 +21,3 @@ DTFecha Usuario::getFechaNac()
 {
   return this->fechaNac;
 };
-

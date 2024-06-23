@@ -35,7 +35,7 @@ string Cliente::getCiudad()
 
  map<string, Notificacion*> Cliente::getNotificaciones()
 {
-   return this->notificaciones; 
+   return this->notificaciones;
 };
 
 
@@ -78,7 +78,7 @@ DTCliente * Cliente::getDatosCliente()
 
 DTUsuario * Cliente::getDatosUsuario()
 {
-  
+
   DTUsuario *  DC = new DTCliente(this->nickname, this->contrasena, this->fechaNac, this->ciudad, this->direccion);
   return DC;
 }
@@ -123,4 +123,3 @@ void Cliente::notificar(Notificacion * noti)
 //   return listadoComens;
 // }
 
- 

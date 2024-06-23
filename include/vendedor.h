@@ -1,17 +1,14 @@
 #ifndef VENDEDOR_H
 #define VENDEDOR_H
 
-
-
 #include "datatypes.h"
 #include "notificacion.h"
 #include "observer.h"
-//#include "producto.h"
+// #include "producto.h"
 #include "usuario.h"
 #include <string>
 #include <set>
 #include <map>
-
 
 using namespace std;
 
@@ -24,8 +21,8 @@ private:
   string codigoRUT;
   map<int, Producto *> productos;
   map<string, Promocion *> promociones;
-  map<string, IObserver*> suscriptores;
-  void notificarSuscriptores(Notificacion * noti);
+  map<string, IObserver *> suscriptores;
+  void notificarSuscriptores(Notificacion *noti);
 
   // set<IObserver> suscriptores;
 
@@ -40,10 +37,10 @@ public:
   void agregarSuscriptor(IObserver *o);
   void eliminarSuscriptor(IObserver *usuario);
   bool estaSuscrito(string nickname);
-  void promoCreada(Notificacion * noti);
+  void promoCreada(Notificacion *noti);
 
-  DTVendedor * getDatosVendedor();
-  DTUsuario * getDatosUsuario();
+  DTVendedor *getDatosVendedor();
+  DTUsuario *getDatosUsuario();
   set<DTComentario> listadoComentarioUsuario();
   string getNickname();
   string getContrasena();
