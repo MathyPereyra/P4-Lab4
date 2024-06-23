@@ -36,7 +36,7 @@ set<Producto_Promocion *> Promocion::getProdProms()
 bool Promocion::habilPromo(Producto *producto, DTFecha fechaActual, int cantidadCompra)
 {
     bool cantidadValida = false;
-    cout << "emmm what the segmentation fault";
+
     bool valido = this->getFechaVen() >= fechaActual;
     for (Producto_Promocion *prodProm : this->getProdProms())
     {

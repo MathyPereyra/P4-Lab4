@@ -190,6 +190,11 @@ set<DTProducto> DTCompra::getProductos()
   return this->productos;
 };
 
+int DTCompra::getId()
+{
+  return this->id;
+}
+
 // DTProducto
 DTProducto::DTProducto(){};
 

@@ -247,6 +247,7 @@ public:
   DTCompra(float precioTotal, DTFecha fechaCompra, int id);
   float getPrecioTotal();
   DTFecha getFecha();
+  int getId();
   set<DTProducto> getProductos();
 
   virtual ~DTCompra(){};

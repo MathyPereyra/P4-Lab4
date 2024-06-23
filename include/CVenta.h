@@ -57,6 +57,9 @@ public:
   set<DTProducto> infoPromocionProductos(string nombre);
   int cantidadMinimaPromo(string nombre, int id);
   DTProducto dataDeProducto(Producto *prod);
+  set<DTProducto> getDatosProductosVendedor(string nicknameV);
+  set<DTPromocion> getDatosPromocionVigentesVendedor(string nicknameV);
+  set<DTCompra> getDatosCompraRealizadaCliente(string nicknameC);
   string nombreVendedor(int idProducto);
   void confirmarCrearPromocion(string nicknameV);
 
@@ -69,6 +72,8 @@ public:
 
   set<string> obtenerProdsPendEnvio(string nombreVendedor);
   map<string, DTFecha> clientesConEnvioPend(string nombreProducto);
+
+  void enviarProducto(int idProducto, string nombreCliente, DTFecha fechaCompra);
 
   //  void confirmarCompra();
   // Operaciones internas (no se si el {} va o no)

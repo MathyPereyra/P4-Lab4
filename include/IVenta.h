@@ -39,8 +39,11 @@ public:
     virtual set<DTProducto> infoPromocionProductos(string nombre) = 0;
     virtual int cantidadMinimaPromo(string nombre, int id) = 0;
     virtual DTProducto dataDeProducto(Producto *prod) = 0;
+    virtual set<DTProducto> getDatosProductosVendedor(string nicknameV) = 0;
+    virtual set<DTPromocion> getDatosPromocionVigentesVendedor(string nicknameV) = 0;
+    virtual set<DTCompra> getDatosCompraRealizadaCliente(string nicknameC) = 0;
     virtual string nombreVendedor(int id) = 0;
-    // virtual enviarProducto()
+    virtual void enviarProducto(int idProducto, string nombreCliente, DTFecha fechaCompra) = 0;
 
     virtual void confirmarCrearPromocion(string nicknameV) = 0;
 

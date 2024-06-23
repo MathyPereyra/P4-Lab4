@@ -248,6 +248,12 @@ void ControladorUsuario::crearRespuesta(string texto, int idC, int idP)
     comentarioOg->agregarRespuesta(nuevo);
 };
 
+DTUsuario *ControladorUsuario::getDatosUsuario(string nickname)
+{
+    Usuario *user = this->obtenerUsuarioPorNickname(nickname);
+    return user->getDatosUsuario();
+}
+
 ControladorUsuario::ControladorUsuario(){};
 
 ControladorUsuario *ControladorUsuario::instancia = nullptr;

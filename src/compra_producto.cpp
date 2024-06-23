@@ -58,3 +58,8 @@ DTProducto Compra_Producto::getDatosProductos()
 {
     return this->productosEnCompra->getDataProducto();
 }
+
+void Compra_Producto::setEnvio()
+{
+    this->envio = true;
+}

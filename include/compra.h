@@ -23,7 +23,7 @@ public:
   Compra(DTFecha fecha, float montoTotal, int id);
 
   void agregarACompra(Producto *prod, int id);
-  bool productoEnCompra();
+  bool productoEnCompra(int id);
   DTCompra infoCompra();
 
   // void setId(integer id);

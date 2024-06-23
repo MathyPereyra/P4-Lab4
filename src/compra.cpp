@@ -14,24 +14,17 @@ void Compra::agregarACompra(Producto *prod, int cantidad)
     this->com_Prods.insert(nuevoCP);
 };
 
-// bool Compra::productoEnCompra(int id_prod)
-//{
-//     bool enCompra = false;
-//     for (Compra_Producto cp : this->com_Prods)
-//     {
-//         setProductos = cp.getProductos();
-//         enCompra = setProductos.count(id_prod) || enCompra;
-//     }
-//     return enCompra;
-// };
-//
-//
-///*void Compra::setId(int id)
-//{
-//    this->id = id;
-//};
-//*/
-//
+bool Compra::productoEnCompra(int id_prod)
+{
+    bool enCompra = false;
+    for (Compra_Producto cp : this->com_Prods)
+    {
+        Producto *prod = cp.getProductosEnCompra();
+        enCompra = setProductos.count(id_prod) || enCompra;
+    }
+    return enCompra;
+};
+
 int Compra::getId()
 {
     return this->id;
@@ -59,5 +52,12 @@ void Compra::setId(int id)
 
 DTCompra Compra::infoCompra()
 {
-    // arreglar diagrama comunicacion crear compra!
+    set<DTProducto> prods;
+
+    for (Compra_Producto *it : this->getCompProd())
+    {
+        DTProducto producto = it->getProductosEnCompra()->getDataProducto();
+        prods.insert(producto);
+    }
+    return DTCompra(this->getMontoTotal(), this->getFecha(), prods, this->getId())
 }
