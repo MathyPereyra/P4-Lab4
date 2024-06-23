@@ -42,7 +42,7 @@ public:
     virtual int cantidadMinimaPromo(string nombre, int id) = 0;
     virtual DTProducto dataDeProducto(Producto * prod) = 0;
     virtual string nombreVendedor(int id) = 0;
-    virtual enviarProducto()
+    //virtual enviarProducto()
 
     
     virtual void confirmarCrearPromocion(string nicknameV) = 0;

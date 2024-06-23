@@ -622,7 +622,6 @@ void realizarCompra()
 
 void dejarComentario()
 {
-
     Fabrica *fabrica = Fabrica::getInstanceF(); // se crea instancia única de fábrica
     IVenta *controladorV = fabrica->getIVenta();
     IUsuario *controladorU = fabrica->getIUsuario();
@@ -938,10 +937,10 @@ void enviarProducto()
     cin.get();      
 }
 
-//
-//
+
+
 // void expedienteDeUsuario()
-//{
+// {
 //    string nicknameU;
 //    cout << "Usuarios registrados:\n";
 //    map<string, Usuario*> usuarios = controlador->listadoUsuarios();
@@ -949,17 +948,17 @@ void enviarProducto()
 //    {
 //        cout << it->second->getNickname() << "\n";
 //    }
-//
+
 //    cout << "Seleccione un usuario: ";
 //    cin >> nicknameU;
 //    cout << "\n";
-//
+
 //    Usuario *usuario = controlador->obtenerUsuarioPorNickname(nicknameU);
 //    DTUsuario dataUsuario = usuario->getDatosUsuario();
 //    cout << "Datos del usuario seleccionado:\n" << dataUsuario << endl;
 //    cout << "Nombre del usuario: " << dataUsuario.getNickname();
 //    cout << "Fecha de Nacimiento: " << dataUsuario.getFechaNac().getDia()<< "/"<< dataUsuario.getFechaNac().getMes() << "/" << dataUsuario.getFechaNac().getAnio() << "\n";
-//
+
 //    Vendedor *vendedor = dynamic_cast<Vendedor *>(usuario);
 //    if (vendedor != nullptr)
 //    {
@@ -972,7 +971,7 @@ void enviarProducto()
 //            cout << iter->second->getNombre() << endl;
 //        }
 //        cout << "\n";
-//
+
 //        // // Lista todos las promociones activas
 //        map<string, Promocion *> promociones = vendedor->getPromociones();
 //        cout << "\nPromociones del vendedor " << vendedor->getNickname() << ":\n";
@@ -987,14 +986,14 @@ void enviarProducto()
 //        Cliente *cliente = dynamic_cast<Cliente *>(usuario);
 //        map<int, Compra*> comprasCliente = cliente->getCompras();
 //        cout << "\nCompras del cliente " << cliente->getNickname() << ":\n";
-//
+
 //        for (map<int, Compra*>::iterator compra = comprasCliente.begin(); compra != comprasCliente.end(); ++compra)
 //        {
 //            cout << "Id de la compra:" << compra->second->getId() << endl; // Muestro el nombre de la promo
 //            cout << "Productos de la compra:\n";
-//
+
 //            set<Compra_Producto*> prodCompra = compra->second->getCompProd();
-//
+
 //            for (set<Compra_Producto*>::iterator it2 = prodCompra.begin(); it2 != prodCompra.end(); ++it2)
 //            {
 //                cout << "Nombre del producto: " << (*it2)->getProductosEnCompra()->getNombre() << endl;
@@ -1004,8 +1003,8 @@ void enviarProducto()
 //            }
 //        }
 //    }
-//}
-//
+// }
+
 
 void altaDeUsuarioCARGARDATOSPREESTABLECIDOS(string nickname, string contrasena, int dia, int mes, int anio, int opcion, string ciudad, string direccion, string codigoRUT)
 { //Pasar opcion = 1 si es cliente y 2 si es vendedor.
@@ -1052,7 +1051,7 @@ void altaDeProductoCARGARDATOSPREESTABLECIDOS(string nicknameV, string nombreP, 
     controladorV->crearProducto(nicknameV, nombreP, descripcionP, precioP, cantStockP, cat);
 }
 
-void crearPromocionCARGARDATOSPREESTABLECIDOS(string nombreProm, string descripcionProm, float descuento,int dia, int mes, int anio, vector<int> id, vector<int> cantMinima, string nicknameV)
+void crearPromocionCARGARDATOSPREESTABLECIDOS(string nombreProm, string descripcionProm, float descuento,int dia, int mes, int anio, map<int,int> prom, string nicknameV)
 {
     Fabrica *fabrica = Fabrica::getInstanceF(); // se crea instancia única de fábrica
     IUsuario *controladorU = fabrica->getIUsuario();
@@ -1060,14 +1059,51 @@ void crearPromocionCARGARDATOSPREESTABLECIDOS(string nombreProm, string descripc
 
     DTFecha fechaVen = DTFecha(dia, mes, anio);
     controladorV->crearPromocion(nombreProm, descripcionProm, descuento, fechaVen);
-    for (size_t i = 0; i < id.size(); ++i) {
-        controladorV->seleccionarProductoAProm(id[i],cantMinima[i]);
+    for (map<int, int>::iterator it = prom.begin(); it != prom.end(); ++it) 
+    {
+        controladorV->seleccionarProductoAProm(it->first,it->second);
     }
 }
 
- void realizarCompraCARGARDATOSPREESTABLECIDOS(IUsuario *controladorU, IVenta *controladorV, string nicknameC,string cat,vector<int> id vector<int> cantidado){}
+void realizarCompraCARGARDATOSPREESTABLECIDOS(string nicknameC,map<int, int> compra, map<int, bool> enviado)
+{
+    Fabrica *fabrica = Fabrica::getInstanceF();
+    IUsuario *controladorU = fabrica->getIUsuario();
+    IVenta *controladorV = fabrica->getIVenta();
 
-void cargarDatosPreestablecidos(){
+    controladorV->crearCompra(nicknameC);
+    
+    for (map<int, int>::iterator it = compra.begin(); it != compra.end(); ++it) 
+    {
+        controladorV->agregarACompra(it->first, it->second);
+        set<DTProducto> sas = controladorV->detallesCompra().getProductos() ;
+    }
+    //Falta poder cambiar el estado de enviado de cada producto
+}
+
+void dejarComentarioCARGARDATOSPREESTABLECIDOS(string nicknameU,int idP, string texto, int idComen, DTFecha fecha, int opcion)
+{
+    Fabrica *fabrica = Fabrica::getInstanceF(); // se crea instancia única de fábrica
+    IVenta *controladorV = fabrica->getIVenta();
+    IUsuario *controladorU = fabrica->getIUsuario();
+    int opcion;
+    switch (opcion)
+    {
+    case 1:
+    {
+        controladorU->crearComentario(texto, idP, nicknameU);
+    }
+    break;
+    case 2:
+    {
+        controladorU->crearRespuesta(texto, idComen, idP);
+    }
+    break;
+    }
+}
+
+void cargarDatosPreestablecidos()
+{
     //altaDeUsuarioCARGARDATOSPREESTABLECIDOS le paso el controlador, nombre, fecha, opcion = 1 si es cliente y 2 si es vendedor
     // si es cliente le paso ciudad y direecion y en codigo rut le paso x, si es vendedor le paso codigoRUT y en ciudad, y direccion le pongo x.
     altaDeUsuarioCARGARDATOSPREESTABLECIDOS("ana23","qwer1234",15,5,1988,2,"x","x","212345678001");
@@ -1081,52 +1117,134 @@ void cargarDatosPreestablecidos(){
     altaDeUsuarioCARGARDATOSPREESTABLECIDOS("roberto","mnbvcx",12,8,1990,1,"Montevideo","Av. Brasil 1011","x");
     altaDeUsuarioCARGARDATOSPREESTABLECIDOS("sofia25","1234asdf",7,12,1983,2,"x","x","445678901234");
 
-   altaDeProductoCARGARDATOSPREESTABLECIDOS("carlos78","Camiseta Azul","Camiseta de poliester, color azul",1400,50,2);
-   altaDeProductoCARGARDATOSPREESTABLECIDOS("ana23","Televisor LED","Televisor LED 55 pulgadas",40500,30,1);
-   altaDeProductoCARGARDATOSPREESTABLECIDOS("carlos78","Chaqueta de Cuero","Chaqueta de cuero, color negro",699.99,20,2);
-   altaDeProductoCARGARDATOSPREESTABLECIDOS("ana23","Microondas Digital","Microondas digital, 30L",1199.99,15,1);
-   altaDeProductoCARGARDATOSPREESTABLECIDOS("diegom","Luz LED","Luz Bluetooth LED",599.99,40,3);
-   altaDeProductoCARGARDATOSPREESTABLECIDOS("carlos78","Pantalones Vaqueros","Pantalones vaqueros, talla 32",60,25,2);
-   altaDeProductoCARGARDATOSPREESTABLECIDOS("diegom","Auriculares Bluetooth","Auriculares bluethooth para celular",199.99,35,3);
-   altaDeProductoCARGARDATOSPREESTABLECIDOS("ana23","Refrigerador","Refrigerador de doble puerta",15499,10,1);
-   altaDeProductoCARGARDATOSPREESTABLECIDOS("ana23","Cafetera","Cafetera de goteo programable",23000,50,1);
-   altaDeProductoCARGARDATOSPREESTABLECIDOS("carlos78","Zapatillas Deportivas","Zapatillas para correr, talla 42",5500,20,2);
-   altaDeProductoCARGARDATOSPREESTABLECIDOS("carlos78","Mochila","Mochila de viaje, 40L",9000,30,3);
-   altaDeProductoCARGARDATOSPREESTABLECIDOS("diegom","Plancha de Ropa","Plancha a vapor, 1500W",12534,25,1);
-   altaDeProductoCARGARDATOSPREESTABLECIDOS("sofia25","Gorra","Gorra para deportes, color rojo",200,50,2);
-   altaDeProductoCARGARDATOSPREESTABLECIDOS("diegom","Tablet","Tablet Android de 10 pulgadas",15000,15,1);
-   altaDeProductoCARGARDATOSPREESTABLECIDOS("sofia25","Reloj de Pared","Reloj de pared vintage",150.50,20,3);
+    altaDeProductoCARGARDATOSPREESTABLECIDOS("carlos78","Camiseta Azul","Camiseta de poliester, color azul",1400,50,2);
+    altaDeProductoCARGARDATOSPREESTABLECIDOS("ana23","Televisor LED","Televisor LED 55 pulgadas",40500,30,1);
+    altaDeProductoCARGARDATOSPREESTABLECIDOS("carlos78","Chaqueta de Cuero","Chaqueta de cuero, color negro",699.99,20,2);
+    altaDeProductoCARGARDATOSPREESTABLECIDOS("ana23","Microondas Digital","Microondas digital, 30L",1199.99,15,1);
+    altaDeProductoCARGARDATOSPREESTABLECIDOS("diegom","Luz LED","Luz Bluetooth LED",599.99,40,3);
+    altaDeProductoCARGARDATOSPREESTABLECIDOS("carlos78","Pantalones Vaqueros","Pantalones vaqueros, talla 32",60,25,2);
+    altaDeProductoCARGARDATOSPREESTABLECIDOS("diegom","Auriculares Bluetooth","Auriculares bluethooth para celular",199.99,35,3);
+    altaDeProductoCARGARDATOSPREESTABLECIDOS("ana23","Refrigerador","Refrigerador de doble puerta",15499,10,1);
+    altaDeProductoCARGARDATOSPREESTABLECIDOS("ana23","Cafetera","Cafetera de goteo programable",23000,50,1);
+    altaDeProductoCARGARDATOSPREESTABLECIDOS("carlos78","Zapatillas Deportivas","Zapatillas para correr, talla 42",5500,20,2);
+    altaDeProductoCARGARDATOSPREESTABLECIDOS("carlos78","Mochila","Mochila de viaje, 40L",9000,30,3);
+    altaDeProductoCARGARDATOSPREESTABLECIDOS("diegom","Plancha de Ropa","Plancha a vapor, 1500W",12534,25,1);
+    altaDeProductoCARGARDATOSPREESTABLECIDOS("sofia25","Gorra","Gorra para deportes, color rojo",200,50,2);
+    altaDeProductoCARGARDATOSPREESTABLECIDOS("diegom","Tablet","Tablet Android de 10 pulgadas",15000,15,1);
+    altaDeProductoCARGARDATOSPREESTABLECIDOS("sofia25","Reloj de Pared","Reloj de pared vintage",150.50,20,3);
 
     map<int,int> promo1;
     promo1.insert({2,1});
-    promo1[2]=1;
-    vector<int> idProm1 = {2,4,8};
-    vector<int> cantMinProm1 = {1,1,1};
-    vector<int> idProm2 = {3,6};
-    vector<int> cantMinProm2 = {2,3};
-    vector<int> idProm3 = {5};
-    vector<int> cantMinProm3 = {2};
-    vector<int> idProm4 = {14};
-    vector<int> cantMinProm4 = {1};
+    promo1.insert({4,1});
+    promo1.insert({8,1});  
 
-   void crearPromocionCARGARDATOSPREESTABLECIDOS("Casa nueva","Para que puedas ahorrar en la casa nueva",30,dia,mes,anio,id, idProm1,cantMinProm1,ana23);
-   void crearPromocionCARGARDATOSPREESTABLECIDOS("Fiesta","Para que no te quedes sin ropa para las fiestas",20,dia,mes,anio,idProm2,cantMinProm2,carlos78);
-   void crearPromocionCARGARDATOSPREESTABLECIDOS("Domotica","Para modernizar tu casa",10,dia,mes,anio,idProm3,cantMinProm3,diegom);
-   void crearPromocionCARGARDATOSPREESTABLECIDOS("Liquidacion","Hasta agotar stock",10,dia,mes,anio,idProm4,cantMinProm4,diegom);
+    map<int,int> promo2;
+    promo2.insert({3,2});
+    promo2.insert({6,3});
 
-//    vector<int> idComp1 = {2,4,8};
-//    vector<int> cantComp1 = {2,1,1};
-//    vector<int> idComp2 = {5};
-//    vector<int> cantComp2 = {1};
-//    vector<int> idComp3 = {14};
-//    vector<int> cantComp3 = {10};
-//    vector<int> idComp4 = {11,12,13};
-//    vector<int> cantComp4 = {1,1,1};
-//    vector<int> idComp5 = {3,6};
-//    vector<int> cantComp5 = {2,3};
-//    vector<int> idComp6 = {};
-//    vector<int> cantComp6 = {1,1,1};
-//    void realizarCompraCARGARDATOSPREESTABLECIDOS(controladorU,controladorV,juan87,idComp1,cantComp1);
+    map<int,int> promo3;
+    promo1.insert({5,2});
+
+    map<int,int> promo4;
+    promo4.insert({14,1});
+
+   crearPromocionCARGARDATOSPREESTABLECIDOS("Casa nueva","Para que puedas ahorrar en la casa nueva",30,25,10,2024,promo1,"ana23");
+   crearPromocionCARGARDATOSPREESTABLECIDOS("Fiesta","Para que no te quedes sin ropa para las fiestas",20,26,10,2024,promo2,"carlos78");
+   crearPromocionCARGARDATOSPREESTABLECIDOS("Domotica","Para modernizar tu casa",10,26,10,2024,promo3,"diegom");
+   crearPromocionCARGARDATOSPREESTABLECIDOS("Liquidacion","Hasta agotar stock",10,26,03,2024,promo4,"diegom");
+
+    map<int,int> compra1;
+    compra1.insert({2,2});
+    compra1.insert({4,1});
+    compra1.insert({8,1});
+    map<int,bool> enviado1;
+    enviado1.insert({2,true});
+    enviado1.insert({4,false});
+    enviado1.insert({8,false});
+
+    map<int,int> compra2;
+    compra2.insert({5,1});
+    map<int,bool> enviado2;
+    enviado2.insert({5,true});
+
+    map<int,int> compra3;
+    compra3.insert({14,10});
+    map<int,bool> enviado3;
+    enviado3.insert({14,true});
+
+    map<int,int> compra4;
+    compra4.insert({11,1});
+    compra4.insert({12,1});
+    compra4.insert({13,1});
+    map<int,bool> enviado4;
+    enviado4.insert({11,true});
+    enviado4.insert({12,true});
+    enviado4.insert({13,true});
+
+    map<int,int> compra5;
+    compra5.insert({3,2});
+    compra5.insert({6,3});
+    map<int,bool> enviado5;
+    enviado5.insert({3,false});
+    enviado5.insert({6,true});
+
+    map<int,int> compra6;
+    compra6.insert({1,2});
+    map<int,bool> enviado6;
+    enviado6.insert({1,false});
+
+    map<int,int> compra7;
+    compra7.insert({1,3});
+    map<int,bool> enviado7;
+    enviado7.insert({1,true});
+
+    map<int,int> compra8;
+    compra8.insert({1,4});
+    map<int,bool> enviado8;
+    enviado8.insert({1,false});
+
+    map<int,int> compra9;
+    compra9.insert({1,5});
+    map<int,bool> enviado9;
+    enviado9.insert({1,false});
+
+    realizarCompraCARGARDATOSPREESTABLECIDOS("juan87",compra1,enviado1);
+    realizarCompraCARGARDATOSPREESTABLECIDOS("juan87",compra2,enviado2);
+    realizarCompraCARGARDATOSPREESTABLECIDOS("laura",compra3,enviado3);
+    realizarCompraCARGARDATOSPREESTABLECIDOS("natalia",compra4,enviado4);
+    realizarCompraCARGARDATOSPREESTABLECIDOS("juan87",compra5,enviado5);
+    realizarCompraCARGARDATOSPREESTABLECIDOS("laura",compra6,enviado6);
+    realizarCompraCARGARDATOSPREESTABLECIDOS("natalia",compra7,enviado7);
+    realizarCompraCARGARDATOSPREESTABLECIDOS("pablo10",compra8,enviado8);
+    realizarCompraCARGARDATOSPREESTABLECIDOS("roberto",compra9,enviado9);
+    
+    //si comenta entonces opcion = 1, si responde un comentario entonces opcion = 2
+    dejarComentarioCARGARDATOSPREESTABLECIDOS("juan87",1, "¿La camiseta azul esta disponible en talla M?", 0, DTFecha(01, 06, 2024), 1);
+    dejarComentarioCARGARDATOSPREESTABLECIDOS("carlos78",1,"Si, tenemos la camiseta azul en talla M.", 1, DTFecha(01, 06, 2024), 2);    
+    dejarComentarioCARGARDATOSPREESTABLECIDOS("laura",1,"¿Es de buen material? Me preocupa la durabilidad.", 2, DTFecha(02, 06, 2024), 2);
+    dejarComentarioCARGARDATOSPREESTABLECIDOS("juan87",1, "He comprado antes y la calidad es buena.", 3, DTFecha(02, 06, 2024), 2);
+    dejarComentarioCARGARDATOSPREESTABLECIDOS("natalia",1,"¿Como es el ajuste? ¿Es ajustada o holgada?", 0, DTFecha(02, 06, 2024), 1);
+    dejarComentarioCARGARDATOSPREESTABLECIDOS("laura",2,"¿Cual es la resolucion del Televisor LED?", 0, DTFecha(02, 06, 2024), 1);
+    dejarComentarioCARGARDATOSPREESTABLECIDOS("ana23",2,"El televisor LED tiene una resolucion de 4K UHD.", 6, DTFecha(02, 06, 2024), 2);
+    dejarComentarioCARGARDATOSPREESTABLECIDOS("pablo10",2,"¿Tiene soporte para HDR10?", 0, DTFecha(03, 06, 2024), 1);
+    dejarComentarioCARGARDATOSPREESTABLECIDOS("ana23",2,"Si, soporta HDR10.", 8, DTFecha(03, 06, 2024), 2);
+    dejarComentarioCARGARDATOSPREESTABLECIDOS("natalia",3,"¿La chaqueta de cuero es resistente al agua?", 0, DTFecha(03, 06, 2024), 1);
+    dejarComentarioCARGARDATOSPREESTABLECIDOS("carlos78",3,"No, la chaqueta de cuero no es resistente al agua.", 10, DTFecha(03, 06, 2024), 2);
+    dejarComentarioCARGARDATOSPREESTABLECIDOS("laura",3,"¿Viene en otros colores?", 10, DTFecha(04, 06, 2024), 2);
+    dejarComentarioCARGARDATOSPREESTABLECIDOS("carlos78",3,"Si, tambien esta disponible en marron.", 12, DTFecha(04, 06, 2024), 2);
+    dejarComentarioCARGARDATOSPREESTABLECIDOS("roberto",3,"¿Es adecuada para climas frios?", 10, DTFecha(04, 06, 2024), 2);
+    dejarComentarioCARGARDATOSPREESTABLECIDOS("pablo10",4,"¿El microondas digital tiene funcion de descongelacion rapida?", 0, DTFecha(04, 06, 2024), 1);
+    dejarComentarioCARGARDATOSPREESTABLECIDOS("ana23",4,"Si, el microondas digital incluye una funcion de descongelacion rapida.", 15, DTFecha(04, 06, 2024), 2);
+    dejarComentarioCARGARDATOSPREESTABLECIDOS("natalia",4,"¿Cuantos niveles de potencia tiene?", 15, DTFecha(05, 06, 2024), 2);
+    dejarComentarioCARGARDATOSPREESTABLECIDOS("ana23",4,"Tiene 10 niveles de potencia", 17, DTFecha(05, 06, 2024), 2);
+    dejarComentarioCARGARDATOSPREESTABLECIDOS("roberto",4,"¿Es facil de limpiar?", 15, DTFecha(05, 06, 2024), 2);
+    dejarComentarioCARGARDATOSPREESTABLECIDOS("roberto",5,"¿La luz LED se puede controlar con una aplicacion movil?", 0, DTFecha(05, 06, 2024), 1);
+    dejarComentarioCARGARDATOSPREESTABLECIDOS("diegom",5,"Si, la luz LED se puede controlar a traves de una aplicacion movil.", 20, DTFecha(05, 06, 2024), 2);
+    dejarComentarioCARGARDATOSPREESTABLECIDOS("pablo10",5,"¿Es compatible con Alexa o Google Home?", 20, DTFecha(06, 06, 2024), 2);
+    dejarComentarioCARGARDATOSPREESTABLECIDOS("diegom",5,"Si, es compatible con ambos.", 22, DTFecha(06, 06, 2024), 2);
+    dejarComentarioCARGARDATOSPREESTABLECIDOS("natalia",5,"¿Cuanto dura la bateria?", 20, DTFecha(06, 06, 2024), 2);
+    dejarComentarioCARGARDATOSPREESTABLECIDOS("pablo10",5,"¿La aplicacion movil es facil de usar?", 20, DTFecha(07, 06, 2024), 2);
+
 }
 
 // int main()
