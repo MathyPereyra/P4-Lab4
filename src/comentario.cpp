@@ -42,11 +42,13 @@ void Comentario::eliminarComentario()
 {
   if (this->respuestas.empty())
   {
+    cout << "el id del comentario es " << this->getId();
     this->producto->listadoComentarios().erase(this->getId());
-    delete this->producto;
-    if (this->respondeA != NULL)
-      delete this->respondeA;
-    this->~Comentario();
+    if(this->respondeA != NULL)
+    {
+      this->respondeA->getMapRespuestas().erase(this->getId()); 
+    }
+    delete this;
   }
   else
   {
@@ -54,11 +56,26 @@ void Comentario::eliminarComentario()
     for (ite = this->respuestas.begin(); ite != this->respuestas.end(); ++ite)
     {
       ite->second->eliminarComentario();
+      delete ite->second;
     }
+    this->respuestas.clear();
   }
 }
 
-// set<Comentario> Comentario::getRespuestas()
-//{
-//   return this->respuestas;
-// }
+set<DTComentario> Comentario::getRespuestas()
+{
+    map<int, Comentario *>::iterator it;
+    map<int, Comentario *> resp = this->respuestas;
+    set<DTComentario> dataComens;
+    for (it = resp.begin(); it != resp.end(); it++)
+    {
+        DTComentario dataC = DTComentario(it->second->getText(), it->second->getId(), it->second->getFecha());
+        dataComens.insert(dataC);
+    }
+    return dataComens;
+};
+
+map<int, Comentario*> Comentario::getMapRespuestas()
+{
+ return this->respuestas; 
+}

@@ -14,16 +14,16 @@ void Compra::agregarACompra(Producto *prod, int cantidad)
     this->com_Prods.insert(nuevoCP);
 };
 
-bool Compra::productoEnCompra(int id_prod)
-{
-    bool enCompra = false;
-    for (Compra_Producto cp : this->com_Prods)
-    {
-        Producto *prod = cp.getProductosEnCompra();
-        enCompra = setProductos.count(id_prod) || enCompra;
-    }
-    return enCompra;
-};
+//bool Compra::productoEnCompra(int id_prod)
+//{
+//    bool enCompra = false;
+//    for (Compra_Producto * cp : this->com_Prods)
+//    {
+//        Producto *prod = cp->getProductosEnCompra();
+//        enCompra = setProductos.count(id_prod) || enCompra;
+//    }
+//    return enCompra;
+//};
 
 int Compra::getId()
 {
@@ -53,11 +53,16 @@ void Compra::setId(int id)
 DTCompra Compra::infoCompra()
 {
     set<DTProducto> prods;
-
-    for (Compra_Producto *it : this->getCompProd())
+    set<Compra_Producto*> compProds = this->getCompProd();
+    for (set<Compra_Producto*>::iterator it = compProds.begin(); it != compProds.end(); ++it)
     {
-        DTProducto producto = it->getProductosEnCompra()->getDataProducto();
+        DTProducto producto = (*it)->getProductosEnCompra()->getDataProducto();
         prods.insert(producto);
     }
-    return DTCompra(this->getMontoTotal(), this->getFecha(), prods, this->getId())
+    return DTCompra(this->getMontoTotal(), this->getFecha(), prods, this->getId());
+}
+
+void Compra::setMontoTotal(float monto)
+{
+    this->montoTotal = monto;
 }

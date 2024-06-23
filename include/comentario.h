@@ -28,7 +28,8 @@ public:
   string getText();
   DTFecha getFecha();
   int getId();
-  set<Comentario> getRespuestas();
+  set<DTComentario>  getRespuestas();
+  map<int, Comentario*> getMapRespuestas();
   void agregarRespuesta(Comentario *Comentario);
 
   void eliminarComentario();

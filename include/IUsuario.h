@@ -32,7 +32,9 @@ public:
     virtual set<DTComentario> listadoComentario(string nickname) = 0;
     virtual void eliminarComentario(int id) = 0;
     virtual void crearComentario(string texto, int id, string nicknameU) = 0;
-    virtual void crearRespuesta(string texto, int idC, int idP) = 0;
+    virtual void crearComentario(string texto, int id, string nicknameU, DTFecha fecha) = 0;
+    virtual void crearRespuesta(string texto, int idC, int idP, string nicknameU) = 0;
+    virtual void crearRespuesta(string texto, int idC, int idP, string nicknameU, DTFecha fecha) = 0;
     virtual bool hayComentarios(int id) = 0;
 
     virtual void liberarMemoriaUsuario() = 0;

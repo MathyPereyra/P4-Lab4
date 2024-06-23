@@ -175,25 +175,60 @@ DTCompra::DTCompra(float precioTotal, DTFecha fechaCompra, int id)
   this->id = id;
 };
 
-float DTCompra::getPrecioTotal()
+float DTCompra::getPrecioTotal() const 
 {
   return this->precioTotal;
 };
 
-DTFecha DTCompra::getFecha()
+DTFecha DTCompra::getFecha() const
 {
   return this->fechaCompra;
 };
 
-set<DTProducto> DTCompra::getProductos()
+set<DTProducto> DTCompra::getProductos() const
 {
   return this->productos;
 };
 
-int DTCompra::getId()
+int DTCompra::getId() const
 {
   return this->id;
 }
+
+bool DTCompra::operator<(const DTCompra este) const
+{
+  return this->getId() < este.getId();
+}
+
+// DTCompra2
+DTCompra2::DTCompra2(string nicknameC, DTFecha fechaCompra, int id)
+{
+  this->fechaCompra = fechaCompra;
+  this->nicknameC = nicknameC;
+  this->id = id;
+};
+
+DTFecha DTCompra2::getFecha() const
+{
+  return this->fechaCompra;
+};
+
+string DTCompra2::getNicknameC() const
+{
+  return this->nicknameC;
+};
+
+int DTCompra2::getId() const
+{
+  return this->id;
+}
+
+bool DTCompra2::operator<(const DTCompra2 este) const
+{
+  return this->getId() < este.getId();
+}
+
+
 
 // DTProducto
 DTProducto::DTProducto(){};

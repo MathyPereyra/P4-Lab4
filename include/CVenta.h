@@ -7,6 +7,7 @@
 #include <map>
 
 #include "CUsuario.h"
+#include "datatypes.h"
 
 using namespace std;
 
@@ -63,7 +64,7 @@ public:
   string nombreVendedor(int idProducto);
   void confirmarCrearPromocion(string nicknameV);
 
-  void crearCompra(string nickname);
+  void crearCompra(string nickname, DTFecha fechaActual);
   set<DTProducto> listadoProductos();
   void agregarACompra(int id, int cantidad);
   bool cantidadValida(int id, int cantidad);
@@ -71,9 +72,9 @@ public:
   DTCompra detallesCompra();
 
   set<string> obtenerProdsPendEnvio(string nombreVendedor);
-  map<string, DTFecha> clientesConEnvioPend(string nombreProducto);
+  set<DTCompra2> clientesConEnvioPend(string nombreProducto);
 
-  void enviarProducto(int idProducto, string nombreCliente, DTFecha fechaCompra);
+  void enviarProducto(int idProducto, string nombreCliente);
 
   //  void confirmarCompra();
   // Operaciones internas (no se si el {} va o no)

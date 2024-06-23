@@ -12,7 +12,7 @@ DTFecha ControladorFecha::getFecha()
     return DTFecha(this->dia, this->mes, this->anio);
 };
 
-bool esBisiesto(int anio)
+bool ControladorFecha::esBisiesto(int anio)
 {
     if ((anio % 4 == 0 && anio % 100 != 0) || (anio % 400 == 0))
     {
@@ -21,27 +21,28 @@ bool esBisiesto(int anio)
     return false;
 };
 
-bool esFechaValida(DTFecha fecha)
+bool ControladorFecha::esFechaValida(DTFecha fecha)
 {
     int diasPorMes[] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 
-    if (fecha.mes < 1 || fecha.mes > 12)
+    if (fecha.getMes() < 1 || fecha.getMes() > 12)
     {
         return false;
     }
 
-    if (esBisiesto(fecha.anio) && fecha.mes == 2)
+    if (this->esBisiesto(fecha.getAnio()) && fecha.getAnio() == 2)
     {
         diasPorMes[1] = 29;
     }
 
-    if (fecha.dia < 1 || fecha.dia > diasPorMes[fecha.mes - 1])
+    if (fecha.getDia() < 1 || fecha.getDia() > diasPorMes[fecha.getMes() - 1])
     {
         return false;
     }
 
     return true;
 };
+
 
 ControladorFecha::ControladorFecha(){};
 

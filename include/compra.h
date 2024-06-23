@@ -32,6 +32,7 @@ public:
   float getMontoTotal();
   set<Compra_Producto *> getCompProd();
   void setId(int);
+  void setMontoTotal(float monto);
 
   virtual ~Compra(){};
 };

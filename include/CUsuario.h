@@ -66,7 +66,10 @@ public:
   // void limpiarMemoria();
 
   void crearComentario(string texto, int producto, string usuario);
-  void crearRespuesta(string texto, int idC, int idP);
+  void crearComentario(string texto, int idP, string nicknameU, DTFecha fecha);
+
+  void crearRespuesta(string texto, int idC, int idP, string nicknameU);
+  void crearRespuesta(string texto, int idC, int idP, string nicknameU, DTFecha fecha);
   bool hayComentarios(int id);
 
   Usuario *obtenerUsuarioPorNickname(const string &nickname);

@@ -82,7 +82,7 @@ public:
   {
     return this->ciudad;
   };
-  string getCodigoRUT() override {};
+  string getCodigoRUT() override {return "";};
 
   string getDireccion() override
   {
@@ -115,8 +115,8 @@ public:
 
   string getNickname() const;
   DTFecha getFechaNac() const;
-  string getCiudad() override {};
-  string getDireccion() override {};
+  string getCiudad() override {return "";};
+  string getDireccion() override {return "";};
 
   string getCodigoRUT() override
   {
@@ -245,13 +245,33 @@ private:
 public:
   DTCompra(float precioTotal, DTFecha fechaCompra, set<DTProducto> comProd, int id);
   DTCompra(float precioTotal, DTFecha fechaCompra, int id);
-  float getPrecioTotal();
-  DTFecha getFecha();
-  int getId();
-  set<DTProducto> getProductos();
+  float getPrecioTotal() const;
+  DTFecha getFecha() const;
+  int getId() const;
+  set<DTProducto> getProductos() const;
+  bool operator<(const DTCompra este) const;
 
   virtual ~DTCompra(){};
 };
+
+// DTCompra2
+class DTCompra2
+{
+private:
+  string nicknameC;
+  DTFecha fechaCompra;
+  int id;
+
+public:
+  DTCompra2(string nicknameC, DTFecha fechaCompra, int id);
+  DTFecha getFecha() const;
+  int getId() const;
+  string getNicknameC() const;
+  bool operator<(const DTCompra2 este) const;
+
+  virtual ~DTCompra2(){};
+};
+
 
 // DTPROMOCION
 

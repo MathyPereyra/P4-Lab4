@@ -1,6 +1,7 @@
 #ifndef IVENTA_H
 #define IVENTA_H
 
+#include "datatypes.h"
 #include "promocion.h"
 #include "usuario.h"
 #include "IUsuario.h"
@@ -43,14 +44,14 @@ public:
     virtual set<DTPromocion> getDatosPromocionVigentesVendedor(string nicknameV) = 0;
     virtual set<DTCompra> getDatosCompraRealizadaCliente(string nicknameC) = 0;
     virtual string nombreVendedor(int id) = 0;
-    virtual void enviarProducto(int idProducto, string nombreCliente, DTFecha fechaCompra) = 0;
+    virtual void enviarProducto(int idProducto, string nombreCliente) = 0;
 
     virtual void confirmarCrearPromocion(string nicknameV) = 0;
 
     virtual set<string> obtenerProdsPendEnvio(string nombreVendedor) = 0;
-    virtual map<string, DTFecha> clientesConEnvioPend(string nombreProducto) = 0;
+    virtual set<DTCompra2> clientesConEnvioPend(string nombreProducto) = 0;
 
-    virtual void crearCompra(string nickname) = 0;
+    virtual void crearCompra(string nickname, DTFecha fechaActual) = 0;
     virtual set<DTProducto> listadoProductos() = 0;
     virtual set<DTPromocion> listadoPromociones() = 0;
     virtual bool productoEnCompra(int id) = 0;

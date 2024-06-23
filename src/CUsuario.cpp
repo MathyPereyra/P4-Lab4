@@ -2,6 +2,7 @@
 #include "../include/usuario.h"
 #include "../include/comentario.h"
 #include "../include/CVenta.h"
+#include "../include/CFecha.h"
 
 #include <cstddef>
 
@@ -158,7 +159,7 @@ set<DTUsuario *> ControladorUsuario::listadoUsuarios()
 
 void ControladorUsuario::setContadorComentario()
 {
-    this->contadorComentario = 0;
+    this->contadorComentario = 1;
 };
 
 int ControladorUsuario::getContadorComentario()
@@ -215,13 +216,19 @@ void ControladorUsuario::eliminarComentario(int id)
 {
     Usuario *usuario = getmemUsuario();
     map<int, Comentario *>::iterator it = usuario->getComentarios().find(id);
-    it->second->eliminarComentario();
-    liberarMemoriaUsuario();
+    if(it != usuario->getComentarios().end())
+    {
+        Comentario *comentario = it->second;
+        cout << "tamanio" << usuario->getComentarios().size();
+        comentario->eliminarComentario();
+        usuario->getComentarios().erase(id);
+        cout << "mem comen con id" << id ;
+    }
+    else cout << "xd";
 }
 
 void ControladorUsuario::liberarMemoriaUsuario()
 {
-    delete this->memUsuario;
 }
 
 void ControladorUsuario::crearComentario(string texto, int idP, string nicknameU)
@@ -230,21 +237,49 @@ void ControladorUsuario::crearComentario(string texto, int idP, string nicknameU
     Producto *producto = ControladorVenta::getInstanciaVen()->seleccionarProductoPorId(idP);
     int id = this->getContadorComentario();
     this->avanzarContadorComentario();
-    DTFecha fecha = DTFecha();
+    DTFecha fecha = ControladorFecha::getInstanciaFecha()->getFecha();
     Comentario *nuevo = new Comentario(texto, fecha, id, producto);
     producto->agregarComentario(id, nuevo);
     usuario->agregarComentario(id, nuevo);
 };
 
-void ControladorUsuario::crearRespuesta(string texto, int idC, int idP)
+void ControladorUsuario::crearComentario(string texto, int idP, string nicknameU, DTFecha fecha)
 {
+    Usuario *usuario = obtenerUsuarioPorNickname(nicknameU);
+    Producto *producto = ControladorVenta::getInstanciaVen()->seleccionarProductoPorId(idP);
+    int id = this->getContadorComentario();
+    this->avanzarContadorComentario();
+    Comentario *nuevo = new Comentario(texto, fecha, id, producto);
+    producto->agregarComentario(id, nuevo);
+    usuario->agregarComentario(id, nuevo);
+};
+
+void ControladorUsuario::crearRespuesta(string texto, int idC, int idP, string nicknameU)
+{
+    Usuario *usuario = obtenerUsuarioPorNickname(nicknameU);
     Producto *prod = ControladorVenta::getInstanciaVen()->seleccionarProductoPorId(idP);
     map<int, Comentario *> comens = prod->listadoComentarios();
     Comentario *comentarioOg = comens.find(idC)->second;
     int id = this->getContadorComentario();
     this->avanzarContadorComentario();
-    DTFecha fecha = DTFecha();
+    DTFecha fecha = ControladorFecha::getInstanciaFecha()->getFecha();
     Comentario *nuevo = new Comentario(texto, fecha, id);
+    prod->agregarComentario(id, nuevo);
+    usuario->agregarComentario(id, nuevo);
+    comentarioOg->agregarRespuesta(nuevo);
+};
+
+void ControladorUsuario::crearRespuesta(string texto, int idC, int idP, string nicknameU, DTFecha fecha)
+{
+    Usuario *usuario = obtenerUsuarioPorNickname(nicknameU);
+    Producto *prod = ControladorVenta::getInstanciaVen()->seleccionarProductoPorId(idP);
+    map<int, Comentario *> comens = prod->listadoComentarios();
+    Comentario *comentarioOg = comens.find(idC)->second;
+    int id = this->getContadorComentario();
+    this->avanzarContadorComentario();
+    Comentario *nuevo = new Comentario(texto, fecha, id);
+    prod->agregarComentario(id, nuevo);
+    usuario->agregarComentario(id, nuevo);
     comentarioOg->agregarRespuesta(nuevo);
 };
 
