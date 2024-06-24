@@ -26,6 +26,8 @@ private:
 public:
   Cliente(string nickname, string contrasena, DTFecha fechaNac, string dir, string ciud);
 
+  void eliminarComentario(int id);
+
   void crearCompra(int); // le agregue el parámetro int porque en cliente.cpp le pasamos el id
   void agregarSuscripcion();
   void eliminarNotificaciones();

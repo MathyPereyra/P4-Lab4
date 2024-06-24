@@ -216,15 +216,16 @@ void ControladorUsuario::eliminarComentario(int id)
 {
     Usuario *usuario = getmemUsuario();
     map<int, Comentario *>::iterator it = usuario->getComentarios().find(id);
-    if(it != usuario->getComentarios().end())
+    if (it != usuario->getComentarios().end())
     {
         Comentario *comentario = it->second;
         cout << "tamanio" << usuario->getComentarios().size();
         comentario->eliminarComentario();
-        usuario->getComentarios().erase(id);
-        cout << "mem comen con id" << id ;
+        usuario->eliminarComentario(id);
+        cout << "mem comen con id" << id;
     }
-    else cout << "xd";
+    else
+        cout << "xd";
 }
 
 void ControladorUsuario::liberarMemoriaUsuario()
