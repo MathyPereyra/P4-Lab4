@@ -39,6 +39,8 @@ public:
   bool estaSuscrito(string nickname);
   void promoCreada(Notificacion *noti);
 
+  void eliminarComentario(int id);
+
   DTVendedor *getDatosVendedor();
   DTUsuario *getDatosUsuario();
   set<DTComentario> listadoComentarioUsuario();

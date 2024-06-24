@@ -115,3 +115,8 @@ void Vendedor::agregarProd(Producto *prod)
 //   }
 //   return listadoComens;
 // }
+
+void Vendedor::eliminarComentario(int id)
+{
+  this->comentarios.erase(id);
+}
